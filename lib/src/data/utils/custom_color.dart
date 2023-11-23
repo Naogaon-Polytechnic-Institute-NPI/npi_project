@@ -5,4 +5,5 @@ class CustomColor{
   static const lightBlue = Color(0xff1BFFFF);
   static const lightPurple = Color(0xffB57EDC);
   static const lightTeal = Color(0xff0EA7A5);
+  static const blueGrey = Color(0xff97B2B7);
 }
