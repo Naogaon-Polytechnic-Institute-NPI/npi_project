@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:npi_project/src/module/student/login&sign_up/local_widget/welcome_text.dart';
 
 class LogInScreen extends StatelessWidget {
   const LogInScreen({super.key});
@@ -7,7 +8,12 @@ class LogInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text('Hello World'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            WelcomeText()
+          ],
+        )
       ),
     );
   }
