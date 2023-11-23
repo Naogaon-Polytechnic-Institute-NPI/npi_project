@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: const LogInScreen(),
+      child: const FirstScreen(),
     );
   }
 }
