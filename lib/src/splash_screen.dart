@@ -11,17 +11,23 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   // Creating a Method to change screen
   changeScreen() {
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const LogInScreen()));
     });
   }
 
   @override
+  void initState() {
+    changeScreen();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.blue[900],
-        body: Column(
+        body: const Column(
           children: [
             Center(
               child: Text(
