@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:npi_project/src/module/student/login&sign_up/view/log_in.dart';
+import 'package:npi_project/src/module/student/login&sign_up/view/option_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: const LogInScreen(),
+      child: const FirstScreen(),
     );
   }
 }
