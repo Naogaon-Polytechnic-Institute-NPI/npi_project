@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:npi_project/src/data/global_widget/title_text.dart';
 import 'package:npi_project/src/data/global_widget/txt_button.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
+import 'package:npi_project/src/module/student/login&sign_up/local_widget/signup_forms&button.dart';
+import 'package:npi_project/src/module/student/login&sign_up/view/signup.dart';
 
 
 class RegisterButton extends StatelessWidget {
@@ -21,7 +23,7 @@ class RegisterButton extends StatelessWidget {
         SizedBox(width: 5.w,),
         TxtButton(
           onTap: (){
-            //Navigator.push(context, MaterialPageRoute(builder: (context)=> Register()));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> const SignUp()));
             print('working');
           },
             buttonName: 'Register',

@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:npi_project/src/data/utils/custom_color.dart';
-import 'package:npi_project/src/module/student/login&sign_up/local_widget/login_forms&button.dart';
+import 'package:npi_project/src/module/student/login&sign_up/local_widget/login_txt_button.dart';
 import 'package:npi_project/src/module/student/login&sign_up/local_widget/register_txt_button.dart';
+import 'package:npi_project/src/module/student/login&sign_up/local_widget/register_header.dart';
+import 'package:npi_project/src/module/student/login&sign_up/local_widget/signup_forms&button.dart';
 import 'package:npi_project/src/module/student/login&sign_up/local_widget/welcome_text.dart';
 
-class LogInScreen extends StatelessWidget {
-  const LogInScreen({super.key});
+class SignUp extends StatelessWidget {
+  const SignUp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Container(
-            height: MediaQuery.of(context).size.height,
+            //height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.all(16.w),
             // decoration: BoxDecoration(
@@ -29,27 +30,27 @@ class LogInScreen extends StatelessWidget {
             //     )
             // ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              //mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const WelcomeText(),
-                Gap(15.h),
                 SizedBox(
-                  height: 130.h,
-                  width: 130.w,
+                  height: 110.h,
+                  width: 110.w,
                   child: Image.asset(
                       'assets/images/npi_logo.png',
                       fit: BoxFit.cover
                   ),
                 ),
-                Gap(30.h),
-                const LoginFormsAndButton(),
+                Gap(10.h),
+                RegisterHeader(),
                 Gap(20.h),
-                const RegisterButton()
+                const RegisterFormsAndButton(),
+                Gap(20.h),
+                const LoginTxtButton()
               ],
             ),
           ),
         ),
       ),
-    );
+    );;
   }
 }
