@@ -41,7 +41,7 @@ class SignUp extends StatelessWidget {
                   ),
                 ),
                 Gap(10.h),
-                RegisterHeader(),
+                const RegisterHeader(),
                 Gap(20.h),
                 const RegisterFormsAndButton(),
                 Gap(20.h),

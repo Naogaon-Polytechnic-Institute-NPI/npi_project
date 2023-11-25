@@ -108,14 +108,14 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
           Gap(10.h),
           InputField(
             //fieldTitle: 'Email',
-              hintText: 'Enter your technology',
+              hintText: 'Enter your technology (CMT)',
               errorText: 'Enter roll',
               obsecureText: false,
               controller: technologyController),
           Gap(10.h),
           InputField(
             //fieldTitle: 'Email',
-              hintText: 'Enter your session',
+              hintText: 'Enter your session (18-19)',
               errorText: 'Enter roll',
               obsecureText: false,
               controller: sessionController),
