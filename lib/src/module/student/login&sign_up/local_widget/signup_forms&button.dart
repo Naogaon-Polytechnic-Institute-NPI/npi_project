@@ -42,24 +42,33 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
 
   void register(String apiUrl) async {
     try {
+      setState(() {
+        loading = true;
+      });
       Response response = await post(
           Uri.parse(apiUrl),
         body: {
-            'name' : usernameController,
-          'roll': rollController,
-          'registration' : registrationController,
-          'technology' : technologyController,
-          'session' : sessionController,
-          'password' : confirmPasswordController
+            'name' : usernameController.text.toString(),
+          'roll': rollController.text.toString(),
+          'registration' : registrationController.text.toString(),
+          'technology' : technologyController.text.toString(),
+          'session' : sessionController.text.toString(),
+          'password' : confirmPasswordController.text.toString()
         },
       );
       if(response.statusCode == 200){
         setState(() {
-          loading = true;
+          loading = false;
         });
         var responseBody = jsonDecode(response.body.toString());
-        debugPrint(responseBody);
-        Utils().toastMessage('Account created successfully', CustomColor.lightTeal);
+        debugPrint(responseBody['response']);
+        if(responseBody['response'].toString() == 'success') {
+          Utils().toastMessage(
+              'Account created successfully', CustomColor.lightTeal);
+        }else{
+          return Utils().
+          toastMessage('Roll/Registration/Session is not correct', Colors.red);
+        }
       }
     } catch (e) {
       setState(() {
@@ -160,13 +169,13 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
               loading: loading,
               onTap: ()async {
                 if(_formKey.currentState!.validate()){
-                  if(passwordController.text.toString().length == 6){
+                  if(passwordController.text.toString().length >= 6){
                     if(passwordController.text.toString() == confirmPasswordController.text.toString()){
                       setState(() {
                         loading = true;
                       });
                       register('https://npi-job-placement-backend.onrender.com/public/api/first-time-login');
-                      register('https://npi-job-placement-backend.onrender.com/private/api/save-user-passwd');
+                      //register('https://npi-job-placement-backend.onrender.com/private/api/save-user-passwd');
                     } else {
                       return Utils().toastMessage("Password didn't match", Colors.red);
                     }
