@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -5,6 +7,7 @@ import 'package:npi_project/src/data/global_widget/custom_button.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/data/utils/toast.dart';
 import 'package:npi_project/src/module/student/login&sign_up/local_widget/input_form.dart';
+import 'package:http/http.dart';
 
 
 
@@ -37,32 +40,34 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
     _cpSecure = !_cpSecure;
   }
 
-  // void register() async {
-  //   try {
-  //     UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-  //         email: emailController.text.toString(),
-  //         password: passwordController.text.toString()
-  //     );
-  //     setState(() {
-  //       loading = false ;
-  //     });
-  //     Utils().toastMessage('Successfully registered', Colors.green);
-  //     Navigator.pushAndRemoveUntil(context,
-  //         MaterialPageRoute(builder: (context)=> const LogIn()), (route) => false);
-  //   } on FirebaseAuthException catch (e) {
-  //     if (e.code == 'weak-password') {
-  //       Utils().toastMessage('${e.message}', Colors.red);
-  //     } else if (e.code == 'email-already-in-use') {
-  //       print('The account already exists for that email.');
-  //       Utils().toastMessage('${e.message}', Colors.red);
-  //     }
-  //     setState(() {
-  //       loading = false ;
-  //     });
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
+  void register(String apiUrl) async {
+    try {
+      Response response = await post(
+          Uri.parse(apiUrl),
+        body: {
+            'name' : usernameController,
+          'roll': rollController,
+          'registration' : registrationController,
+          'technology' : technologyController,
+          'session' : sessionController,
+          'password' : confirmPasswordController
+        },
+      );
+      if(response.statusCode == 200){
+        setState(() {
+          loading = true;
+        });
+        var responseBody = jsonDecode(response.body.toString());
+        debugPrint(responseBody);
+        Utils().toastMessage('Account created successfully', CustomColor.lightTeal);
+      }
+    } catch (e) {
+      setState(() {
+        loading = false;
+      });
+      debugPrint(e.toString());
+    }
+  }
 
 
   @override
@@ -157,11 +162,11 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
                 if(_formKey.currentState!.validate()){
                   if(passwordController.text.toString().length == 6){
                     if(passwordController.text.toString() == confirmPasswordController.text.toString()){
-                      // setState(() {
-                      //   loading = true;
-                      // });
-                      // register();
-                      print('working');
+                      setState(() {
+                        loading = true;
+                      });
+                      register('https://npi-job-placement-backend.onrender.com/public/api/first-time-login');
+                      register('https://npi-job-placement-backend.onrender.com/private/api/save-user-passwd');
                     } else {
                       return Utils().toastMessage("Password didn't match", Colors.red);
                     }

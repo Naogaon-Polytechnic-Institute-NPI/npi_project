@@ -30,11 +30,11 @@ class CustomButton extends StatelessWidget {
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
                 colors:[
-                  Color(0xff00CAB1).withOpacity(.8),
+                  const Color(0xff00CAB1).withOpacity(.8),
                   CustomColor.lightTeal,
                 ]
             ),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: CustomColor.blueGrey,
               blurRadius: 9,
