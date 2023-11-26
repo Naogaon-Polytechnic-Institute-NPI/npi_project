@@ -18,15 +18,18 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       // Use builder only if you need to use library outside ScreenUtilInit context
-      builder: (_ , child) {
+      builder: (_, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'First Method',
           home: child,
         );
       },
+
+      child: const HomeScreen(),
+
       child: LogInScreen(),
+
     );
   }
 }
-
