@@ -59,6 +59,7 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
               hintText: 'Enter your Roll',
               errorText: 'Enter Roll',
               obsecureText: false,
+              textInputType: TextInputType.number,
               controller: rollController),
           Gap(10.h),
           InputField(
@@ -67,6 +68,7 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
             errorText: 'Enter password',
             obsecureText: _psecure,
             controller: passwordController,
+            textInputType: TextInputType.text,
             suffixIcon: IconButton(
               icon: Icon(
                 _psecure ? Icons.remove_red_eye : Icons.remove_red_eye_outlined,
