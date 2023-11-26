@@ -37,7 +37,7 @@ class LogInScreen extends StatelessWidget {
                   height: 130.h,
                   width: 130.w,
                   child: Image.asset('assets/images/npi_logo.png',
-                      fit: BoxFit.cover),
+                      fit: BoxFit.fill),
                 ),
                 Gap(30.h),
                 const LoginFormsAndButton(),

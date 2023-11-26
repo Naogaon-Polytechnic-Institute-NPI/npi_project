@@ -47,6 +47,7 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
         if (responseBody['response'].toString() == 'success') {
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
               builder: (context) => HomeScreen()), (route) => false);
+          Utils().toastMessage('Loged in', CustomColor.lightTeal);
         }else if(responseBody['response'].toString() == 'Roll not found !'){
           Utils().toastMessage('User not found', Colors.red);
         }else if(responseBody['response'].toString() == 'Password is incorrect'){

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:npi_project/src/data/utils/custom_color.dart';
-import 'package:npi_project/src/module/student/home/local_widget/card.dart';
 import 'package:npi_project/src/module/student/home/local_widget/educataion_Info_card.dart';
 import 'package:npi_project/src/module/student/home/local_widget/greeting.dart';
 import 'package:npi_project/src/module/student/home/local_widget/occupation_info_card.dart';
@@ -26,14 +24,14 @@ class _HomeScreenState extends State<HomeScreen> {
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors:[
-                    Colors.white,
-                    CustomColor.lightTeal.withOpacity(.5),
-                  ]
-              )
+              // gradient: LinearGradient(
+              //     begin: Alignment.topCenter,
+              //     end: Alignment.bottomCenter,
+              //     colors:[
+              //       Colors.white,
+              //       CustomColor.lightTeal.withOpacity(.5),
+              //     ]
+              // )
           ),
           child:SingleChildScrollView(
             child: Column(
