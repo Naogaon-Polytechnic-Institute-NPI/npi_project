@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:npi_project/src/module/student/login&sign_up/view/log_in.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({super.key});
@@ -32,7 +34,11 @@ class NavBar extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(15),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushAndRemoveUntil(
+                    context, MaterialPageRoute(builder: (context)=>
+                const LogInScreen()), (route) => false);
+              },
               child: Container(
                 width: double.infinity,
                 height: 50,
@@ -51,9 +57,11 @@ class NavBar extends StatelessWidget {
                     const SizedBox(width: 15),
                     Image.asset('assets/images/exit.png'),
                     const SizedBox(width: 30),
-                    const Text(
+                    Text(
                       'Log out',
-                      style: TextStyle(fontSize: 16, color: Colors.red),
+                      style: TextStyle(
+                          fontSize: 16.sp, 
+                          color: Colors.red),
                     ),
                   ],
                 ),

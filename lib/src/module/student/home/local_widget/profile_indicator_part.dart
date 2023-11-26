@@ -45,7 +45,7 @@ class ProfileIndicatorPart extends StatelessWidget {
                 ),
               ),
               Gap(8.w),
-              Icon(Icons.edit_rounded, color: CustomColor.lightTeal,),
+              const Icon(Icons.edit_rounded, color: CustomColor.lightTeal,),
 
             ],
           )
