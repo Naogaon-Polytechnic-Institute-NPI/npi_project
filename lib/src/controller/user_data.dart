@@ -1,0 +1,4 @@
+class UserData{
+  dynamic userData;
+
+}

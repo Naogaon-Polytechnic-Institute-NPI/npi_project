@@ -35,30 +35,23 @@ class InputField extends StatelessWidget {
               ),
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25.r),
-                  borderSide: BorderSide(color: CustomColor.blueGrey.withOpacity(.2), width: 1.w)
-              ),
+                  borderSide: BorderSide(
+                      color: CustomColor.blueGrey.withOpacity(.2), width: 1.w)),
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25.r),
-                  borderSide: BorderSide(color: CustomColor.lightTeal, width: 1.w)
-              ),
+                  borderSide:
+                      BorderSide(color: CustomColor.lightTeal, width: 1.w)),
               fillColor: CustomColor.lightTeal.withOpacity(0.1),
               filled: true,
-          //   enabledBorder: UnderlineInputBorder(
-          //     borderSide: BorderSide(color: CustomColor.lightTeal, width: 1)
-          //   ),
-          //   focusedBorder: UnderlineInputBorder(
-          //       borderSide: BorderSide(color: CustomColor.lightTeal, width: 2.5)
-          //   ),
-          //    focusColor: CustomColor.lightTeal,
-              suffixIcon: suffixIcon,
-          ),
+
+              suffixIcon: suffixIcon),
           validator: (value){
             if(value!.isEmpty){
+
               return errorText;
             }
             return null;
-          }
-      ),
+          }),
     );
   }
 }

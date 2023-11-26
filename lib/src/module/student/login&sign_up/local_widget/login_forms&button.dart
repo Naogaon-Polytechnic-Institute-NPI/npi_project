@@ -8,7 +8,8 @@ import 'package:npi_project/src/controller/api_end_points.dart';
 import 'package:npi_project/src/data/global_widget/custom_button.dart';
 import 'package:npi_project/src/data/global_widget/txt_button.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
-import 'package:npi_project/src/module/student/home/home.dart';
+import 'package:npi_project/src/data/utils/toast.dart';
+import 'package:npi_project/src/module/student/home/view/home.dart';
 import 'package:npi_project/src/module/student/login&sign_up/local_widget/input_form.dart';
 
 class LoginFormsAndButton extends StatefulWidget {
@@ -29,24 +30,37 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
     _psecure = !_psecure;
   }
 
-  void login()async{
-    try{
-      Response response =  await post(Uri.parse(ApiEndPoints.login),
+
+  void login() async {
+    try {
+      Response response = await post(Uri.parse(ApiEndPoints.login),
           body: {
-            'roll' : rollController.text.toString(),
-            'password' : passwordController.text.toString()
+            'roll': rollController.text.toString(),
+            'password': passwordController.text.toString()
           }
       );
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
+        setState(() {
+          _loading = false;
+        });
         var responseBody = jsonDecode(response.body.toString());
-        if(responseBody['response'].toString() == 'success'){
+        if (responseBody['response'].toString() == 'success') {
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-              builder:(context)=> Home), (route) => false)
+              builder: (context) => HomeScreen()), (route) => false);
+        }else if(responseBody['response'].toString() == 'Roll not found !'){
+          Utils().toastMessage('User not found', Colors.red);
+        }else if(responseBody['response'].toString() == 'Password is incorrect'){
+          Utils().toastMessage("Password didn't match", Colors.red);
         }
       }
-    }catch(e){
+    } catch (e) {
+      setState(() {
+        _loading = false ;
+      });
       print(e.toString());
     }
+  }
+
 
     @override
     Widget build(BuildContext context) {
@@ -72,7 +86,8 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
               textInputType: TextInputType.text,
               suffixIcon: IconButton(
                 icon: Icon(
-                  _psecure ? Icons.remove_red_eye : Icons.remove_red_eye_outlined,
+                  _psecure ? Icons.remove_red_eye : Icons
+                      .remove_red_eye_outlined,
                   color: CustomColor.lightTeal,
                 ),
                 onPressed: () {
@@ -96,10 +111,10 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
                 buttonName: 'Login',
                 onTap: () {
                   if (_formKey.currentState!.validate()) {
-                    // setState(() {
-                    //   _loading = true ;
-                    // });
-                    // login();
+                    setState(() {
+                      _loading = true ;
+                    });
+                    login();
                     print('working');
                     print(rollController.text.toString());
                     print(passwordController.text.toString());
@@ -110,4 +125,5 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
         ),
       );
     }
-  }
+}
+
