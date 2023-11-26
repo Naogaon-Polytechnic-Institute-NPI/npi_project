@@ -26,9 +26,9 @@ class MyApp extends StatelessWidget {
         );
       },
 
-      child: const HomeScreen(),
+      //child: const HomeScreen(),
 
-      //child: LogInScreen(),
+      child: LogInScreen(),
 
     );
   }

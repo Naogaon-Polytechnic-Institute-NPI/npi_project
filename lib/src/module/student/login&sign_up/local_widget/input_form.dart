@@ -8,13 +8,16 @@ class InputField extends StatelessWidget {
   final String errorText;
   final TextEditingController controller;
   final IconButton? suffixIcon;
-  const InputField(
-      {super.key,
-      required this.hintText,
-      required this.obsecureText,
-      required this.controller,
-      required this.errorText,
-      this.suffixIcon});
+  final TextInputType textInputType;
+  const InputField({
+    super.key,
+    required this.hintText,
+    required this.obsecureText,
+    required this.controller,
+    required this.errorText,
+    required this.textInputType,
+    this.suffixIcon
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +26,7 @@ class InputField extends StatelessWidget {
       child: TextFormField(
           controller: controller,
           obscureText: obsecureText,
+          keyboardType: textInputType,
           decoration: InputDecoration(
               hintText: hintText,
               hintStyle: const TextStyle(

@@ -13,8 +13,8 @@ class ProfileIndicatorPart extends StatelessWidget {
       alignment: Alignment.center,
       height: 130,
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(.7),
-        borderRadius: BorderRadius.circular(10),
+        color: Colors.white.withOpacity(.5),
+        borderRadius: BorderRadius.circular(10.r),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

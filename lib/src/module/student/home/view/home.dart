@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
+import 'package:npi_project/src/module/student/home/local_widget/card.dart';
 import 'package:npi_project/src/module/student/home/local_widget/educataion_Info_card.dart';
 import 'package:npi_project/src/module/student/home/local_widget/greeting.dart';
 import 'package:npi_project/src/module/student/home/local_widget/occupation_info_card.dart';
@@ -38,12 +39,12 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                GreetingPart(),
-                ProfileIndicatorPart(),
+                const GreetingPart(),
+                const ProfileIndicatorPart(),
                 Gap(20.h),
-                PersonalInfoCard(),
-                EducationInfoCard(),
-                OccupationInfoCard()
+                const PersonalInfoCard(),
+                const EducationInfoCard(),
+                const OccupationInfoCard(),
               ],
             ),
           ),

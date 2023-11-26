@@ -9,12 +9,15 @@ class OccupationInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Colors.white.withOpacity(.7),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.r),
+      ),
       elevation: 0,
       child: ExpansionTile(
         tilePadding: EdgeInsets.all(10.w),
-        leading: const CircleAvatar(
-          backgroundColor: CustomColor.lightTeal,
-          backgroundImage: AssetImage('assets/images/businessman.png'),
+        leading: CircleAvatar(
+          backgroundColor: CustomColor.lightTeal.withOpacity(.5),
+          backgroundImage: const AssetImage('assets/images/businessman.png'),
 
         ),
         title:Text(

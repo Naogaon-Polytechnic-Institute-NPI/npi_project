@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:npi_project/src/controller/api_end_points.dart';
 import 'package:npi_project/src/data/global_widget/custom_button.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/data/utils/toast.dart';
 import 'package:npi_project/src/module/student/login&sign_up/local_widget/input_form.dart';
+import 'package:http/http.dart';
+import 'package:npi_project/src/module/student/login&sign_up/view/log_in.dart';
 
 
 
@@ -28,8 +33,6 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
   bool _psecure = true, _cpSecure = true;
   bool loading = false;
 
-  // FirebaseAuth _auth = FirebaseAuth.instance;
-
   void passwordIsSecure (){
     _psecure = !_psecure;
   }
@@ -37,32 +40,69 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
     _cpSecure = !_cpSecure;
   }
 
-  // void register() async {
-  //   try {
-  //     UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-  //         email: emailController.text.toString(),
-  //         password: passwordController.text.toString()
-  //     );
-  //     setState(() {
-  //       loading = false ;
-  //     });
-  //     Utils().toastMessage('Successfully registered', Colors.green);
-  //     Navigator.pushAndRemoveUntil(context,
-  //         MaterialPageRoute(builder: (context)=> const LogIn()), (route) => false);
-  //   } on FirebaseAuthException catch (e) {
-  //     if (e.code == 'weak-password') {
-  //       Utils().toastMessage('${e.message}', Colors.red);
-  //     } else if (e.code == 'email-already-in-use') {
-  //       print('The account already exists for that email.');
-  //       Utils().toastMessage('${e.message}', Colors.red);
-  //     }
-  //     setState(() {
-  //       loading = false ;
-  //     });
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
+  void register() async {
+    try {
+      setState(() {
+        loading = true;
+      });
+      Response response = await post(
+          Uri.parse(ApiEndPoints.signUp),
+        body: {
+          'name' : usernameController.text.toString(),
+          'roll': rollController.text.toString(),
+          'registration' : registrationController.text.toString(),
+          'technology' : technologyController.text.toString(),
+          'session' : sessionController.text.toString(),
+          'password' : confirmPasswordController.text.toString()
+        }
+      );
+      if(response.statusCode == 200){
+        setState(() {
+          loading = false;
+        });
+        var responseBody = jsonDecode(response.body.toString());
+        debugPrint(responseBody['response']);
+        if(responseBody['response'].toString() == 'success') {
+          try{
+            Response signUpResponse = await post(Uri.parse(ApiEndPoints.savePassword),
+                body: {
+                  'name' : usernameController.text.toString(),
+                  'roll': rollController.text.toString(),
+                  'registration' : registrationController.text.toString(),
+                  'technology' : technologyController.text.toString(),
+                  'session' : sessionController.text.toString(),
+                  'password' : confirmPasswordController.text.toString()
+                }
+            );
+            if(response.statusCode == 200){
+              var signupResponseBody = jsonDecode(signUpResponse.body.toString());
+              print(signupResponseBody);
+              if(signupResponseBody['response'].toString() == 'success'){
+                Utils().toastMessage(
+                    'Account created successfully', CustomColor.lightTeal);
+                Navigator.pushAndRemoveUntil(
+                    context, MaterialPageRoute(
+                    builder: (context)=> LogInScreen()), (route) => false);
+              }
+            }
+          }catch(e){
+            print(e.toString());
+          }
+        }else if(responseBody['response'].toString() == 'Something went wrong !') {
+          Utils().toastMessage(
+              'Fill the data properly', CustomColor.lightTeal);
+        }else{
+          return Utils().
+          toastMessage('Roll/Registration/Session is not correct', Colors.red);
+        }
+      }
+    } catch (e) {
+      setState(() {
+        loading = false;
+      });
+      debugPrint(e.toString());
+    }
+  }
 
 
   @override
@@ -89,6 +129,7 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
               hintText: 'Enter your name',
               errorText: 'Enter name',
               obsecureText: false,
+              textInputType: TextInputType.name,
               controller: usernameController
           ),
           Gap(10.h),
@@ -97,6 +138,7 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
               hintText: 'Enter your Roll',
               errorText: 'Enter roll',
               obsecureText: false,
+              textInputType: TextInputType.number,
               controller: rollController),
           Gap(10.h),
           InputField(
@@ -104,6 +146,7 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
               hintText: 'Enter your Registration',
               errorText: 'Enter registration',
               obsecureText: false,
+              textInputType: TextInputType.number,
               controller: registrationController),
           Gap(10.h),
           InputField(
@@ -111,6 +154,7 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
               hintText: 'Enter your technology (CMT)',
               errorText: 'Enter roll',
               obsecureText: false,
+              textInputType: TextInputType.text,
               controller: technologyController),
           Gap(10.h),
           InputField(
@@ -118,6 +162,7 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
               hintText: 'Enter your session (18-19)',
               errorText: 'Enter roll',
               obsecureText: false,
+              textInputType: TextInputType.number,
               controller: sessionController),
           Gap(10.h),
           InputField(
@@ -125,6 +170,7 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
             hintText: 'Enter your password',
             errorText: 'Enter password',
             obsecureText: _psecure,
+            textInputType: TextInputType.visiblePassword,
             controller: passwordController,
             suffixIcon: IconButton(
               icon:Icon(_psecure? Icons.remove_red_eye : Icons.remove_red_eye_outlined, color: CustomColor.lightTeal,),
@@ -140,6 +186,7 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
             hintText: 'Enter confirm password',
             errorText: 'Enter password again',
             obsecureText: _cpSecure,
+            textInputType: TextInputType.visiblePassword,
             controller: confirmPasswordController,
             suffixIcon: IconButton(
               icon:Icon(_cpSecure? Icons.remove_red_eye : Icons.remove_red_eye_outlined, color: CustomColor.lightTeal),
@@ -155,13 +202,12 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
               loading: loading,
               onTap: ()async {
                 if(_formKey.currentState!.validate()){
-                  if(passwordController.text.toString().length == 6){
+                  if(passwordController.text.toString().length >= 6){
                     if(passwordController.text.toString() == confirmPasswordController.text.toString()){
-                      // setState(() {
-                      //   loading = true;
-                      // });
-                      // register();
-                      print('working');
+                      setState(() {
+                        loading = true;
+                      });
+                      register();
                     } else {
                       return Utils().toastMessage("Password didn't match", Colors.red);
                     }
