@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:http/http.dart';
+import 'package:npi_project/src/controller/api_end_points.dart';
 import 'package:npi_project/src/data/global_widget/custom_button.dart';
 import 'package:npi_project/src/data/global_widget/txt_button.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
@@ -25,88 +29,85 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
     _psecure = !_psecure;
   }
 
-  // void login()async {
-  //   try {
-  //     await FirebaseAuth.instance.signInWithEmailAndPassword(
-  //         email: emailController.text.toString(),
-  //         password: passwordController.text.toString()
-  //     );
-  //     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Home()), (route) => false);
-  //     Utils().toastMessage('Loged In', Colors.green);
-  //   } on FirebaseAuthException catch (e) {
-  //
-  //     if(e.code.toString() == 'INVALID_LOGIN_CREDENTIALS') {
-  //       Utils().toastMessage('Wrong email or password', Colors.red);
-  //     }else if(e.code.toString() == 'invalid-email'){
-  //       Utils().toastMessage('invalid email', Colors.red);
-  //     }
-  //     setState(() {
-  //       _loading = false;
-  //     });
-  //     debugPrint(e.code);
-  //   }
-  // }
+  void login()async{
+    try{
+      Response response =  await post(Uri.parse(ApiEndPoints.login),
+          body: {
+            'roll' : rollController.text.toString(),
+            'password' : passwordController.text.toString()
+          }
+      );
+      if(response.statusCode == 200){
+        var responseBody = jsonDecode(response.body.toString());
+        if(responseBody['response'].toString() == 'success'){
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+              builder:(context)=> Home), (route) => false)
+        }
+      }
+    }catch(e){
+      print(e.toString());
+    }
 
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          InputField(
+    @override
+    Widget build(BuildContext context) {
+      return Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            InputField(
               //fieldTitle: 'Email',
-              hintText: 'Enter your Roll',
-              errorText: 'Enter Roll',
-              obsecureText: false,
-              textInputType: TextInputType.number,
-              controller: rollController),
-          Gap(10.h),
-          InputField(
-            //fieldTitle: 'Password',
-            hintText: 'Enter your password',
-            errorText: 'Enter password',
-            obsecureText: _psecure,
-            controller: passwordController,
-            textInputType: TextInputType.text,
-            suffixIcon: IconButton(
-              icon: Icon(
-                _psecure ? Icons.remove_red_eye : Icons.remove_red_eye_outlined,
-                color: CustomColor.lightTeal,
+                hintText: 'Enter your Roll',
+                errorText: 'Enter Roll',
+                obsecureText: false,
+                textInputType: TextInputType.number,
+                controller: rollController),
+            Gap(10.h),
+            InputField(
+              //fieldTitle: 'Password',
+              hintText: 'Enter your password',
+              errorText: 'Enter password',
+              obsecureText: _psecure,
+              controller: passwordController,
+              textInputType: TextInputType.text,
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _psecure ? Icons.remove_red_eye : Icons.remove_red_eye_outlined,
+                  color: CustomColor.lightTeal,
+                ),
+                onPressed: () {
+                  setState(() {
+                    passwordIsSecure();
+                  });
+                },
               ),
-              onPressed: () {
-                setState(() {
-                  passwordIsSecure();
-                });
-              },
             ),
-          ),
-          TxtButton(
-            onTap: () {
-              //Navigator.push(context, MaterialPageRoute(builder: (context)=> EnterEmail()));
-              print('Working');
-            },
-            buttonName: 'Forgot password?',
-            fontSize: 13.sp,
-            color: CustomColor.blueGrey,
-          ),
-          CustomButton(
-              loading: _loading,
-              buttonName: 'Login',
+            TxtButton(
               onTap: () {
-                if (_formKey.currentState!.validate()) {
-                  // setState(() {
-                  //   _loading = true ;
-                  // });
-                  // login();
-                  print('working');
-                  print(rollController.text.toString());
-                  print(passwordController.text.toString());
-                  //Navigator.push(context, MaterialPageRoute(builder: (context)=> MyHomePage()));
-                }
-              })
-        ],
-      ),
-    );
+                //Navigator.push(context, MaterialPageRoute(builder: (context)=> EnterEmail()));
+                print('Working');
+              },
+              buttonName: 'Forgot password?',
+              fontSize: 13.sp,
+              color: CustomColor.blueGrey,
+            ),
+            CustomButton(
+                loading: _loading,
+                buttonName: 'Login',
+                onTap: () {
+                  if (_formKey.currentState!.validate()) {
+                    // setState(() {
+                    //   _loading = true ;
+                    // });
+                    // login();
+                    print('working');
+                    print(rollController.text.toString());
+                    print(passwordController.text.toString());
+                    //Navigator.push(context, MaterialPageRoute(builder: (context)=> MyHomePage()));
+                  }
+                })
+          ],
+        ),
+      );
+    }
   }
-}
