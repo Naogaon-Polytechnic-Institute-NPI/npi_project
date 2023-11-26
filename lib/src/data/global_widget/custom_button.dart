@@ -25,15 +25,32 @@ class CustomButton extends StatelessWidget {
         width: MediaQuery.sizeOf(context).width,
         decoration: BoxDecoration(
             color: CustomColor.lightTeal,
-            borderRadius: BorderRadius.circular(25.r)
+            borderRadius: BorderRadius.circular(25.r),
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors:[
+                  Color(0xff00CAB1).withOpacity(.8),
+                  CustomColor.lightTeal,
+                ]
+            ),
+          boxShadow: [
+            BoxShadow(
+              color: CustomColor.blueGrey,
+              blurRadius: 9,
+              spreadRadius: 3,
+              offset: Offset(0, 5)
+            )
+          ]
         ),
         child: loading? const CircularProgressIndicator( color: Colors.white, strokeWidth: 3,) :
         Text(
           buttonName,
           style: TextStyle(
-              fontSize: 17.sp,
+              fontSize: 18.sp,
               color: Colors.white,
-            fontFamily: 'Roboto'
+            fontFamily: 'Roboto',
+            fontWeight: FontWeight.w500
           ),),
       ),
     );

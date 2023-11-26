@@ -25,6 +25,10 @@ class InputField extends StatelessWidget {
           obscureText: obsecureText,
           decoration: InputDecoration(
               hintText: hintText,
+              hintStyle: const TextStyle(
+                color: CustomColor.blueGrey,
+                fontFamily: 'Roboto',
+              ),
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25.r),
                   borderSide: BorderSide(
@@ -35,9 +39,23 @@ class InputField extends StatelessWidget {
                       BorderSide(color: CustomColor.lightTeal, width: 1.w)),
               fillColor: CustomColor.lightTeal.withOpacity(0.1),
               filled: true,
+
               suffixIcon: suffixIcon),
           validator: (value) {
             if (value!.isEmpty) {
+
+          //   enabledBorder: UnderlineInputBorder(
+          //     borderSide: BorderSide(color: CustomColor.lightTeal, width: 1)
+          //   ),
+          //   focusedBorder: UnderlineInputBorder(
+          //       borderSide: BorderSide(color: CustomColor.lightTeal, width: 2.5)
+          //   ),
+          //    focusColor: CustomColor.lightTeal,
+              suffixIcon: suffixIcon,
+          ),
+          validator: (value){
+            if(value!.isEmpty){
+
               return errorText;
             }
             return null;
