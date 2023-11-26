@@ -41,18 +41,6 @@ class InputField extends StatelessWidget {
               filled: true,
 
               suffixIcon: suffixIcon),
-          validator: (value) {
-            if (value!.isEmpty) {
-
-          //   enabledBorder: UnderlineInputBorder(
-          //     borderSide: BorderSide(color: CustomColor.lightTeal, width: 1)
-          //   ),
-          //   focusedBorder: UnderlineInputBorder(
-          //       borderSide: BorderSide(color: CustomColor.lightTeal, width: 2.5)
-          //   ),
-          //    focusColor: CustomColor.lightTeal,
-              suffixIcon: suffixIcon,
-          ),
           validator: (value){
             if(value!.isEmpty){
 

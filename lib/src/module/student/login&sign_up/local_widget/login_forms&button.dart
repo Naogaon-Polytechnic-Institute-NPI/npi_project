@@ -4,7 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:npi_project/src/data/global_widget/custom_button.dart';
 import 'package:npi_project/src/data/global_widget/txt_button.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
-import 'package:npi_project/src/module/student/home/home.dart';
+import 'package:npi_project/src/module/student/home/view/home.dart';
 import 'package:npi_project/src/module/student/login&sign_up/local_widget/input_form.dart';
 
 class LoginFormsAndButton extends StatefulWidget {
@@ -25,27 +25,13 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
     _psecure = !_psecure;
   }
 
-  // void login()async {
-  //   try {
-  //     await FirebaseAuth.instance.signInWithEmailAndPassword(
-  //         email: emailController.text.toString(),
-  //         password: passwordController.text.toString()
-  //     );
-  //     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Home()), (route) => false);
-  //     Utils().toastMessage('Loged In', Colors.green);
-  //   } on FirebaseAuthException catch (e) {
-  //
-  //     if(e.code.toString() == 'INVALID_LOGIN_CREDENTIALS') {
-  //       Utils().toastMessage('Wrong email or password', Colors.red);
-  //     }else if(e.code.toString() == 'invalid-email'){
-  //       Utils().toastMessage('invalid email', Colors.red);
-  //     }
-  //     setState(() {
-  //       _loading = false;
-  //     });
-  //     debugPrint(e.code);
-  //   }
-  // }
+  void logIn(){
+    try{
+      Response response =
+    }catch(e){
+      print(e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

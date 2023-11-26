@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:npi_project/src/module/student/home/home.dart';
+import 'package:npi_project/src/module/student/home/view/home.dart';
 import 'package:npi_project/src/module/student/login&sign_up/view/log_in.dart';
 import 'package:npi_project/src/module/student/login&sign_up/view/option_screen.dart';
 
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
 
       child: const HomeScreen(),
 
-      child: LogInScreen(),
+      //child: LogInScreen(),
 
     );
   }
