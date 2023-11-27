@@ -5,7 +5,11 @@ import 'package:npi_project/src/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NavBar extends StatelessWidget {
-  const NavBar({super.key});
+  final String userName, roll;
+  const NavBar({
+    required this.userName,
+    required this.roll,
+    super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,22 +18,28 @@ class NavBar extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: ListView(
         children: [
-          const DrawerHeader(
+           DrawerHeader(
               child: Center(
             child: Column(
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                     backgroundColor: Colors.white,
                     radius: 42,
                     backgroundImage: AssetImage('assets/images/npi_logo.png')),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
-                Text('User Name', style: TextStyle(fontSize: 18)),
-                SizedBox(
+                Text(
+                    userName,
+                    style: TextStyle(
+                        fontSize: 18.sp,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w500
+                    )),
+                const SizedBox(
                   height: 5,
                 ),
-                Text('Roll')
+                const Text('Roll')
               ],
             ),
           )),

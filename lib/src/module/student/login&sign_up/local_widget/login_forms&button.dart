@@ -44,6 +44,7 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
         });
         var responseBody = jsonDecode(response.body.toString());
         if (responseBody['response'].toString() == 'success') {
+
           // If Successfully Logged In (creds are correct)
           var sharedPref = await SharedPreferences.getInstance();
           sharedPref.setBool(SplashScreenState.KEYLOGIN, true);
@@ -52,12 +53,22 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
               context,
               MaterialPageRoute(builder: (context) => HomeScreen()),
               (route) => false);
+
+//           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+//               builder: (context) => HomeScreen(
+//                 useName: responseBody['studentData']['name'],
+//                 roll: responseBody['studentData']['roll'],
+//                 privetKey: responseBody['studentData']["private_id"],
+//               )), (route) => false);
+
           Utils().toastMessage('Loged in', CustomColor.lightTeal);
         } else if (responseBody['response'].toString() == 'Roll not found !') {
           Utils().toastMessage('User not found', Colors.red);
         } else if (responseBody['response'].toString() ==
             'Password is incorrect') {
           Utils().toastMessage("Password didn't match", Colors.red);
+        }else{
+          return Utils().toastMessage('Server error!!', Colors.red);
         }
       }
     } catch (e) {
@@ -68,6 +79,7 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -76,6 +88,16 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           InputField(
+
+//     @override
+//     Widget build(BuildContext context) {
+//       return Form(
+//         key: _formKey,
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.end,
+//           children: [
+//             InputField(
+
               //fieldTitle: 'Email',
               hintText: 'Enter your Roll',
               errorText: 'Enter Roll',

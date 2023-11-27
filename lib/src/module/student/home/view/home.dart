@@ -10,7 +10,12 @@ import 'package:npi_project/src/module/student/home/local_widget/personal_info_c
 import 'package:npi_project/src/module/student/home/local_widget/profile_indicator_part.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final String useName, privetKey, roll;
+  const HomeScreen({
+    required this.useName,
+    required this.roll,
+    required this.privetKey,
+    super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -25,7 +30,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         key: _globalKey,
-        drawer: const NavBar(),
+        drawer: NavBar(
+          userName: widget.useName,
+          roll: widget.roll,
+        ),
         body: Container(
           padding: EdgeInsets.all(24.w),
           height: MediaQuery.of(context).size.height,
@@ -60,12 +68,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 Gap(10.h),
-                const GreetingPart(),
+                GreetingPart(
+                  userName: widget.useName,
+                ),
                 const ProfileIndicatorPart(),
                 Gap(20.h),
-                const PersonalInfoCard(),
-                const EducationInfoCard(),
-                const OccupationInfoCard(),
+                PersonalInfoCard(
+                  privetKey: widget.privetKey,
+                ),
+                EducationInfoCard(
+                  privetKey: widget.privetKey,
+                ),
+                OccupationInfoCard(
+                  privetKey: widget.privetKey,
+                ),
               ],
             ),
           ),

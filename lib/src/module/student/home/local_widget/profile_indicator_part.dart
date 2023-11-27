@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
+import 'package:npi_project/src/module/student/home/view/edit.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class ProfileIndicatorPart extends StatelessWidget {
@@ -45,7 +46,11 @@ class ProfileIndicatorPart extends StatelessWidget {
                 ),
               ),
               Gap(8.w),
-              const Icon(Icons.edit_rounded, color: CustomColor.lightTeal,),
+              InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const EditScreen()));
+                },
+                  child: const Icon(Icons.edit_rounded, color: CustomColor.lightTeal,)),
 
             ],
           )

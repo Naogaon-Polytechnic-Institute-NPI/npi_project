@@ -83,6 +83,8 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
                 Navigator.pushAndRemoveUntil(
                     context, MaterialPageRoute(
                     builder: (context)=> LogInScreen()), (route) => false);
+              }else if(signupResponseBody['response'].toString() == 'User  already have a account. Please Login'){
+                Utils().toastMessage('Already have an account', CustomColor.lightTeal);
               }
             }
           }catch(e){
@@ -91,10 +93,12 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
         }else if(responseBody['response'].toString() == 'Something went wrong !') {
           Utils().toastMessage(
               'Fill the data properly', CustomColor.lightTeal);
-        }else{
+        }else if (responseBody['response'].toString() == 'Roll/Registration/Session is not correct'){
           return Utils().
           toastMessage('Roll/Registration/Session is not correct', Colors.red);
-        }
+        }else{
+        return Utils().toastMessage('Server error!!', Colors.red);
+      }
       }
     } catch (e) {
       setState(() {
