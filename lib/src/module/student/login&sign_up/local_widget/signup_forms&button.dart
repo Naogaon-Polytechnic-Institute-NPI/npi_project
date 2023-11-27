@@ -83,6 +83,8 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
                 Navigator.pushAndRemoveUntil(
                     context, MaterialPageRoute(
                     builder: (context)=> LogInScreen()), (route) => false);
+              }else if(signupResponseBody['response'].toString() == 'User  already have a account. Please Login'){
+                Utils().toastMessage('Already have an account', CustomColor.lightTeal);
               }
             }
           }catch(e){

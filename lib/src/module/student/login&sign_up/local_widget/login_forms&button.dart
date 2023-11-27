@@ -46,7 +46,9 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
         var responseBody = jsonDecode(response.body.toString());
         if (responseBody['response'].toString() == 'success') {
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-              builder: (context) => HomeScreen()), (route) => false);
+              builder: (context) => HomeScreen(
+                useName: responseBody['studentData']['name'],
+              )), (route) => false);
           Utils().toastMessage('Loged in', CustomColor.lightTeal);
         }else if(responseBody['response'].toString() == 'Roll not found !'){
           Utils().toastMessage('User not found', Colors.red);
