@@ -11,6 +11,8 @@ import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/data/utils/toast.dart';
 import 'package:npi_project/src/module/student/home/view/home.dart';
 import 'package:npi_project/src/module/student/login&sign_up/local_widget/input_form.dart';
+import 'package:npi_project/src/splash_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginFormsAndButton extends StatefulWidget {
   const LoginFormsAndButton({super.key});
@@ -30,101 +32,102 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
     _psecure = !_psecure;
   }
 
-
   void login() async {
     try {
-      Response response = await post(Uri.parse(ApiEndPoints.login),
-          body: {
-            'roll': rollController.text.toString(),
-            'password': passwordController.text.toString()
-          }
-      );
+      Response response = await post(Uri.parse(ApiEndPoints.login), body: {
+        'roll': rollController.text.toString(),
+        'password': passwordController.text.toString()
+      });
       if (response.statusCode == 200) {
         setState(() {
           _loading = false;
         });
         var responseBody = jsonDecode(response.body.toString());
         if (responseBody['response'].toString() == 'success') {
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-              builder: (context) => HomeScreen()), (route) => false);
+          // If Successfully Logged In (creds are correct)
+          var sharedPref = await SharedPreferences.getInstance();
+          sharedPref.setBool(SplashScreenState.KEYLOGIN, true);
+
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+              (route) => false);
           Utils().toastMessage('Loged in', CustomColor.lightTeal);
-        }else if(responseBody['response'].toString() == 'Roll not found !'){
+        } else if (responseBody['response'].toString() == 'Roll not found !') {
           Utils().toastMessage('User not found', Colors.red);
-        }else if(responseBody['response'].toString() == 'Password is incorrect'){
+        } else if (responseBody['response'].toString() ==
+            'Password is incorrect') {
           Utils().toastMessage("Password didn't match", Colors.red);
         }
       }
     } catch (e) {
       setState(() {
-        _loading = false ;
+        _loading = false;
       });
       print(e.toString());
     }
   }
 
-
-    @override
-    Widget build(BuildContext context) {
-      return Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            InputField(
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          InputField(
               //fieldTitle: 'Email',
-                hintText: 'Enter your Roll',
-                errorText: 'Enter Roll',
-                obsecureText: false,
-                textInputType: TextInputType.number,
-                controller: rollController),
-            Gap(10.h),
-            InputField(
-              //fieldTitle: 'Password',
-              hintText: 'Enter your password',
-              errorText: 'Enter password',
-              obsecureText: _psecure,
-              controller: passwordController,
-              textInputType: TextInputType.text,
-              suffixIcon: IconButton(
-                icon: Icon(
-                  _psecure ? Icons.remove_red_eye : Icons
-                      .remove_red_eye_outlined,
-                  color: CustomColor.lightTeal,
-                ),
-                onPressed: () {
-                  setState(() {
-                    passwordIsSecure();
-                  });
-                },
+              hintText: 'Enter your Roll',
+              errorText: 'Enter Roll',
+              obsecureText: false,
+              textInputType: TextInputType.number,
+              controller: rollController),
+          Gap(10.h),
+          InputField(
+            //fieldTitle: 'Password',
+            hintText: 'Enter your password',
+            errorText: 'Enter password',
+            obsecureText: _psecure,
+            controller: passwordController,
+            textInputType: TextInputType.text,
+            suffixIcon: IconButton(
+              icon: Icon(
+                _psecure ? Icons.remove_red_eye : Icons.remove_red_eye_outlined,
+                color: CustomColor.lightTeal,
               ),
-            ),
-            TxtButton(
-              onTap: () {
-                //Navigator.push(context, MaterialPageRoute(builder: (context)=> EnterEmail()));
-                print('Working');
+              onPressed: () {
+                setState(() {
+                  passwordIsSecure();
+                });
               },
-              buttonName: 'Forgot password?',
-              fontSize: 13.sp,
-              color: CustomColor.blueGrey,
             ),
-            CustomButton(
-                loading: _loading,
-                buttonName: 'Login',
-                onTap: () {
-                  if (_formKey.currentState!.validate()) {
-                    setState(() {
-                      _loading = true ;
-                    });
-                    login();
-                    print('working');
-                    print(rollController.text.toString());
-                    print(passwordController.text.toString());
-                    //Navigator.push(context, MaterialPageRoute(builder: (context)=> MyHomePage()));
-                  }
-                })
-          ],
-        ),
-      );
-    }
+          ),
+          TxtButton(
+            onTap: () {
+              //Navigator.push(context, MaterialPageRoute(builder: (context)=> EnterEmail()));
+              print('Working');
+            },
+            buttonName: 'Forgot password?',
+            fontSize: 13.sp,
+            color: CustomColor.blueGrey,
+          ),
+          CustomButton(
+              loading: _loading,
+              buttonName: 'Login',
+              onTap: () {
+                if (_formKey.currentState!.validate()) {
+                  setState(() {
+                    _loading = true;
+                  });
+                  login();
+                  print('working');
+                  print(rollController.text.toString());
+                  print(passwordController.text.toString());
+                  //Navigator.push(context, MaterialPageRoute(builder: (context)=> MyHomePage()));
+                }
+              })
+        ],
+      ),
+    );
+  }
 }
-
