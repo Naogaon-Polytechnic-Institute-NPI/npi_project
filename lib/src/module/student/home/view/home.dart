@@ -10,9 +10,11 @@ import 'package:npi_project/src/module/student/home/local_widget/personal_info_c
 import 'package:npi_project/src/module/student/home/local_widget/profile_indicator_part.dart';
 
 class HomeScreen extends StatefulWidget {
-  final String useName;
+  final String useName, privetKey, roll;
   const HomeScreen({
     required this.useName,
+    required this.roll,
+    required this.privetKey,
     super.key});
 
   @override
@@ -30,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
         key: _globalKey,
         drawer: NavBar(
           userName: widget.useName,
+          roll: widget.roll,
         ),
         body: Container(
           padding: EdgeInsets.all(24.w),
@@ -70,9 +73,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const ProfileIndicatorPart(),
                 Gap(20.h),
-                const PersonalInfoCard(),
-                const EducationInfoCard(),
-                const OccupationInfoCard(),
+                PersonalInfoCard(
+                  privetKey: widget.privetKey,
+                ),
+                EducationInfoCard(
+                  privetKey: widget.privetKey,
+                ),
+                OccupationInfoCard(
+                  privetKey: widget.privetKey,
+                ),
               ],
             ),
           ),

@@ -48,12 +48,16 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
               builder: (context) => HomeScreen(
                 useName: responseBody['studentData']['name'],
+                roll: responseBody['studentData']['roll'],
+                privetKey: responseBody['studentData']["private_id"],
               )), (route) => false);
           Utils().toastMessage('Loged in', CustomColor.lightTeal);
         }else if(responseBody['response'].toString() == 'Roll not found !'){
           Utils().toastMessage('User not found', Colors.red);
         }else if(responseBody['response'].toString() == 'Password is incorrect'){
           Utils().toastMessage("Password didn't match", Colors.red);
+        }else{
+          return Utils().toastMessage('Server error!!', Colors.red);
         }
       }
     } catch (e) {
@@ -63,7 +67,6 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
       print(e.toString());
     }
   }
-
 
     @override
     Widget build(BuildContext context) {

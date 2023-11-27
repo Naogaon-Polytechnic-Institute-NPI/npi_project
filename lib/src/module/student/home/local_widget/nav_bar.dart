@@ -3,9 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:npi_project/src/module/student/login&sign_up/view/log_in.dart';
 
 class NavBar extends StatelessWidget {
-  final String userName;
+  final String userName, roll;
   const NavBar({
     required this.userName,
+    required this.roll,
     super.key});
 
   @override
