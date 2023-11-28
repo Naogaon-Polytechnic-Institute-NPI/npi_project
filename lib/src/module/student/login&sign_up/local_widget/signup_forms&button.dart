@@ -1,3 +1,5 @@
+// ignore_for_file: void_checks, use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -41,20 +43,21 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
   }
 
   void register() async {
+    Map<String, dynamic> registerData = {
+      'name' : usernameController.text.toString(),
+      'roll': rollController.text.toString(),
+      'registration' : registrationController.text.toString(),
+      'technology' : technologyController.text.toString(),
+      'session' : sessionController.text.toString(),
+      'password' : confirmPasswordController.text.toString()
+    };
     try {
       setState(() {
         loading = true;
       });
       Response response = await post(
           Uri.parse(ApiEndPoints.signUp),
-        body: {
-          'name' : usernameController.text.toString(),
-          'roll': rollController.text.toString(),
-          'registration' : registrationController.text.toString(),
-          'technology' : technologyController.text.toString(),
-          'session' : sessionController.text.toString(),
-          'password' : confirmPasswordController.text.toString()
-        }
+        body: registerData
       );
       if(response.statusCode == 200){
         setState(() {
@@ -65,14 +68,7 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
         if(responseBody['response'].toString() == 'success') {
           try{
             Response signUpResponse = await post(Uri.parse(ApiEndPoints.savePassword),
-                body: {
-                  'name' : usernameController.text.toString(),
-                  'roll': rollController.text.toString(),
-                  'registration' : registrationController.text.toString(),
-                  'technology' : technologyController.text.toString(),
-                  'session' : sessionController.text.toString(),
-                  'password' : confirmPasswordController.text.toString()
-                }
+                body: registerData
             );
             if(response.statusCode == 200){
               var signupResponseBody = jsonDecode(signUpResponse.body.toString());
@@ -93,7 +89,7 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
         }else if(responseBody['response'].toString() == 'Something went wrong !') {
           Utils().toastMessage(
               'Fill the data properly', CustomColor.lightTeal);
-        }else if (responseBody['response'].toString() == 'Roll/Registration/Session is not correct'){
+        }else if(responseBody['response'].toString() == 'Roll/Registration/Session is not correct'){
           return Utils().
           toastMessage('Roll/Registration/Session is not correct', Colors.red);
         }else{

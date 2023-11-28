@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
-import 'package:npi_project/src/module/student/home/view/edit.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class ProfileIndicatorPart extends StatelessWidget {
@@ -33,26 +32,14 @@ class ProfileIndicatorPart extends StatelessWidget {
               style: TextStyle(fontSize: 15),
             ),
           ),
-          Gap(5.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                  'Complete your Profile',
-                style: TextStyle(
-                  fontFamily: 'Roboto',
-                  fontSize: 16.sp,
-                  color: CustomColor.blueGrey
-                ),
-              ),
-              Gap(8.w),
-              InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const EditScreen()));
-                },
-                  child: const Icon(Icons.edit_rounded, color: CustomColor.lightTeal,)),
-
-            ],
+          Gap(8.h),
+          Text(
+              'Completed 50% of your Profile',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 16.sp,
+              color: CustomColor.blueGrey
+            ),
           )
         ],
       )

@@ -16,6 +16,9 @@ class SplashScreen extends StatefulWidget {
 class SplashScreenState extends State<SplashScreen> {
   // Create a veriable for SharedPreference Key
   static const String KEYLOGIN = "login";
+  static const String userName = 'userName';
+  static const String roll = 'roll';
+  static const String privetKey = 'privetKey';
 
   @override
   void initState() {
@@ -51,14 +54,18 @@ class SplashScreenState extends State<SplashScreen> {
   }
 
   void changeScreen() async {
-    var sharedPref = await SharedPreferences.getInstance();
+    SharedPreferences sharedPref = await SharedPreferences.getInstance();
     var isLoggedIn = sharedPref.getBool(KEYLOGIN);
 
     if (isLoggedIn != null) {
       if (isLoggedIn) {
         Future.delayed(const Duration(seconds: 3), () {
           Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()));
+              MaterialPageRoute(builder: (context) => HomeScreen(
+                useName: sharedPref.getString(userName),
+                roll: sharedPref.getString(roll),
+                privetKey: sharedPref.getString(privetKey),
+              )));
         });
       } else {
         Future.delayed(const Duration(seconds: 3), () {

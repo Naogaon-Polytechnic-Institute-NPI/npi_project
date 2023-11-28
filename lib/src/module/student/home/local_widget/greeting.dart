@@ -26,7 +26,8 @@ class GreetingPart extends StatelessWidget {
             color: CustomColor.lightTeal
           ),),
           //Gap(5.h),
-          Text(userName,
+          Text(
+            userName,
           style: TextStyle(
             fontSize: 16.sp,
             fontFamily: 'Roboto',

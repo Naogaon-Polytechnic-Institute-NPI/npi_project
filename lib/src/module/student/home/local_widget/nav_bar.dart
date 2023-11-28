@@ -39,7 +39,7 @@ class NavBar extends StatelessWidget {
                 const SizedBox(
                   height: 5,
                 ),
-                const Text('Roll')
+                Text(roll)
               ],
             ),
           )),
@@ -56,8 +56,7 @@ class NavBar extends StatelessWidget {
               child: InkWell(
                 onTap: () async {
                   var sharedPref = await SharedPreferences.getInstance();
-                  sharedPref.setBool(SplashScreenState.KEYLOGIN, false);
-
+                  sharedPref.clear();
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

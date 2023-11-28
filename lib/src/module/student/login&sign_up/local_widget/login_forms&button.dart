@@ -46,20 +46,23 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
         if (responseBody['response'].toString() == 'success') {
 
           // If Successfully Logged In (creds are correct)
-          var sharedPref = await SharedPreferences.getInstance();
+          SharedPreferences sharedPref = await SharedPreferences.getInstance();
           sharedPref.setBool(SplashScreenState.KEYLOGIN, true);
+          sharedPref.setString(SplashScreenState.userName, responseBody['studentData']['name']);
+          sharedPref.setString(SplashScreenState.roll, responseBody['studentData']['roll']);
+          sharedPref.setString(SplashScreenState.privetKey, responseBody['studentData']['private_id']);
 
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
-              (route) => false);
+          // Navigator.pushAndRemoveUntil(
+          //     context,
+          //     MaterialPageRoute(builder: (context) => HomeScreen()),
+          //     (route) => false);
 
-//           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-//               builder: (context) => HomeScreen(
-//                 useName: responseBody['studentData']['name'],
-//                 roll: responseBody['studentData']['roll'],
-//                 privetKey: responseBody['studentData']["private_id"],
-//               )), (route) => false);
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+              builder: (context) => HomeScreen(
+                useName: responseBody['studentData']['name'],
+                roll: responseBody['studentData']['roll'],
+                privetKey: responseBody['studentData']["private_id"],
+              )), (route) => false);
 
           Utils().toastMessage('Loged in', CustomColor.lightTeal);
         } else if (responseBody['response'].toString() == 'Roll not found !') {
