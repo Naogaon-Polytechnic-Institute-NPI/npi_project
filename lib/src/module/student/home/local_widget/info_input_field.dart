@@ -45,7 +45,7 @@ class InfoInputForm extends StatelessWidget {
                   hintText: hintText,
                   hintStyle: TextStyle(
                       fontSize: 13.sp,
-                      fontFamily: 'RobotoRegular',
+                      fontFamily: 'Roboto',
                       color: const Color(0xff9A9A9A)
                   ),
                   enabledBorder: const OutlineInputBorder(

@@ -95,6 +95,7 @@ class _InputPersonalInfoState extends State<InputPersonalInfo> {
       key: _formKey,
       child: SingleChildScrollView(
         child: SizedBox(
+          height: 700.h,
           child: Padding(
             padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0.h),
             child: Column(
@@ -184,11 +185,13 @@ class _InputPersonalInfoState extends State<InputPersonalInfo> {
                 ),
                 Gap(10.h),
                 CustomButton(onTap: (){
-                 setState(() {
-                   _loading = true;
-                 });
-                 savePersonalInfo();
-                 Navigator.pop(context);
+                  if(_formKey.currentState!.validate()) {
+                    setState(() {
+                      _loading = true;
+                    });
+                    savePersonalInfo();
+                    Navigator.pop(context);
+                  }
                 },
                     buttonName: 'SAVE')
               ],

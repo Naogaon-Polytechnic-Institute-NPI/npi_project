@@ -45,7 +45,9 @@ class EducationInfoCard extends StatelessWidget {
                     top: Radius.circular(17.r))),
             context: context,
             builder: (BuildContext context) {
-              return const InputEducationalInfo();
+              return InputEducationalInfo(
+                privetKey: privetKey,
+              );
             },
           ),
           child: const CircleAvatar(

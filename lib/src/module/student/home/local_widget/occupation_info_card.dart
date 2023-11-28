@@ -38,12 +38,16 @@ class OccupationInfoCard extends StatelessWidget {
         trailing: InkWell(
           onTap: ()=> showModalBottomSheet<void>(
             showDragHandle: true,
+            useSafeArea: true,
+            enableDrag: true,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.vertical(
                     top: Radius.circular(17.r))),
             context: context,
             builder: (BuildContext context) {
-              return const InputOccupationalInfo();
+              return InputOccupationalInfo(
+                privetKey: privetKey,
+              );
             },
           ),
           child: const CircleAvatar(

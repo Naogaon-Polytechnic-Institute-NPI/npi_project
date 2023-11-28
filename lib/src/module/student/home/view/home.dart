@@ -8,6 +8,8 @@ import 'package:npi_project/src/module/student/home/local_widget/nav_bar.dart';
 import 'package:npi_project/src/module/student/home/local_widget/occupation_info_card.dart';
 import 'package:npi_project/src/module/student/home/local_widget/personal_info_card.dart';
 import 'package:npi_project/src/module/student/home/local_widget/profile_indicator_part.dart';
+import 'package:npi_project/src/splash_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   final String? useName, privetKey, roll;

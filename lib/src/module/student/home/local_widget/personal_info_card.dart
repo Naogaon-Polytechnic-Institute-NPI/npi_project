@@ -69,13 +69,16 @@ class PersonalInfoCard extends StatelessWidget {
                   );
                 } else if (snapshot.hasError) {
                   return Center(
-                    child: Text(
-                      'No data found',
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontFamily: 'Roboto',
-                        color: CustomColor.blueGrey
-                      ),),
+                    // child: Text(
+                    //   'No data found',
+                    //   style: TextStyle(
+                    //     fontSize: 16.sp,
+                    //     fontFamily: 'Roboto',
+                    //     color: CustomColor.blueGrey
+                    //   ),),
+                    child: LoadingAnimationWidget.staggeredDotsWave(
+                        color: CustomColor.lightTeal,
+                        size: 50),
                   );
                 } else {
                   return SizedBox(
