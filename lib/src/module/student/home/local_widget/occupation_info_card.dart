@@ -10,7 +10,7 @@ import 'package:npi_project/src/module/student/home/local_widget/input_personal_
 
 class OccupationInfoCard extends StatelessWidget {
   final String privetKey;
-  const OccupationInfoCard({required this.privetKey,super.key});
+  const OccupationInfoCard({required this.privetKey, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,25 +24,23 @@ class OccupationInfoCard extends StatelessWidget {
         tilePadding: EdgeInsets.all(10.w),
         leading: CircleAvatar(
           backgroundColor: CustomColor.lightTeal.withOpacity(.5),
-          backgroundImage: const AssetImage('assets/images/businessman.png'),
-
+          backgroundImage: const AssetImage('assets/images/employee.png'),
         ),
         title: Text(
           'Occupation Info',
           style: TextStyle(
               fontSize: 20.sp,
               fontFamily: 'Roboto',
-              color: CustomColor.blueGrey
-          ),
+              color: CustomColor.blueGrey),
         ),
         trailing: InkWell(
-          onTap: ()=> showModalBottomSheet<void>(
+          onTap: () => showModalBottomSheet<void>(
             showDragHandle: true,
             useSafeArea: true,
             enableDrag: true,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(17.r))),
+                borderRadius:
+                    BorderRadius.vertical(top: Radius.circular(17.r))),
             context: context,
             builder: (BuildContext context) {
               return InputOccupationalInfo(
@@ -52,7 +50,10 @@ class OccupationInfoCard extends StatelessWidget {
           ),
           child: const CircleAvatar(
             backgroundColor: Colors.white,
-            child: Icon(Icons.edit_rounded, color: CustomColor.lightTeal,),
+            child: Icon(
+              Icons.edit_rounded,
+              color: CustomColor.lightTeal,
+            ),
           ),
         ),
         children: [
@@ -62,8 +63,7 @@ class OccupationInfoCard extends StatelessWidget {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
                     child: LoadingAnimationWidget.staggeredDotsWave(
-                        color: CustomColor.lightTeal,
-                        size: 50),
+                        color: CustomColor.lightTeal, size: 50),
                   );
                 } else if (snapshot.data!.response == 'No Data Found') {
                   return Center(
@@ -72,10 +72,10 @@ class OccupationInfoCard extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 16.sp,
                           fontFamily: 'Roboto',
-                          color: CustomColor.blueGrey
-                      ),),
+                          color: CustomColor.blueGrey),
+                    ),
                   );
-                }else if (snapshot.hasError) {
+                } else if (snapshot.hasError) {
                   return Center(
                     // child: Text(
                     //   'No data found',
@@ -85,38 +85,33 @@ class OccupationInfoCard extends StatelessWidget {
                     //     color: CustomColor.blueGrey
                     //   ),),
                     child: LoadingAnimationWidget.staggeredDotsWave(
-                        color: CustomColor.lightTeal,
-                        size: 50),
+                        color: CustomColor.lightTeal, size: 50),
                   );
                 } else {
                   return SizedBox(
-                    width: MediaQuery
-                        .sizeOf(context)
-                        .width,
+                    width: MediaQuery.sizeOf(context).width,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       //mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         DataText(
                             dataTitle: 'Current Occupation',
-                            userData: '${snapshot.data!.occupatioInfo!
-                                .currnetOccupation}'),
+                            userData:
+                                '${snapshot.data!.occupatioInfo!.currnetOccupation}'),
                         const UnderLine(),
                         DataText(
                             height: 100.h,
                             dataTitle: 'Occupation Details',
-                            userData: '${snapshot.data!.occupatioInfo!
-                                .occupationDetails}'),
+                            userData:
+                                '${snapshot.data!.occupatioInfo!.occupationDetails}'),
                         const UnderLine(),
                       ],
                     ),
                   );
                 }
-              }
-          )
+              })
         ],
       ),
     );
   }
-
 }
