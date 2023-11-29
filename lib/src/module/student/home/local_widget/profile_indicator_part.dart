@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:npi_project/src/controller/user_data.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileIndicatorPart extends StatefulWidget {
   final String privetKey;
@@ -15,7 +16,8 @@ class ProfileIndicatorPart extends StatefulWidget {
 }
 
 class _ProfileIndicatorPartState extends State<ProfileIndicatorPart> {
-  double? progressValue; // Make it nullable
+  static const String progressValueKey = 'progressValue';
+  double? progressValue;
 
   @override
   void initState() {
@@ -29,14 +31,17 @@ class _ProfileIndicatorPartState extends State<ProfileIndicatorPart> {
     await userData.educationInfo(widget.privetKey);
     await userData.occupationInfo(widget.privetKey);
     await userData.calculateProgress();
-    progressValue = userData.progress;
     setState(() {
 
     });
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setDouble(progressValueKey, userData.progress);
+    progressValue = sharedPreferences.getDouble(progressValueKey);
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       alignment: Alignment.center,
       height: 130,
@@ -58,7 +63,12 @@ class _ProfileIndicatorPartState extends State<ProfileIndicatorPart> {
             animation: true,
             center: Text(
               '${((progressValue ?? 0.0) * 100).toStringAsFixed(0)}%',
-              style: TextStyle(fontSize: 15.sp),
+              style: TextStyle(
+                  fontSize: 16.sp,
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.w700,
+                color: CustomColor.blueGrey
+              ),
             ),
           ),
           Gap(8.h),

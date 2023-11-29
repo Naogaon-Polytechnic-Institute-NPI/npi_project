@@ -29,20 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
   GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
 
   @override
-  void initState(){
-    getvalue();
-    super.initState();
-  }
-
-  getvalue() async {
-    UserData userData = UserData();
-    await userData.personalInfo('${widget.privetKey}');
-    await userData.educationInfo('${widget.privetKey}');
-    await userData.occupationInfo('${widget.privetKey}');
-    userData.calculateProgress();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(

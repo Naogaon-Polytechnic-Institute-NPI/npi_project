@@ -25,10 +25,9 @@ class PersonalInfoCard extends StatelessWidget {
       elevation: 0,
       child: ExpansionTile(
         tilePadding: EdgeInsets.all(10.w),
-        leading: CircleAvatar(
-          backgroundColor: CustomColor.lightTeal.withOpacity(.5),
-          backgroundImage: const AssetImage('assets/images/profile.png'),
-
+        leading: const CircleAvatar(
+          backgroundColor: Colors.white,
+          backgroundImage: AssetImage('assets/images/profile.png'),
         ),
         title: Text(
           'Personal Info',

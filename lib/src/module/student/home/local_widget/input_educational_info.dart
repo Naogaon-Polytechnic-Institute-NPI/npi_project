@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -120,7 +122,6 @@ class _InputEducationalInfoState extends State<InputEducationalInfo> {
                         });
                         saveEducationalInfo();
                         SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-                        // ignore: use_build_context_synchronously
                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                             builder: (context)=> HomeScreen(
                               privetKey: sharedPreferences.getString(SplashScreenState.privetKey),

@@ -70,6 +70,8 @@ class UserData {
       if (responseData['response'].toString() == 'Data Found') {
         print('Occupation data found');
         _occupationData = 0.30;
+      }else{
+        _occupationData = -0.30;
       }
 
       print(responseData.toString());
@@ -82,6 +84,17 @@ class UserData {
       throw Exception('Unknown error');
     }
   }
+
+  Future <void> deleteApi(String position)async{
+    final response = await http.get(Uri.parse("${ApiEndPoints.deleteApi}$position"));
+    if(response.statusCode == 200){
+      var responseData = jsonDecode(response.body.toString());
+      if(responseData['reponse'].toString() == 'success'){
+        Utils().toastMessage('Deleted', Colors.red);
+      }
+    }
+  }
+
 
   double _progress = 0;
   double get progress => _progress;
