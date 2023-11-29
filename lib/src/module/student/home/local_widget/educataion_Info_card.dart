@@ -28,10 +28,10 @@ class _EducationInfoCardState extends State<EducationInfoCard> {
       elevation: 0,
       child: ExpansionTile(
         tilePadding: EdgeInsets.all(10.w),
-        leading: CircleAvatar(
-          backgroundColor: CustomColor.lightTeal.withOpacity(.5),
+        leading: const CircleAvatar(
+          backgroundColor: Colors.white,
           backgroundImage:
-              const AssetImage('assets/images/student-with-graduation-cap.png'),
+              AssetImage('assets/images/student-with-graduation-cap.png'),
         ),
         title: Text(
           'Education Info',
