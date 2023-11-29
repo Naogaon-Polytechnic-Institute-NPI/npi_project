@@ -37,10 +37,16 @@ class InputPersonalInfo extends StatefulWidget {
     super.key});
 
   @override
-  State<InputPersonalInfo> createState() => _InputPersonalInfoState();
+  State<InputPersonalInfo> createState() => InputPersonalInfoState();
 }
 
-class _InputPersonalInfoState extends State<InputPersonalInfo> {
+class InputPersonalInfoState extends State<InputPersonalInfo> {
+  static const String fatherNameKey = 'fatherName';
+  static const String motherNameKey = 'motherName';
+  static const String presentAddressKey = 'presentAddress';
+  static const String permanentAddressKEy = 'permanentAddress';
+  static const String contactNumberKey = 'contactNumber';
+  static const String emailKey = 'emailAddress';
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final fatherController = TextEditingController();
@@ -69,12 +75,17 @@ class _InputPersonalInfoState extends State<InputPersonalInfo> {
           _loading = false;
         });
         var responseBody = jsonDecode(response.body.toString());
-        if (responseBody['message'].toString() == 'Edit Complete' &&
-            responseBody['response'].toString() == 'success') {
+        if(responseBody['response'].toString() == 'success'){
           Utils().toastMessage('Data Updated', CustomColor.lightTeal);
-        } else if (responseBody['response'].toString() == 'success') {
-          Utils().toastMessage('Data Saved', CustomColor.lightTeal);
-        } else {
+        SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+        sharedPreferences.setString(fatherNameKey, fatherController.text.toString());
+        sharedPreferences.setString(motherNameKey, motherController.text.toString());
+        sharedPreferences.setString(presentAddressKey, presentController.text.toString());
+        sharedPreferences.setString(permanentAddressKEy, permanentController.text.toString());
+        sharedPreferences.setString(contactNumberKey, contactController.text.toString());
+        sharedPreferences.setString(emailKey, emailController.text.toString());
+        }
+        else {
           Utils().toastMessage('server error!', Colors.red);
         }
       }
@@ -87,13 +98,23 @@ class _InputPersonalInfoState extends State<InputPersonalInfo> {
       print(e.toString());
     }
   }
+
   @override
   void initState() {
-    nameController.text = widget.userName;
-    // nameController.text = widget.userName;
-    // nameController.text = widget.userName;
+    getData();
     super.initState();
   }
+  void getData()async{
+    nameController.text = widget.userName;
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    fatherController.text = sharedPreferences.getString(fatherNameKey) ?? '';
+    motherController.text = sharedPreferences.getString(motherNameKey) ?? '';
+    presentController.text = sharedPreferences.getString(presentAddressKey) ?? '';
+    permanentController.text = sharedPreferences.getString(permanentAddressKEy) ?? '';
+    contactController.text = sharedPreferences.getString(contactNumberKey) ?? '';
+    emailController.text = sharedPreferences.getString(emailKey) ?? '';
+  }
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.sizeOf(context).width;
@@ -197,13 +218,14 @@ class _InputPersonalInfoState extends State<InputPersonalInfo> {
                           _loading = true;
                         });
                         savePersonalInfo();
-                        SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                            builder: (context)=> HomeScreen(
-                              privetKey: sharedPreferences.getString(SplashScreenState.privetKey),
-                              useName: sharedPreferences.getString(SplashScreenState.userName),
-                              roll: sharedPreferences.getString(SplashScreenState.roll),
-                            )), (route) => false);
+                        Navigator.pop(context);
+                        // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                        // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                        //     builder: (context)=> HomeScreen(
+                        //       privetKey: sharedPreferences.getString(SplashScreenState.privetKey),
+                        //       useName: sharedPreferences.getString(SplashScreenState.userName),
+                        //       roll: sharedPreferences.getString(SplashScreenState.roll),
+                        //     )), (route) => false);
                       }
                     }, buttonName: 'SAVE')
                   ],

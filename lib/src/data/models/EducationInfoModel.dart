@@ -1,5 +1,5 @@
 /// response : "Data Found !"
-/// educational_info : [{"institute_name":"Naogaon Polytechnic Institute","studying":"Diploma in engineering","subject_name":"Computer Technology","passing_year":"2024"},{"institute_name":"Bogura Polytechnic Institute","studying":"Diploma in Engineering","subject_name":"Computer Engineering","passing_year":"2024"},{"institute_name":"dfs","studying":"","subject_name":"","passing_year":""},{"institute_name":"Bogura Polytechnic Institute","studying":"Diploma in Engineering","subject_name":"Computer Engineering","passing_year":"2024"}]
+/// educational_info : [{"post_id":9,"institute_name":"Bogura Polytechnic Institute","studying":"Diploma in Engineering","subject_name":"Computer Engineering","passing_year":"2024"},{"post_id":10,"institute_name":"dfs","studying":"","subject_name":"","passing_year":""},{"post_id":11,"institute_name":"Bogura Polytechnic Institute","studying":"Diploma in Engineering","subject_name":"Computer Engineering","passing_year":"2024"}]
 
 class EducationInfoModel {
   EducationInfoModel({
@@ -35,17 +35,20 @@ class EducationInfoModel {
 
 }
 
-/// institute_name : "Naogaon Polytechnic Institute"
-/// studying : "Diploma in engineering"
-/// subject_name : "Computer Technology"
+/// post_id : 9
+/// institute_name : "Bogura Polytechnic Institute"
+/// studying : "Diploma in Engineering"
+/// subject_name : "Computer Engineering"
 /// passing_year : "2024"
 
 class EducationalInfo {
   EducationalInfo({
+      int? postId, 
       String? instituteName, 
       String? studying, 
       String? subjectName, 
       String? passingYear,}){
+    _postId = postId;
     _instituteName = instituteName;
     _studying = studying;
     _subjectName = subjectName;
@@ -53,16 +56,19 @@ class EducationalInfo {
 }
 
   EducationalInfo.fromJson(dynamic json) {
+    _postId = json['post_id'];
     _instituteName = json['institute_name'];
     _studying = json['studying'];
     _subjectName = json['subject_name'];
     _passingYear = json['passing_year'];
   }
+  int? _postId;
   String? _instituteName;
   String? _studying;
   String? _subjectName;
   String? _passingYear;
 
+  int? get postId => _postId;
   String? get instituteName => _instituteName;
   String? get studying => _studying;
   String? get subjectName => _subjectName;
@@ -70,6 +76,7 @@ class EducationalInfo {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['post_id'] = _postId;
     map['institute_name'] = _instituteName;
     map['studying'] = _studying;
     map['subject_name'] = _subjectName;

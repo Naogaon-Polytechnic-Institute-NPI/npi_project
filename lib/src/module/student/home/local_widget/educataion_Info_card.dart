@@ -8,10 +8,15 @@ import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/module/student/home/local_widget/input_educational_info.dart';
 import 'package:npi_project/src/module/student/home/local_widget/input_personal_info.dart';
 
-class EducationInfoCard extends StatelessWidget {
+class EducationInfoCard extends StatefulWidget {
   final String privetKey;
   const EducationInfoCard({required this.privetKey,super.key});
 
+  @override
+  State<EducationInfoCard> createState() => _EducationInfoCardState();
+}
+
+class _EducationInfoCardState extends State<EducationInfoCard> {
   @override
   Widget build(BuildContext context) {
     final userData = UserData();
@@ -23,11 +28,10 @@ class EducationInfoCard extends StatelessWidget {
       elevation: 0,
       child: ExpansionTile(
         tilePadding: EdgeInsets.all(10.w),
-        leading: CircleAvatar(
-          backgroundColor: CustomColor.lightTeal.withOpacity(.5),
-          backgroundImage: const AssetImage(
+        leading: const CircleAvatar(
+          backgroundColor: Colors.white,
+          backgroundImage: AssetImage(
               'assets/images/student-with-graduation-cap.png'),
-
         ),
         title: Text(
           'Education Info',
@@ -46,7 +50,7 @@ class EducationInfoCard extends StatelessWidget {
             context: context,
             builder: (BuildContext context) {
               return InputEducationalInfo(
-                privetKey: privetKey,
+                privetKey: widget.privetKey,
               );
             },
           ),
@@ -57,7 +61,7 @@ class EducationInfoCard extends StatelessWidget {
         ),
         children: [
           FutureBuilder(
-              future: userData.educationInfo(privetKey),
+              future: userData.educationInfo(widget.privetKey),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
@@ -115,6 +119,17 @@ class EducationInfoCard extends StatelessWidget {
                                     fontSize: 20.sp,
                                     fontFamily: 'Roboto',
                                     color: CustomColor.blueGrey
+                                ),
+                              ),
+                              trailing: InkWell(
+                                onTap: (){
+                                  setState(() {
+                                    userData.deleteApi('${snapshot.data!.educationalInfo![index].postId}');
+                                  });
+                                },
+                                child: const CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  child: Icon(Icons.delete, color: CustomColor.lightTeal,),
                                 ),
                               ),
                               children: [
