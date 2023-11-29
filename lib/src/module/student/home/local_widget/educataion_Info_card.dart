@@ -79,7 +79,7 @@ class EducationInfoCard extends StatelessWidget {
                   return ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: snapshot.data!.response!.length,
+                      itemCount: snapshot.data!.educationalInfo!.length,
                       itemBuilder: (context, index) {
                         return Card(
                             color: CustomColor.lightTeal.withOpacity(0.1),
@@ -97,7 +97,7 @@ class EducationInfoCard extends StatelessWidget {
 
                               ),
                               title: Text(
-                                '${snapshot.data!.response?[index].instituteName}',
+                                '${snapshot.data!.educationalInfo![index].instituteName}',
                                 style: TextStyle(
                                     fontSize: 20.sp,
                                     fontFamily: 'Roboto',
@@ -115,19 +115,19 @@ class EducationInfoCard extends StatelessWidget {
                                       DataText(
                                           dataTitle: 'Course Name',
                                           userData: '${snapshot.data!
-                                              .response![index]
+                                              .educationalInfo![index]
                                               .studying}'),
                                       const UnderLine(),
                                       DataText(
                                           dataTitle: 'Subject Name',
                                           userData: '${snapshot.data!
-                                              .response![index]
+                                              .educationalInfo![index]
                                               .subjectName}'),
                                       const UnderLine(),
                                       DataText(
                                           dataTitle: 'Passing Year',
                                           userData: '${snapshot.data!
-                                              .response![index]
+                                              .educationalInfo![index]
                                               .passingYear}'),
                                       const UnderLine(),
                                     ],

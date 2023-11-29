@@ -1,27 +1,34 @@
-/// response : [{"institute_name":"Naogaon Polytechnic Institute","studying":"Diploma in Engineering","subject_name":"Computer Engineering","passing_year":"2024"}]
+/// response : "Data Found !"
+/// educational_info : [{"institute_name":"Naogaon Polytechnic Institute","studying":"Diploma in engineering","subject_name":"Computer Technology","passing_year":"2024"},{"institute_name":"Bogura Polytechnic Institute","studying":"Diploma in Engineering","subject_name":"Computer Engineering","passing_year":"2024"},{"institute_name":"dfs","studying":"","subject_name":"","passing_year":""},{"institute_name":"Bogura Polytechnic Institute","studying":"Diploma in Engineering","subject_name":"Computer Engineering","passing_year":"2024"}]
 
 class EducationInfoModel {
   EducationInfoModel({
-      List<Response>? response,}){
+      String? response, 
+      List<EducationalInfo>? educationalInfo,}){
     _response = response;
+    _educationalInfo = educationalInfo;
 }
 
   EducationInfoModel.fromJson(dynamic json) {
-    if (json['response'] != null) {
-      _response = [];
-      json['response'].forEach((v) {
-        _response?.add(Response.fromJson(v));
+    _response = json['response'];
+    if (json['educational_info'] != null) {
+      _educationalInfo = [];
+      json['educational_info'].forEach((v) {
+        _educationalInfo?.add(EducationalInfo.fromJson(v));
       });
     }
   }
-  List<Response>? _response;
+  String? _response;
+  List<EducationalInfo>? _educationalInfo;
 
-  List<Response>? get response => _response;
+  String? get response => _response;
+  List<EducationalInfo>? get educationalInfo => _educationalInfo;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    if (_response != null) {
-      map['response'] = _response?.map((v) => v.toJson()).toList();
+    map['response'] = _response;
+    if (_educationalInfo != null) {
+      map['educational_info'] = _educationalInfo?.map((v) => v.toJson()).toList();
     }
     return map;
   }
@@ -29,12 +36,12 @@ class EducationInfoModel {
 }
 
 /// institute_name : "Naogaon Polytechnic Institute"
-/// studying : "Diploma in Engineering"
-/// subject_name : "Computer Engineering"
+/// studying : "Diploma in engineering"
+/// subject_name : "Computer Technology"
 /// passing_year : "2024"
 
-class Response {
-  Response({
+class EducationalInfo {
+  EducationalInfo({
       String? instituteName, 
       String? studying, 
       String? subjectName, 
@@ -45,7 +52,7 @@ class Response {
     _passingYear = passingYear;
 }
 
-  Response.fromJson(dynamic json) {
+  EducationalInfo.fromJson(dynamic json) {
     _instituteName = json['institute_name'];
     _studying = json['studying'];
     _subjectName = json['subject_name'];

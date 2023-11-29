@@ -1,20 +1,27 @@
-/// personal_data : {"name":"Md Shadikul Islam Shafi","father_name":"Md Hafizul Islam","mother_name":"Mst. Sabera Sultana","present_address":"Naogaon Sadar, Naogaon","permanent_address":"Naogaon Sadar, Naogaon","contact_number":"01585953674","email_address":"mdshadikulislamshafi@gmail.com"}
+/// response : "Data Found !"
+/// personal_data : {"name":"Md Shadikul Islam Shafi","father_name":"ddd","mother_name":"","present_address":"","permanent_address":"","contact_number":"","email_address":""}
 
 class PersonalInfoModel {
   PersonalInfoModel({
+      String? response, 
       PersonalData? personalData,}){
+    _response = response;
     _personalData = personalData;
 }
 
   PersonalInfoModel.fromJson(dynamic json) {
+    _response = json['response'];
     _personalData = json['personal_data'] != null ? PersonalData.fromJson(json['personal_data']) : null;
   }
+  String? _response;
   PersonalData? _personalData;
 
+  String? get response => _response;
   PersonalData? get personalData => _personalData;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['response'] = _response;
     if (_personalData != null) {
       map['personal_data'] = _personalData?.toJson();
     }
@@ -24,12 +31,12 @@ class PersonalInfoModel {
 }
 
 /// name : "Md Shadikul Islam Shafi"
-/// father_name : "Md Hafizul Islam"
-/// mother_name : "Mst. Sabera Sultana"
-/// present_address : "Naogaon Sadar, Naogaon"
-/// permanent_address : "Naogaon Sadar, Naogaon"
-/// contact_number : "01585953674"
-/// email_address : "mdshadikulislamshafi@gmail.com"
+/// father_name : "ddd"
+/// mother_name : ""
+/// present_address : ""
+/// permanent_address : ""
+/// contact_number : ""
+/// email_address : ""
 
 class PersonalData {
   PersonalData({

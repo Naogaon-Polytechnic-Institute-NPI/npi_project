@@ -86,13 +86,13 @@ class OccupationInfoCard extends StatelessWidget {
                       children: [
                         DataText(
                             dataTitle: 'Current Occupation',
-                            userData: '${snapshot.data!.occupationInfo!
+                            userData: '${snapshot.data!.occupatioInfo!
                                 .currnetOccupation}'),
                         const UnderLine(),
                         DataText(
                             height: 100.h,
                             dataTitle: 'Occupation Details',
-                            userData: '${snapshot.data!.occupationInfo!
+                            userData: '${snapshot.data!.occupatioInfo!
                                 .occupationDetails}'),
                         const UnderLine(),
                       ],

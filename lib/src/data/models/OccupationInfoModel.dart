@@ -1,40 +1,47 @@
-/// occupationInfo : {"currnet_occupation":"Student","occupation_details":"Currently i am a stident of Naogaon Polytechnic Institute"}
+/// response : "Data Found"
+/// occupatio_info : {"currnet_occupation":"job","occupation_details":"I'm currently employed in Dream IT as  Junior Android Developer"}
 
 class OccupationInfoModel {
   OccupationInfoModel({
-      OccupationInfo? occupationInfo,}){
-    _occupationInfo = occupationInfo;
+      String? response, 
+      OccupatioInfo? occupatioInfo,}){
+    _response = response;
+    _occupatioInfo = occupatioInfo;
 }
 
   OccupationInfoModel.fromJson(dynamic json) {
-    _occupationInfo = json['occupationInfo'] != null ? OccupationInfo.fromJson(json['occupationInfo']) : null;
+    _response = json['response'];
+    _occupatioInfo = json['occupatio_info'] != null ? OccupatioInfo.fromJson(json['occupatio_info']) : null;
   }
-  OccupationInfo? _occupationInfo;
+  String? _response;
+  OccupatioInfo? _occupatioInfo;
 
-  OccupationInfo? get occupationInfo => _occupationInfo;
+  String? get response => _response;
+  OccupatioInfo? get occupatioInfo => _occupatioInfo;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    if (_occupationInfo != null) {
-      map['occupationInfo'] = _occupationInfo?.toJson();
+    map['response'] = _response;
+    if (_occupatioInfo != null) {
+      map['occupatio_info'] = _occupatioInfo?.toJson();
     }
     return map;
   }
 
 }
 
-/// currnet_occupation : "Student"
-/// occupation_details : "Currently i am a stident of Naogaon Polytechnic Institute"
+/// currnet_occupation : "job"
+/// occupation_details : "I'm currently employed in Dream IT as  Junior Android Developer"
 
-class OccupationInfo {
-  OccupationInfo({
+class OccupatioInfo {
+  OccupatioInfo({
       String? currnetOccupation, 
       String? occupationDetails,}){
     _currnetOccupation = currnetOccupation;
     _occupationDetails = occupationDetails;
 }
 
-  OccupationInfo.fromJson(dynamic json) {
+  OccupatioInfo.fromJson(dynamic json) {
     _currnetOccupation = json['currnet_occupation'];
     _occupationDetails = json['occupation_details'];
   }
