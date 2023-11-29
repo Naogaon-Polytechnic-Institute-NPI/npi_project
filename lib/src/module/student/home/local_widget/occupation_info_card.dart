@@ -65,7 +65,7 @@ class OccupationInfoCard extends StatelessWidget {
                         color: CustomColor.lightTeal,
                         size: 50),
                   );
-                } else if (snapshot.hasError) {
+                } else if (snapshot.data!.response == 'No Data Found') {
                   return Center(
                     child: Text(
                       'No data found',
@@ -74,6 +74,19 @@ class OccupationInfoCard extends StatelessWidget {
                           fontFamily: 'Roboto',
                           color: CustomColor.blueGrey
                       ),),
+                  );
+                }else if (snapshot.hasError) {
+                  return Center(
+                    // child: Text(
+                    //   'No data found',
+                    //   style: TextStyle(
+                    //     fontSize: 16.sp,
+                    //     fontFamily: 'Roboto',
+                    //     color: CustomColor.blueGrey
+                    //   ),),
+                    child: LoadingAnimationWidget.staggeredDotsWave(
+                        color: CustomColor.lightTeal,
+                        size: 50),
                   );
                 } else {
                   return SizedBox(

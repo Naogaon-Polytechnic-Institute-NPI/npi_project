@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:npi_project/src/controller/user_data.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/module/student/home/local_widget/educataion_Info_card.dart';
 import 'package:npi_project/src/module/student/home/local_widget/greeting.dart';
@@ -26,6 +27,20 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState(){
+    getvalue();
+    super.initState();
+  }
+
+  getvalue() async {
+    UserData userData = UserData();
+    await userData.personalInfo('${widget.privetKey}');
+    await userData.educationInfo('${widget.privetKey}');
+    await userData.occupationInfo('${widget.privetKey}');
+    userData.calculateProgress();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +88,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 GreetingPart(
                   userName: '${widget.useName}',
                 ),
-                const ProfileIndicatorPart(),
+                ProfileIndicatorPart(
+                  privetKey: '${widget.privetKey}',
+                ),
                 Gap(20.h),
                 PersonalInfoCard(
                   privetKey: '${widget.privetKey}',

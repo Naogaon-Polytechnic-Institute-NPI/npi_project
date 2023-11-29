@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -9,6 +11,9 @@ import 'package:npi_project/src/data/global_widget/custom_button.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/data/utils/toast.dart';
 import 'package:npi_project/src/module/student/home/local_widget/info_input_field.dart';
+import 'package:npi_project/src/module/student/home/view/home.dart';
+import 'package:npi_project/src/splash_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class InputOccupationalInfo extends StatefulWidget {
   final String privetKey;
@@ -48,6 +53,13 @@ class _InputOccupationalInfoState extends State<InputOccupationalInfo> {
       }else{
         Utils().toastMessage('server error!', Colors.red);
       }
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+          builder: (context)=> HomeScreen(
+            privetKey: sharedPreferences.getString(SplashScreenState.privetKey),
+            useName: sharedPreferences.getString(SplashScreenState.userName),
+            roll: sharedPreferences.getString(SplashScreenState.roll),
+          )), (route) => false);
     }
     catch (e) {
       setState(() {
@@ -89,13 +101,19 @@ class _InputOccupationalInfoState extends State<InputOccupationalInfo> {
                   errorText: 'enter father name',
                   controller: occupationDetailsController,
                 ),
-                CustomButton(onTap: (){
+                CustomButton(onTap: ()async {
                   if(_formKey.currentState!.validate()) {
                     setState(() {
                       _loading = true;
                     });
                     saveOccupationInfo();
-                    Navigator.pop(context);
+                    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                        builder: (context)=> HomeScreen(
+                          privetKey: sharedPreferences.getString(SplashScreenState.privetKey),
+                          useName: sharedPreferences.getString(SplashScreenState.userName),
+                          roll: sharedPreferences.getString(SplashScreenState.roll),
+                        )), (route) => false);
                   }
                 },
                     buttonName: 'SAVE')

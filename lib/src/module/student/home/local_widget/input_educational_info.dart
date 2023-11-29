@@ -10,6 +10,9 @@ import 'package:npi_project/src/data/global_widget/custom_button.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/data/utils/toast.dart';
 import 'package:npi_project/src/module/student/home/local_widget/info_input_field.dart';
+import 'package:npi_project/src/module/student/home/view/home.dart';
+import 'package:npi_project/src/splash_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class InputEducationalInfo extends StatefulWidget {
   final String privetKey;
@@ -110,14 +113,21 @@ class _InputEducationalInfoState extends State<InputEducationalInfo> {
                       controller: passingYearController,
                     ),
                     Gap(10.h),
-                    CustomButton(onTap: (){
+                    CustomButton(onTap: ()async {
                       if(_formKey.currentState!.validate()) {
                         setState(() {
                           _loading = true;
                         });
                         saveEducationalInfo();
-                        Navigator.pop(context);
-                      }
+                        SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                        // ignore: use_build_context_synchronously
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                            builder: (context)=> HomeScreen(
+                              privetKey: sharedPreferences.getString(SplashScreenState.privetKey),
+                              useName: sharedPreferences.getString(SplashScreenState.userName),
+                              roll: sharedPreferences.getString(SplashScreenState.roll),
+                            )), (route) => false);
+                    }
                     },
                         buttonName: 'SAVE')
                   ],
