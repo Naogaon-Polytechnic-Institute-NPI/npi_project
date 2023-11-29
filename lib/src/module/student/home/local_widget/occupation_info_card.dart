@@ -22,16 +22,10 @@ class OccupationInfoCard extends StatelessWidget {
       elevation: 0,
       child: ExpansionTile(
         tilePadding: EdgeInsets.all(10.w),
-<<<<<<< HEAD
         leading: CircleAvatar(
           backgroundColor: CustomColor.lightTeal.withOpacity(.5),
           backgroundImage: const AssetImage('assets/images/employee.png'),
-=======
-        leading: const CircleAvatar(
-          backgroundColor: Colors.white,
-          backgroundImage: AssetImage('assets/images/businessman.png'),
 
->>>>>>> b896d298f4d3d2ce768aaacfb7cf8e56f9f9aa86
         ),
         title: Text(
           'Occupation Info',
