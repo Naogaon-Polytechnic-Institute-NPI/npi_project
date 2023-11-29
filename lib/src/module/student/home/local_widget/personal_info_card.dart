@@ -8,11 +8,9 @@ import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/module/student/home/local_widget/input_personal_info.dart';
 
 class PersonalInfoCard extends StatelessWidget {
-  final String privetKey, userName ;
-  const PersonalInfoCard({
-    required this.privetKey,
-    required this.userName,
-    super.key});
+  final String privetKey, userName;
+  const PersonalInfoCard(
+      {required this.privetKey, required this.userName, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +32,14 @@ class PersonalInfoCard extends StatelessWidget {
           style: TextStyle(
               fontSize: 20.sp,
               fontFamily: 'Roboto',
-              color: CustomColor.blueGrey
-          ),
+              color: CustomColor.blueGrey),
         ),
         trailing: InkWell(
-          onTap: ()=> showModalBottomSheet<void>(
+          onTap: () => showModalBottomSheet<void>(
             showDragHandle: true,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(17.r))),
+                borderRadius:
+                    BorderRadius.vertical(top: Radius.circular(17.r))),
             context: context,
             builder: (BuildContext context) {
               return InputPersonalInfo(
@@ -53,7 +50,10 @@ class PersonalInfoCard extends StatelessWidget {
           ),
           child: const CircleAvatar(
             backgroundColor: Colors.white,
-            child: Icon(Icons.edit_rounded, color: CustomColor.lightTeal,),
+            child: Icon(
+              Icons.edit_rounded,
+              color: CustomColor.lightTeal,
+            ),
           ),
         ),
         children: [
@@ -63,19 +63,16 @@ class PersonalInfoCard extends StatelessWidget {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
                     child: LoadingAnimationWidget.staggeredDotsWave(
-                        color: CustomColor.lightTeal,
-                        size: 50),
+                        color: CustomColor.lightTeal, size: 50),
                   );
-                } else if(snapshot.data!.response == 'No Data Found !'){
+                } else if (snapshot.data!.response == 'No Data Found !') {
                   return Center(
-                    child: Text(
-                      'No data found',
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontFamily: 'Roboto',
-                        color: CustomColor.blueGrey
-                      )));
-                }else if (snapshot.hasError) {
+                      child: Text('No data found',
+                          style: TextStyle(
+                              fontSize: 16.sp,
+                              fontFamily: 'Roboto',
+                              color: CustomColor.blueGrey)));
+                } else if (snapshot.hasError) {
                   return Center(
                     // child: Text(
                     //   'No data found',
@@ -85,15 +82,11 @@ class PersonalInfoCard extends StatelessWidget {
                     //     color: CustomColor.blueGrey
                     //   ),),
                     child: LoadingAnimationWidget.staggeredDotsWave(
-                        color: CustomColor.lightTeal,
-                        size: 50),
+                        color: CustomColor.lightTeal, size: 50),
                   );
                 } else {
                   return SizedBox(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width,
+                    width: MediaQuery.of(context).size.width,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -104,40 +97,39 @@ class PersonalInfoCard extends StatelessWidget {
                         const UnderLine(),
                         DataText(
                             dataTitle: 'Father Name',
-                            userData: '${snapshot.data!.personalData!.fatherName}'
-                        ),
+                            userData:
+                                '${snapshot.data!.personalData!.fatherName}'),
                         const UnderLine(),
                         DataText(
                             dataTitle: 'Mother Name',
-                            userData: '${snapshot.data!.personalData!
-                                .motherName}'),
+                            userData:
+                                '${snapshot.data!.personalData!.motherName}'),
                         const UnderLine(),
                         DataText(
                             dataTitle: 'Present Address',
-                            userData: '${snapshot.data!.personalData!
-                                .presentAddress}'),
+                            userData:
+                                '${snapshot.data!.personalData!.presentAddress}'),
                         const UnderLine(),
                         DataText(
                             dataTitle: 'Permanent Address',
-                            userData: '${snapshot.data!.personalData!
-                                .permanentAddress}'),
+                            userData:
+                                '${snapshot.data!.personalData!.permanentAddress}'),
                         const UnderLine(),
                         DataText(
                             dataTitle: 'Contact Number',
-                            userData: '${snapshot.data!.personalData!
-                                .contactNumber}'),
+                            userData:
+                                '${snapshot.data!.personalData!.contactNumber}'),
                         const UnderLine(),
                         DataText(
                             dataTitle: 'Email',
-                            userData: '${snapshot.data!.personalData!
-                                .emailAddress}'),
+                            userData:
+                                '${snapshot.data!.personalData!.emailAddress}'),
                         const UnderLine(),
                       ],
                     ),
                   );
                 }
-              }
-          )
+              })
         ],
       ),
     );

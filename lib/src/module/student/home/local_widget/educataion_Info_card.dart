@@ -28,17 +28,10 @@ class _EducationInfoCardState extends State<EducationInfoCard> {
       elevation: 0,
       child: ExpansionTile(
         tilePadding: EdgeInsets.all(10.w),
-<<<<<<< HEAD
         leading: CircleAvatar(
           backgroundColor: CustomColor.lightTeal.withOpacity(.5),
           backgroundImage:
               const AssetImage('assets/images/student-with-graduation-cap.png'),
-=======
-        leading: const CircleAvatar(
-          backgroundColor: Colors.white,
-          backgroundImage: AssetImage(
-              'assets/images/student-with-graduation-cap.png'),
->>>>>>> b896d298f4d3d2ce768aaacfb7cf8e56f9f9aa86
         ),
         title: Text(
           'Education Info',
@@ -113,10 +106,9 @@ class _EducationInfoCardState extends State<EducationInfoCard> {
                             elevation: 0,
                             child: ExpansionTile(
                               tilePadding: EdgeInsets.all(10.w),
-                              leading: CircleAvatar(
-                                backgroundColor:
-                                    CustomColor.lightTeal.withOpacity(.5),
-                                backgroundImage: const AssetImage(
+                              leading: const CircleAvatar(
+                                backgroundColor: Colors.white,
+                                backgroundImage: AssetImage(
                                     'assets/images/student-with-graduation-cap.png'),
                               ),
                               title: Text(
@@ -127,14 +119,18 @@ class _EducationInfoCardState extends State<EducationInfoCard> {
                                     color: CustomColor.blueGrey),
                               ),
                               trailing: InkWell(
-                                onTap: (){
+                                onTap: () {
                                   setState(() {
-                                    userData.deleteApi('${snapshot.data!.educationalInfo![index].postId}');
+                                    userData.deleteApi(
+                                        '${snapshot.data!.educationalInfo![index].postId}');
                                   });
                                 },
                                 child: const CircleAvatar(
                                   backgroundColor: Colors.white,
-                                  child: Icon(Icons.delete, color: CustomColor.lightTeal,),
+                                  child: Icon(
+                                    Icons.delete,
+                                    color: CustomColor.lightTeal,
+                                  ),
                                 ),
                               ),
                               children: [
