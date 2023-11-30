@@ -73,51 +73,57 @@ class _InputOccupationalInfoState extends State<InputOccupationalInfo> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.sizeOf(context).width;
-    return Form(
-      key: _formKey,
-      child: SingleChildScrollView(
-        child: SizedBox(
-          height: 500.h,
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0.h),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                InfoInputForm(
-                  title: 'Current occupation',
-                  fieldHeight: 50.h,
-                  fieldWidth: width,
-                  hintText: 'Enter you occupation',
-                  errorText: '',
-                  controller: currnetOccupationController,
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+          body: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: SizedBox(
+              height: 500.h,
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0.h),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    InfoInputForm(
+                      title: 'Current occupation',
+                      fieldHeight: 50.h,
+                      fieldWidth: width,
+                      hintText: 'Enter you occupation',
+                      errorText: '',
+                      controller: currnetOccupationController,
 
+                    ),
+                    Gap(10.h),
+                    InfoInputForm(
+                      title: 'Occupation Details',
+                      fieldHeight: 50.h,
+                      fieldWidth: width,
+                      hintText: 'Enter Occupation Details',
+                      errorText: 'enter father name',
+                      controller: occupationDetailsController,
+                    ),
+                    CustomButton(onTap: ()async {
+                      if(_formKey.currentState!.validate()) {
+                        setState(() {
+                          _loading = true;
+                        });
+                        saveOccupationInfo();
+                        SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                            builder: (context)=> HomeScreen(
+                              privetKey: sharedPreferences.getString(SplashScreenState.privetKey),
+                              useName: sharedPreferences.getString(SplashScreenState.userName),
+                              roll: sharedPreferences.getString(SplashScreenState.roll),
+                            )), (route) => false);
+                      }
+                    },
+                        buttonName: 'SAVE')
+                  ],
                 ),
-                Gap(10.h),
-                InfoInputForm(
-                  title: 'Occupation Details',
-                  fieldHeight: 50.h,
-                  fieldWidth: width,
-                  hintText: 'Enter Occupation Details',
-                  errorText: 'enter father name',
-                  controller: occupationDetailsController,
-                ),
-                CustomButton(onTap: ()async {
-                  if(_formKey.currentState!.validate()) {
-                    setState(() {
-                      _loading = true;
-                    });
-                    saveOccupationInfo();
-                    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                        builder: (context)=> HomeScreen(
-                          privetKey: sharedPreferences.getString(SplashScreenState.privetKey),
-                          useName: sharedPreferences.getString(SplashScreenState.userName),
-                          roll: sharedPreferences.getString(SplashScreenState.roll),
-                        )), (route) => false);
-                  }
-                },
-                    buttonName: 'SAVE')
-              ],
+              ),
             ),
           ),
         ),

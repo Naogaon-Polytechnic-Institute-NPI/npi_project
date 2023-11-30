@@ -25,6 +25,8 @@ class InputField extends StatelessWidget {
       width: MediaQuery.sizeOf(context).width,
       child: TextFormField(
           controller: controller,
+          autofocus: false,
+          focusNode: FocusNode(),
           obscureText: obsecureText,
           keyboardType: textInputType,
           decoration: InputDecoration(

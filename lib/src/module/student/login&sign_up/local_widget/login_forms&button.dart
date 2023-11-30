@@ -91,17 +91,6 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           InputField(
-
-//     @override
-//     Widget build(BuildContext context) {
-//       return Form(
-//         key: _formKey,
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.end,
-//           children: [
-//             InputField(
-
-              //fieldTitle: 'Email',
               hintText: 'Enter your Roll',
               errorText: 'Enter Roll',
               obsecureText: false,
