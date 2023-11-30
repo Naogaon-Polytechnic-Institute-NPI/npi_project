@@ -42,7 +42,7 @@ class _EducationInfoCardState extends State<EducationInfoCard> {
               color: CustomColor.blueGrey),
         ),
         trailing: SizedBox(
-          width: 100.w,
+          width: 80.w,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [

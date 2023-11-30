@@ -106,11 +106,7 @@ class InputPersonalInfoState extends State<InputPersonalInfo> {
               height: MediaQuery.sizeOf(context).height,
               child: Padding(
                 padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0.h),
-                child:
-                FutureBuilder(
-                  future: UserData().personalInfo(widget.privetKey),
-                  builder: (context, snapshot) {
-                    return Column(
+                child:Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             InfoInputForm(
@@ -203,14 +199,14 @@ class InputPersonalInfoState extends State<InputPersonalInfo> {
                               }
                             }, buttonName: 'SAVE')
                           ],
-                        );
-                  }
+    )
+
                 )
                 ),
               ),
             ),
         ),
-      ),
+
     );
   }
 }

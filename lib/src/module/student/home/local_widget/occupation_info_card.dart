@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:npi_project/src/controller/user_data.dart';
 import 'package:npi_project/src/data/global_widget/data_text.dart';
@@ -34,27 +35,37 @@ class OccupationInfoCard extends StatelessWidget {
               fontFamily: 'Roboto',
               color: CustomColor.blueGrey),
         ),
-        trailing: InkWell(
-          onTap: () => showModalBottomSheet<void>(
-            showDragHandle: true,
-            useSafeArea: true,
-            enableDrag: true,
-            shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.vertical(top: Radius.circular(17.r))),
-            context: context,
-            builder: (BuildContext context) {
-              return InputOccupationalInfo(
-                privetKey: privetKey,
-              );
-            },
-          ),
-          child: const CircleAvatar(
-            backgroundColor: Colors.white,
-            child: Icon(
-              Icons.edit_rounded,
-              color: CustomColor.lightTeal,
-            ),
+        trailing: SizedBox(
+          width: 75.w,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              const Icon(Icons.keyboard_arrow_down, size: 30,),
+              Gap(10.w),
+              InkWell(
+                onTap: () => showModalBottomSheet<void>(
+                  showDragHandle: true,
+                  useSafeArea: true,
+                  enableDrag: true,
+                  shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(17.r))),
+                  context: context,
+                  builder: (BuildContext context) {
+                    return InputOccupationalInfo(
+                      privetKey: privetKey,
+                    );
+                  },
+                ),
+                child: const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Icon(
+                    Icons.edit_rounded,
+                    color: CustomColor.lightTeal,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         children: [
