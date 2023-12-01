@@ -31,7 +31,6 @@ class _InputEducationalInfoState extends State<InputEducationalInfo> {
   final subjectController = TextEditingController();
   final passingYearController = TextEditingController();
 
-  bool _loading = false;
 
   void saveEducationalInfo()async{
     Map<String, dynamic> educationalData = {
@@ -44,9 +43,6 @@ class _InputEducationalInfoState extends State<InputEducationalInfo> {
       Response response = await post(Uri.parse('${ApiEndPoints.educationInfoPost}${widget.privetKey}'),
           body: educationalData);
       if (response.statusCode == 200) {
-        setState(() {
-          _loading = false;
-        });
         var responseBody = jsonDecode(response.body.toString());
         if (responseBody['response'].toString() == 'success') {
           Utils().toastMessage('Data Saved', CustomColor.lightTeal);
@@ -56,9 +52,6 @@ class _InputEducationalInfoState extends State<InputEducationalInfo> {
       }
     }
     catch (e) {
-      setState(() {
-        _loading = false;
-      });
       print(e.toString());
     }
   }
@@ -121,17 +114,15 @@ class _InputEducationalInfoState extends State<InputEducationalInfo> {
                         Gap(10.h),
                         CustomButton(onTap: ()async {
                           if(_formKey.currentState!.validate()) {
-                            setState(() {
-                              _loading = true;
-                            });
                             saveEducationalInfo();
-                            SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                                builder: (context)=> HomeScreen(
-                                  privetKey: sharedPreferences.getString(SplashScreenState.privetKey),
-                                  useName: sharedPreferences.getString(SplashScreenState.userName),
-                                  roll: sharedPreferences.getString(SplashScreenState.roll),
-                                )), (route) => false);
+                            Navigator.pop(context);
+                            // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                            // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                            //     builder: (context)=> HomeScreen(
+                            //       privetKey: sharedPreferences.getString(SplashScreenState.privetKey),
+                            //       useName: sharedPreferences.getString(SplashScreenState.userName),
+                            //       roll: sharedPreferences.getString(SplashScreenState.roll),
+                            //     )), (route) => false);
                         }
                         },
                             buttonName: 'SAVE')

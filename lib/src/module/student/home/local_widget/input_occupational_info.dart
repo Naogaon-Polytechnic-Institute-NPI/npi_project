@@ -145,8 +145,8 @@ class _InputOccupationalInfoState extends State<InputOccupationalInfo> {
                           if (_formKey.currentState!.validate()) {
                             saveOccupationInfo();
                             Navigator.pop(context);
-                            SharedPreferences sharedPreferences =
-                                await SharedPreferences.getInstance();
+                            // SharedPreferences sharedPreferences =
+                            //     await SharedPreferences.getInstance();
                             // Navigator.pushAndRemoveUntil(
                             //     context,
                             //     MaterialPageRoute(
