@@ -35,7 +35,7 @@ class OccupationInfoCard extends StatelessWidget {
               color: CustomColor.blueGrey),
         ),
         trailing: SizedBox(
-          width: 75.w,
+          width: 80.w,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
