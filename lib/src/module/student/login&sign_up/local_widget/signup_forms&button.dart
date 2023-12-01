@@ -9,6 +9,7 @@ import 'package:npi_project/src/controller/api_end_points.dart';
 import 'package:npi_project/src/data/global_widget/custom_button.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/data/utils/toast.dart';
+import 'package:npi_project/src/module/student/login&sign_up/local_widget/drop_down.dart';
 import 'package:npi_project/src/module/student/login&sign_up/local_widget/input_form.dart';
 import 'package:http/http.dart';
 import 'package:npi_project/src/module/student/login&sign_up/view/log_in.dart';
@@ -23,13 +24,16 @@ class RegisterFormsAndButton extends StatefulWidget {
 }
 
 class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
+  static const List <String> technologyOptions = ['CMT', 'CT','AIDT', 'FT', 'ENV'];
+  String? technologySelectedValue;
+
+  static const List <String> sessionOptions = ['18-19', '19-20','20-21', '21-22', '22-23'];
+  String? sessionSelectedValue;
 
   final _formKey = GlobalKey<FormState>();
   final usernameController = TextEditingController();
   final rollController = TextEditingController();
   final registrationController = TextEditingController();
-  final technologyController = TextEditingController();
-  final sessionController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   bool _psecure = true, _cpSecure = true;
@@ -47,10 +51,11 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
       'name' : usernameController.text.toString(),
       'roll': rollController.text.toString(),
       'registration' : registrationController.text.toString(),
-      'technology' : technologyController.text.toString(),
-      'session' : sessionController.text.toString(),
+      'technology' : technologySelectedValue.toString(),
+      'session' : sessionSelectedValue.toString(),
       'password' : confirmPasswordController.text.toString()
     };
+    print(registerData);
     try {
       setState(() {
         loading = true;
@@ -78,7 +83,7 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
                     'Account created successfully', CustomColor.lightTeal);
                 Navigator.pushAndRemoveUntil(
                     context, MaterialPageRoute(
-                    builder: (context)=> LogInScreen()), (route) => false);
+                    builder: (context)=> const LogInScreen()), (route) => false);
               }else if(signupResponseBody['response'].toString() == 'User  already have a account. Please Login'){
                 Utils().toastMessage('Already have an account', CustomColor.lightTeal);
               }
@@ -104,14 +109,19 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
     }
   }
 
+  @override
+  void initState() {
+    super.initState();
+    technologySelectedValue = technologyOptions.first;
+    sessionSelectedValue = sessionOptions.first;
+  }
+
 
   @override
   void dispose() {
     usernameController.dispose();
     rollController.dispose();
     registrationController.dispose();
-    technologyController.dispose();
-    sessionController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
     super.dispose();
@@ -149,21 +159,25 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
               textInputType: TextInputType.number,
               controller: registrationController),
           Gap(10.h),
-          InputField(
-            //fieldTitle: 'Email',
-              hintText: 'Enter your technology (CMT)',
-              errorText: 'Enter roll',
-              obsecureText: false,
-              textInputType: TextInputType.text,
-              controller: technologyController),
+          DropdownExample(
+            selectedValue: '$technologySelectedValue',
+            options: technologyOptions,
+            onChanged: (String? newValue) {
+              setState(() {
+               technologySelectedValue = newValue;
+              });
+            },
+          ),
           Gap(10.h),
-          InputField(
-            //fieldTitle: 'Email',
-              hintText: 'Enter your session (18-19)',
-              errorText: 'Enter roll',
-              obsecureText: false,
-              textInputType: TextInputType.number,
-              controller: sessionController),
+          DropdownExample(
+            selectedValue: '$sessionSelectedValue',
+            options: sessionOptions,
+            onChanged: (String? newValue) {
+              setState(() {
+                sessionSelectedValue = newValue;
+              });
+            },
+          ),
           Gap(10.h),
           InputField(
             //fieldTitle: 'Password',
@@ -200,7 +214,7 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
           CustomButton(
               buttonName: 'Register',
               loading: loading,
-              onTap: ()async {
+              onTap: (){
                 if(_formKey.currentState!.validate()){
                   if(passwordController.text.toString().length >= 6){
                     if(passwordController.text.toString() == confirmPasswordController.text.toString()){
@@ -215,6 +229,8 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
                     return Utils().toastMessage("Less than 6 character", Colors.red);
                   }
                 }
+                print('hi ${sessionSelectedValue}');
+                print(technologySelectedValue);
               }
           )
         ],

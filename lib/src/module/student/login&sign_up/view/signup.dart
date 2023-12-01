@@ -12,23 +12,17 @@ class SignUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+    child:Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
             //height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.all(16.w),
-            // decoration: BoxDecoration(
-            //     gradient: LinearGradient(
-            //         begin: Alignment.topCenter,
-            //         end: Alignment.bottomCenter,
-            //         colors:[
-            //           Colors.white,
-            //           CustomColor.lightTeal.withOpacity(.5),
-            //         ]
-            //     )
-            // ),
+
             child: Column(
               //mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -51,6 +45,6 @@ class SignUp extends StatelessWidget {
           ),
         ),
       ),
-    );;
+    ));
   }
 }

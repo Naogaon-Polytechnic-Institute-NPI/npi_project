@@ -32,6 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
+        resizeToAvoidBottomInset: true,
         key: _globalKey,
         drawer: NavBar(
           userName: '${widget.useName}',

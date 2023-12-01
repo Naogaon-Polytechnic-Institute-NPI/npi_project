@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:npi_project/src/controller/user_data.dart';
 import 'package:npi_project/src/data/global_widget/data_text.dart';
@@ -14,7 +15,6 @@ class PersonalInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userData = UserData();
     return Card(
       color: CustomColor.lightTeal.withOpacity(0.1),
       shape: RoundedRectangleBorder(
@@ -22,7 +22,7 @@ class PersonalInfoCard extends StatelessWidget {
       ),
       elevation: 0,
       child: ExpansionTile(
-        tilePadding: EdgeInsets.all(10.w),
+        tilePadding: EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 0.h),
         leading: const CircleAvatar(
           backgroundColor: Colors.white,
           backgroundImage: AssetImage('assets/images/profile.png'),
@@ -34,26 +34,39 @@ class PersonalInfoCard extends StatelessWidget {
               fontFamily: 'Roboto',
               color: CustomColor.blueGrey),
         ),
-        trailing: InkWell(
-          onTap: () => showModalBottomSheet<void>(
-            showDragHandle: true,
-            shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.vertical(top: Radius.circular(17.r))),
-            context: context,
-            builder: (BuildContext context) {
-              return InputPersonalInfo(
-                userName: userName,
-                privetKey: privetKey,
-              );
-            },
-          ),
-          child: const CircleAvatar(
-            backgroundColor: Colors.white,
-            child: Icon(
-              Icons.edit_rounded,
-              color: CustomColor.lightTeal,
-            ),
+        trailing: SizedBox(
+          width: 100.w,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              const Icon(
+                Icons.keyboard_arrow_down,
+                size: 30,
+              ),
+              Gap(10.w),
+              InkWell(
+                onTap: () => showModalBottomSheet<void>(
+                  showDragHandle: true,
+                  shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(17.r))),
+                  context: context,
+                  builder: (BuildContext context) {
+                    return InputPersonalInfo(
+                      userName: userName,
+                      privetKey: privetKey,
+                    );
+                  },
+                ),
+                child: const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Icon(
+                    Icons.edit_rounded,
+                    color: CustomColor.lightTeal,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         children: [

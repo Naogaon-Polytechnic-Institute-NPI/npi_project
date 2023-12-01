@@ -66,73 +66,79 @@ class _InputEducationalInfoState extends State<InputEducationalInfo> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.sizeOf(context).width;
-    return Form(
-      key: _formKey,
-      child: SingleChildScrollView(
-        child: SizedBox(
-          height: 700.h,
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0.h),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    InfoInputForm(
-                      title: 'Institute Name',
-                      fieldHeight: 50.h,
-                      fieldWidth: width,
-                      hintText: 'Enter institute name',
-                      errorText: 'Enter institute name',
-                      controller: instituteController,
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: SizedBox(
+              height: MediaQuery.sizeOf(context).height,
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0.h),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        InfoInputForm(
+                          title: 'Institute Name',
+                          fieldHeight: 50.h,
+                          fieldWidth: width,
+                          hintText: 'Enter institute name',
+                          errorText: 'Enter institute name',
+                          controller: instituteController,
 
-                    ),
-                    Gap(10.h),
-                    InfoInputForm(
-                      title: 'Course name',
-                      fieldHeight: 50.h,
-                      fieldWidth: width,
-                      hintText: 'Enter course name',
-                      errorText: 'Enter course name',
-                      controller: courseController,
+                        ),
+                        Gap(10.h),
+                        InfoInputForm(
+                          title: 'Course name',
+                          fieldHeight: 50.h,
+                          fieldWidth: width,
+                          hintText: 'Enter course name',
+                          errorText: 'Enter course name',
+                          controller: courseController,
 
-                    ),
-                    Gap(10.h),
-                    InfoInputForm(
-                      title: 'Subject Name',
-                      fieldHeight: 50.h,
-                      fieldWidth: width,
-                      hintText: 'Enter subject name',
-                      errorText: 'Enter subject name',
-                      controller: subjectController,
+                        ),
+                        Gap(10.h),
+                        InfoInputForm(
+                          title: 'Subject Name',
+                          fieldHeight: 50.h,
+                          fieldWidth: width,
+                          hintText: 'Enter subject name',
+                          errorText: 'Enter subject name',
+                          controller: subjectController,
 
-                    ),
-                    Gap(10.h),
-                    InfoInputForm(
-                      title: 'Passing year',
-                      fieldHeight: 50.h,
-                      fieldWidth: width,
-                      hintText: 'Enter passing year',
-                      errorText: 'Enter passing year',
-                      controller: passingYearController,
-                    ),
-                    Gap(10.h),
-                    CustomButton(onTap: ()async {
-                      if(_formKey.currentState!.validate()) {
-                        setState(() {
-                          _loading = true;
-                        });
-                        saveEducationalInfo();
-                        SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                            builder: (context)=> HomeScreen(
-                              privetKey: sharedPreferences.getString(SplashScreenState.privetKey),
-                              useName: sharedPreferences.getString(SplashScreenState.userName),
-                              roll: sharedPreferences.getString(SplashScreenState.roll),
-                            )), (route) => false);
-                    }
-                    },
-                        buttonName: 'SAVE')
-                  ],
-                )
+                        ),
+                        Gap(10.h),
+                        InfoInputForm(
+                          title: 'Passing year',
+                          fieldHeight: 50.h,
+                          fieldWidth: width,
+                          hintText: 'Enter passing year',
+                          errorText: 'Enter passing year',
+                          controller: passingYearController,
+                        ),
+                        Gap(10.h),
+                        CustomButton(onTap: ()async {
+                          if(_formKey.currentState!.validate()) {
+                            setState(() {
+                              _loading = true;
+                            });
+                            saveEducationalInfo();
+                            SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                                builder: (context)=> HomeScreen(
+                                  privetKey: sharedPreferences.getString(SplashScreenState.privetKey),
+                                  useName: sharedPreferences.getString(SplashScreenState.userName),
+                                  roll: sharedPreferences.getString(SplashScreenState.roll),
+                                )), (route) => false);
+                        }
+                        },
+                            buttonName: 'SAVE')
+                      ],
+                    )
+              ),
+            ),
           ),
         ),
       ),
