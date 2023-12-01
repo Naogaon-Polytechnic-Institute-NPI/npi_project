@@ -49,6 +49,13 @@ class _InputEducationalInfoState extends State<InputEducationalInfo> {
         } else {
           Utils().toastMessage('server error!', Colors.red);
         }
+        SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+            builder: (context)=> HomeScreen(
+              privetKey: sharedPreferences.getString(SplashScreenState.privetKey),
+              useName: sharedPreferences.getString(SplashScreenState.userName),
+              roll: sharedPreferences.getString(SplashScreenState.roll),
+            )), (route) => false);
       }
     }
     catch (e) {
@@ -115,14 +122,7 @@ class _InputEducationalInfoState extends State<InputEducationalInfo> {
                         CustomButton(onTap: ()async {
                           if(_formKey.currentState!.validate()) {
                             saveEducationalInfo();
-                            Navigator.pop(context);
-                            // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-                            // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                            //     builder: (context)=> HomeScreen(
-                            //       privetKey: sharedPreferences.getString(SplashScreenState.privetKey),
-                            //       useName: sharedPreferences.getString(SplashScreenState.userName),
-                            //       roll: sharedPreferences.getString(SplashScreenState.roll),
-                            //     )), (route) => false);
+                            //Navigator.pop(context);
                         }
                         },
                             buttonName: 'SAVE')

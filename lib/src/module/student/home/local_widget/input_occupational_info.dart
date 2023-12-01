@@ -5,7 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:http/http.dart';
 import 'package:npi_project/src/controller/api_end_points.dart';
+import 'package:npi_project/src/controller/user_data.dart';
 import 'package:npi_project/src/data/global_widget/custom_button.dart';
+import 'package:npi_project/src/data/models/OccupationInfoModel.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/data/utils/toast.dart';
 import 'package:npi_project/src/module/student/home/local_widget/info_input_field.dart';
@@ -24,26 +26,35 @@ class InputOccupationalInfo extends StatefulWidget {
 class _InputOccupationalInfoState extends State<InputOccupationalInfo> {
   final _formKey = GlobalKey<FormState>();
   final occupationDetailsController = TextEditingController();
+  bool _loading = false;
+  final UserData _userData = UserData();
   static const List<String> workOption = [
     'Student',
-    'Business',
+    'Businessman',
     'Employed',
     'Not Employed',
-    'Freelancer'
+    'Freelancer',
+    'Others'
   ];
-  String selectedValue = workOption.first;
+  String? selectedValue;
 
 
   void saveOccupationInfo() async {
     Map<String, dynamic> occupationData = {
-      'currnetOccupation': selectedValue,
+      'currnetOccupation': selectedValue.toString(),
       'occupationDetails': occupationDetailsController.text.toString(),
     };
     try {
+      setState(() {
+        _loading = true;
+      });
       Response response = await post(
           Uri.parse('${ApiEndPoints.occupationInfoPost}${widget.privetKey}'),
           body: occupationData);
       if (response.statusCode == 200) {
+        setState(() {
+          _loading = false;
+        });
         var responseBody = jsonDecode(response.body.toString());
         if (responseBody['message'].toString() == 'Edit Complete' &&
             responseBody['response'].toString() == 'success') {
@@ -52,6 +63,13 @@ class _InputOccupationalInfoState extends State<InputOccupationalInfo> {
           Utils().toastMessage('Data Saved', CustomColor.lightTeal);
         } else {
           Utils().toastMessage('server error!', Colors.red);
+          SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+              builder: (context)=> HomeScreen(
+                privetKey: sharedPreferences.getString(SplashScreenState.privetKey),
+                useName: sharedPreferences.getString(SplashScreenState.userName),
+                roll: sharedPreferences.getString(SplashScreenState.roll),
+              )), (route) => false);
         }
       } else {
         Utils().toastMessage('server error!', Colors.red);
@@ -73,6 +91,26 @@ class _InputOccupationalInfoState extends State<InputOccupationalInfo> {
       print(e.toString());
     }
   }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
+  Future<void> getData() async {
+    try {
+      OccupationInfoModel occupationInfoModel = await _userData.occupationInfo(widget.privetKey);
+      setState(() {
+        selectedValue = occupationInfoModel.occupatioInfo!.currnetOccupation!.toString();
+      });
+      occupationDetailsController.text = occupationInfoModel.occupatioInfo!.occupationDetails ?? '';
+    } catch (e) {
+      Utils().toastMessage('Error', Colors.red);
+      print('Error fetching data: $e');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +182,7 @@ class _InputOccupationalInfoState extends State<InputOccupationalInfo> {
                         onTap: () async {
                           if (_formKey.currentState!.validate()) {
                             saveOccupationInfo();
-                            Navigator.pop(context);
+                            print(selectedValue);
                             // SharedPreferences sharedPreferences =
                             //     await SharedPreferences.getInstance();
                             // Navigator.pushAndRemoveUntil(
