@@ -47,6 +47,7 @@ class UserData {
         _educationalData = 0.30;
         return EducationInfoModel.fromJson(responseData);
       }else{
+        _educationalData = 0.00;
         return EducationInfoModel.fromJson(responseData);
       }
     } else if (response.statusCode == 500) {
@@ -70,10 +71,7 @@ class UserData {
       if (responseData['response'].toString() == 'Data Found') {
         print('Occupation data found');
         _occupationData = 0.30;
-      }else{
-        _occupationData = -0.30;
       }
-
       print(responseData.toString());
       return OccupationInfoModel.fromJson(responseData);
     } else if (response.statusCode == 500) {

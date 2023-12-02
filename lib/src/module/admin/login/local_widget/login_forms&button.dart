@@ -69,7 +69,7 @@ class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
             'Password is incorrect') {
           Utils().toastMessage("Password didn't match", Colors.red);
         }else{
-          return Utils().toastMessage('Server error!!', Colors.red);
+          Utils().toastMessage('Server error!!', Colors.red);
         }
       }
     } catch (e) {
@@ -105,7 +105,7 @@ class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
             suffixIcon: IconButton(
               icon: Icon(
                 _psecure ? Icons.remove_red_eye : Icons.remove_red_eye_outlined,
-                color: CustomColor.lightTeal,
+                color: CustomColor.deepOrange,
               ),
               onPressed: () {
                 setState(() {

@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:npi_project/src/controller/api_end_points.dart';
+import 'package:npi_project/src/controller/drop_down_list.dart';
 import 'package:npi_project/src/data/global_widget/custom_button.dart';
+import 'package:npi_project/src/data/models/DropDownModel.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/data/utils/toast.dart';
 import 'package:npi_project/src/module/student/login&sign_up/local_widget/drop_down.dart';
@@ -31,6 +33,7 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
   String? sessionSelectedValue;
 
   final _formKey = GlobalKey<FormState>();
+  //final DropDownListController _dropDownListController = DropDownListController();
   final usernameController = TextEditingController();
   final rollController = TextEditingController();
   final registrationController = TextEditingController();
@@ -108,6 +111,17 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
       debugPrint(e.toString());
     }
   }
+
+
+  // Future<void> getData() async {
+  //   try {
+  //     DropDownModel dropDownModel = await _d
+  //
+  //   } catch (e) {
+  //     //Utils().toastMessage('Error', Colors.red);
+  //     print('Error fetching data: $e');
+  //   }
+  // }
 
   @override
   void initState() {

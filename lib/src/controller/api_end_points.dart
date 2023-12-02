@@ -4,6 +4,9 @@ class ApiEndPoints{
   static const login = 'https://npi-job-placement-backend.onrender.com/public/api/login-student';
   static const resetPasswordVerify = 'https://npi-job-placement-backend.onrender.com/public/api/forget-password-verify';
   static const changePassword = 'https://npi-job-placement-backend.onrender.com/private/api/change-password';
+  static const technologyList = 'https://npi-job-placement-backend.onrender.com/public/api/view-technology-list';
+  static const sessionList = 'https://npi-job-placement-backend.onrender.com/public/api/view-sessions';
+  static const courseList = 'https://npi-job-placement-backend.onrender.com/public/api/view-course-names';
   static const personalInfoGet = 'https://npi-job-placement-backend.onrender.com/private/api/view-personal-info?private_id=';
   static const personalInfoPost = 'https://npi-job-placement-backend.onrender.com/private/api/save-student-personal-info/';
   static const educationInfoGet = 'https://npi-job-placement-backend.onrender.com/private/api/view-educational-info?private_id=';

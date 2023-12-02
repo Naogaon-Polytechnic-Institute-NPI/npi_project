@@ -7,6 +7,7 @@ class InfoInputForm extends StatelessWidget {
   final double fieldHeight, fieldWidth;
   final bool notEditable;
   final dynamic initialValue;
+  final TextInputType? textInputType;
   final TextEditingController? controller;
   const InfoInputForm({
     super.key,
@@ -17,7 +18,8 @@ class InfoInputForm extends StatelessWidget {
     required this.errorText,
     this.notEditable = false,
     this.controller,
-    this.initialValue
+    this.initialValue,
+    this.textInputType
   });
 
   @override
@@ -38,7 +40,7 @@ class InfoInputForm extends StatelessWidget {
           width: fieldWidth,
           child: TextFormField(
             textInputAction: TextInputAction.next,
-            //initialValue: initialValue,
+            keyboardType: textInputType,
             controller: controller,
               readOnly: notEditable,
               decoration: InputDecoration(
