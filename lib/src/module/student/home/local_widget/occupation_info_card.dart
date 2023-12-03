@@ -39,14 +39,11 @@ class OccupationInfoCard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-<<<<<<< HEAD
               const Icon(
                 Icons.keyboard_arrow_down,
                 size: 30,
+                color: CustomColor.blueGrey,
               ),
-=======
-              const Icon(Icons.keyboard_arrow_down, size: 30, color: CustomColor.blueGrey,),
->>>>>>> ae2ea757ea434edb2bc0225fd8e0ed8243a15943
               Gap(10.w),
               InkWell(
                 onTap: () => showModalBottomSheet<void>(
