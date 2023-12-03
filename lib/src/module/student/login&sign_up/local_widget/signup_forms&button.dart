@@ -1,7 +1,7 @@
 // ignore_for_file: void_checks, use_build_context_synchronously
 
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -26,14 +26,10 @@ class RegisterFormsAndButton extends StatefulWidget {
 }
 
 class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
-  static const List <String> technologyOptions = ['CMT', 'CT','AIDT', 'FT', 'ENV'];
   String? technologySelectedValue;
-
-  static const List <String> sessionOptions = ['18-19', '19-20','20-21', '21-22', '22-23'];
   String? sessionSelectedValue;
 
   final _formKey = GlobalKey<FormState>();
-  //final DropDownListController _dropDownListController = DropDownListController();
   final usernameController = TextEditingController();
   final rollController = TextEditingController();
   final registrationController = TextEditingController();
@@ -65,7 +61,7 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
       });
       Response response = await post(
           Uri.parse(ApiEndPoints.signUp),
-        body: registerData
+          body: registerData
       );
       if(response.statusCode == 200){
         setState(() {
@@ -101,8 +97,8 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
           return Utils().
           toastMessage('Roll/Registration/Session is not correct', Colors.red);
         }else{
-        return Utils().toastMessage('Server error!!', Colors.red);
-      }
+          return Utils().toastMessage('Server error!!', Colors.red);
+        }
       }
     } catch (e) {
       setState(() {
@@ -112,22 +108,9 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
     }
   }
 
-
-  // Future<void> getData() async {
-  //   try {
-  //     DropDownModel dropDownModel = await _d
-  //
-  //   } catch (e) {
-  //     //Utils().toastMessage('Error', Colors.red);
-  //     print('Error fetching data: $e');
-  //   }
-  // }
-
   @override
   void initState() {
     super.initState();
-    technologySelectedValue = technologyOptions.first;
-    sessionSelectedValue = sessionOptions.first;
   }
 
 
@@ -149,7 +132,7 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           InputField(
-              //fieldTitle: 'Username',
+            //fieldTitle: 'Username',
               hintText: 'Enter your name',
               errorText: 'Enter name',
               obsecureText: false,
@@ -158,7 +141,7 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
           ),
           Gap(10.h),
           InputField(
-              //fieldTitle: 'Email',
+            //fieldTitle: 'Email',
               hintText: 'Enter your Roll',
               errorText: 'Enter roll',
               obsecureText: false,
@@ -173,25 +156,28 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
               textInputType: TextInputType.number,
               controller: registrationController),
           Gap(10.h),
-          DropdownExample(
-            selectedValue: '$technologySelectedValue',
-            options: technologyOptions,
-            onChanged: (String? newValue) {
+          DropDown(
+            hintText: 'Enter your technology',
+            apiEndpoint: ApiEndPoints.technologyList,
+            onValueChanged: (selectedId) {
               setState(() {
-               technologySelectedValue = newValue;
+                technologySelectedValue = selectedId;
               });
+              print('Dropdown 1 - Selected ID: $selectedId');
             },
           ),
           Gap(10.h),
-          DropdownExample(
-            selectedValue: '$sessionSelectedValue',
-            options: sessionOptions,
-            onChanged: (String? newValue) {
+          DropDown(
+            hintText: 'Enter your session',
+            apiEndpoint: ApiEndPoints.sessionList,
+            onValueChanged: (selectedId) {
               setState(() {
-                sessionSelectedValue = newValue;
+                sessionSelectedValue = selectedId;
               });
+              print('Dropdown 1 - Selected ID: $selectedId');
             },
           ),
+
           Gap(10.h),
           InputField(
             //fieldTitle: 'Password',
@@ -243,8 +229,8 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
                     return Utils().toastMessage("Less than 6 character", Colors.red);
                   }
                 }
-                print('hi ${sessionSelectedValue}');
-                print(technologySelectedValue);
+                // print('hi ${sessionSelectedValue}');
+                // print(technologySelectedValue);
               }
           )
         ],

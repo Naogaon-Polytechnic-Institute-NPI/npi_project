@@ -24,10 +24,7 @@ class ForgotFormsAndButton extends StatefulWidget {
 }
 
 class _ForgotFormsAndButtonState extends State<ForgotFormsAndButton> {
-  static const List <String> technologyOptions = ['Please select your technology', 'CMT', 'CT','AIDT', 'FT', 'ENV'];
   String? technologySelectedValue;
-
-  static const List <String> sessionOptions = ['Please select your session', '18-19', '19-20','20-21', '21-22', '22-23'];
   String? sessionSelectedValue;
 
   final _formKey = GlobalKey<FormState>();
@@ -108,8 +105,6 @@ class _ForgotFormsAndButtonState extends State<ForgotFormsAndButton> {
   @override
   void initState() {
     super.initState();
-    technologySelectedValue = technologyOptions.first;
-    sessionSelectedValue = sessionOptions.first;
   }
 
 
@@ -130,7 +125,6 @@ class _ForgotFormsAndButtonState extends State<ForgotFormsAndButton> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           InputField(
-              //fieldTitle: 'Email',
               hintText: 'Enter your Roll',
               errorText: 'Enter roll',
               obsecureText: false,
@@ -138,32 +132,29 @@ class _ForgotFormsAndButtonState extends State<ForgotFormsAndButton> {
               controller: rollController),
           Gap(10.h),
           InputField(
-            //fieldTitle: 'Email',
               hintText: 'Enter your Registration',
               errorText: 'Enter registration',
               obsecureText: false,
               textInputType: TextInputType.number,
               controller: registrationController),
           Gap(10.h),
-          DropdownExample(
-            selectedValue: '$technologySelectedValue',
-            options: technologyOptions,
-            onChanged: (String? newValue) {
-              setState(() {
-               technologySelectedValue = newValue;
-              });
-            },
-          ),
+          DropDown(
+              apiEndpoint: ApiEndPoints.technologyList,
+              onValueChanged: (selectedId){
+                setState(() {
+                  technologySelectedValue = selectedId;
+                });
+              },
+              hintText: 'Enter your technology'),
           Gap(10.h),
-          DropdownExample(
-            selectedValue: '$sessionSelectedValue',
-            options: sessionOptions,
-            onChanged: (String? newValue) {
-              setState(() {
-                sessionSelectedValue = newValue;
-              });
-            },
-          ),
+          DropDown(
+              apiEndpoint: ApiEndPoints.sessionList,
+              onValueChanged: (selectedId){
+                setState(() {
+                  sessionSelectedValue = selectedId;
+                });
+              },
+              hintText: 'Enter your session'),
           Gap(10.h),
           InputField(
             //fieldTitle: 'Password',
@@ -202,12 +193,6 @@ class _ForgotFormsAndButtonState extends State<ForgotFormsAndButton> {
               loading: loading,
               onTap: () {
                     if (_formKey.currentState!.validate()) {
-                      if (technologySelectedValue == technologyOptions[0] ||
-                          sessionSelectedValue == sessionOptions[0]) {
-                        Utils().toastMessage(
-                            'Select technology and session', Colors.red);
-                      }
-                      else {
                         if (passwordController.text
                             .toString()
                             .length >= 6) {
@@ -227,7 +212,6 @@ class _ForgotFormsAndButtonState extends State<ForgotFormsAndButton> {
                         }
                       }
                     }
-              }
           )
         ],
       ),

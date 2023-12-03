@@ -11,6 +11,7 @@ import 'package:npi_project/src/controller/user_data.dart';
 import 'package:npi_project/src/data/global_widget/custom_button.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/data/utils/toast.dart';
+import 'package:npi_project/src/module/student/home/local_widget/drop_down.dart';
 import 'package:npi_project/src/module/student/home/local_widget/info_input_field.dart';
 import 'package:npi_project/src/module/student/home/view/home.dart';
 import 'package:npi_project/src/splash_screen.dart';
@@ -26,6 +27,7 @@ class InputEducationalInfo extends StatefulWidget {
 
 class _InputEducationalInfoState extends State<InputEducationalInfo> {
   final _formKey = GlobalKey<FormState>();
+  String? selectedCourse;
   final instituteController = TextEditingController();
   final courseController = TextEditingController();
   final subjectController = TextEditingController();
@@ -78,7 +80,8 @@ class _InputEducationalInfoState extends State<InputEducationalInfo> {
               child: Padding(
                 padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0.h),
                     child: Column(
-                      mainAxisSize: MainAxisSize.max,
+                      //mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         InfoInputForm(
                           title: 'Institute Name',
@@ -90,15 +93,23 @@ class _InputEducationalInfoState extends State<InputEducationalInfo> {
 
                         ),
                         Gap(10.h),
-                        InfoInputForm(
-                          title: 'Course name',
-                          fieldHeight: 50.h,
-                          fieldWidth: width,
-                          hintText: 'Enter course name',
-                          errorText: 'Enter course name',
-                          controller: courseController,
-
+                        Text(
+                          'Course Name',
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontSize: 14.sp,
+                          ),
                         ),
+                        Gap(7.h),
+                        DropDown(
+                          hintText: 'Enter Course name',
+                            apiEndpoint: ApiEndPoints.courseList,
+                            onValueChanged: (selectedId){
+                              setState(() {
+                                selectedCourse = selectedId;
+                              });
+                              print('selected curse $selectedCourse');
+                            }),
                         Gap(10.h),
                         InfoInputForm(
                           title: 'Subject Name',

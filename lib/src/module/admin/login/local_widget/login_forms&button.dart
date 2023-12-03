@@ -89,8 +89,15 @@ class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           AdminInputField(
-              hintText: 'Enter your Roll',
-              errorText: 'Enter Roll',
+              hintText: 'Enter your number',
+              errorText: 'Enter number',
+              obsecureText: false,
+              textInputType: TextInputType.number,
+              controller: rollController),
+          Gap(10.h),
+          AdminInputField(
+              hintText: 'Enter your email',
+              errorText: 'Enter email',
               obsecureText: false,
               textInputType: TextInputType.number,
               controller: rollController),

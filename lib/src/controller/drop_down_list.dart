@@ -6,12 +6,12 @@
 //
 // class DropDownListController{
 //
-//   Future <DropDownModel> dropDown(String apiEndPoints)async{
+//   Future <DropdownList> dropDown(String apiEndPoints)async{
 //
 //       final response = await http.get(Uri.parse(apiEndPoints));
 //       if(response.statusCode == 200){
 //         var responseBody = jsonDecode(response.body);
-//         return DropDownModel.fromJson(responseBody);
+//         return DropdownList.fromJson(responseBody);
 //       }else if(response.statusCode == 500){
 //         Utils().toastMessage('Server error!', Colors.red);
 //         throw Exception('Server error');
