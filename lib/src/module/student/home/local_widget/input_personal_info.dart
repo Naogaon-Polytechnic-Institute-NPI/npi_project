@@ -81,7 +81,7 @@ class InputPersonalInfoState extends State<InputPersonalInfo> {
       contactController.text = personalInfoModel.personalData!.contactNumber! ?? '';
       emailController.text = personalInfoModel.personalData!.emailAddress! ?? '';
     } catch (e) {
-      Utils().toastMessage('Error', Colors.red);
+      //Utils().toastMessage('Error', Colors.red);
       print('Error fetching data: $e');
     }
   }
@@ -172,6 +172,7 @@ class InputPersonalInfoState extends State<InputPersonalInfo> {
                                     title: 'Contact number',
                                     fieldHeight: 50.h,
                                     fieldWidth: 161.w,
+                                    textInputType: TextInputType.number,
                                     hintText: 'Enter contact number',
                                   controller: contactController,
                                 ),
@@ -180,6 +181,7 @@ class InputPersonalInfoState extends State<InputPersonalInfo> {
                                     title: 'Email',
                                     fieldHeight: 50.h,
                                     fieldWidth: 161.w,
+                                    textInputType: TextInputType.emailAddress,
                                     hintText: 'Enter email',
                                   controller: emailController,
                                 ),

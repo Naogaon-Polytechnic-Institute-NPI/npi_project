@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:npi_project/src/module/student/login&sign_up/local_widget/login_txt_button.dart';
-import 'package:npi_project/src/module/student/login&sign_up/local_widget/register_txt_button.dart';
 import 'package:npi_project/src/module/student/login&sign_up/local_widget/register_header.dart';
 import 'package:npi_project/src/module/student/login&sign_up/local_widget/signup_forms&button.dart';
-import 'package:npi_project/src/module/student/login&sign_up/local_widget/welcome_text.dart';
+
 
 class SignUp extends StatelessWidget {
   const SignUp({super.key});

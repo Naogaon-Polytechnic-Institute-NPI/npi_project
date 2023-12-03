@@ -6,9 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:npi_project/src/controller/api_end_points.dart';
-import 'package:npi_project/src/controller/drop_down_list.dart';
 import 'package:npi_project/src/data/global_widget/custom_button.dart';
-import 'package:npi_project/src/data/models/DropDownModel.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/data/utils/toast.dart';
 import 'package:npi_project/src/module/student/login&sign_up/local_widget/drop_down.dart';
@@ -18,23 +16,21 @@ import 'package:npi_project/src/module/student/login&sign_up/view/log_in.dart';
 
 
 
-class RegisterFormsAndButton extends StatefulWidget {
-  const RegisterFormsAndButton({super.key});
+class ForgotFormsAndButton extends StatefulWidget {
+  const ForgotFormsAndButton({super.key});
 
   @override
-  State<RegisterFormsAndButton> createState() => _RegisterFormsAndButtonState();
+  State<ForgotFormsAndButton> createState() => _ForgotFormsAndButtonState();
 }
 
-class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
-  static const List <String> technologyOptions = ['CMT', 'CT','AIDT', 'FT', 'ENV'];
+class _ForgotFormsAndButtonState extends State<ForgotFormsAndButton> {
+  static const List <String> technologyOptions = ['Please select your technology', 'CMT', 'CT','AIDT', 'FT', 'ENV'];
   String? technologySelectedValue;
 
-  static const List <String> sessionOptions = ['18-19', '19-20','20-21', '21-22', '22-23'];
+  static const List <String> sessionOptions = ['Please select your session', '18-19', '19-20','20-21', '21-22', '22-23'];
   String? sessionSelectedValue;
 
   final _formKey = GlobalKey<FormState>();
-  //final DropDownListController _dropDownListController = DropDownListController();
-  final usernameController = TextEditingController();
   final rollController = TextEditingController();
   final registrationController = TextEditingController();
   final passwordController = TextEditingController();
@@ -51,12 +47,11 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
 
   void register() async {
     Map<String, dynamic> registerData = {
-      'name' : usernameController.text.toString(),
       'roll': rollController.text.toString(),
       'registration' : registrationController.text.toString(),
       'technology' : technologySelectedValue.toString(),
       'session' : sessionSelectedValue.toString(),
-      'password' : confirmPasswordController.text.toString()
+      'new_password' : confirmPasswordController.text.toString()
     };
     print(registerData);
     try {
@@ -64,7 +59,7 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
         loading = true;
       });
       Response response = await post(
-          Uri.parse(ApiEndPoints.signUp),
+          Uri.parse(ApiEndPoints.resetPasswordVerify),
         body: registerData
       );
       if(response.statusCode == 200){
@@ -73,33 +68,31 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
         });
         var responseBody = jsonDecode(response.body.toString());
         debugPrint(responseBody['response']);
-        if(responseBody['response'].toString() == 'success') {
+        if(responseBody['response'].toString() == 'User Found') {
           try{
-            Response signUpResponse = await post(Uri.parse(ApiEndPoints.savePassword),
+            Response signUpResponse = await post(Uri.parse(ApiEndPoints.changePassword),
                 body: registerData
             );
             if(response.statusCode == 200){
               var signupResponseBody = jsonDecode(signUpResponse.body.toString());
               print(signupResponseBody);
-              if(signupResponseBody['response'].toString() == 'success'){
+              if(signupResponseBody['response'].toString() == 'Password Changed'){
                 Utils().toastMessage(
-                    'Account created successfully', CustomColor.lightTeal);
+                    'Password Changed', CustomColor.lightTeal);
                 Navigator.pushAndRemoveUntil(
                     context, MaterialPageRoute(
                     builder: (context)=> const LogInScreen()), (route) => false);
-              }else if(signupResponseBody['response'].toString() == 'User  already have a account. Please Login'){
-                Utils().toastMessage('Already have an account', CustomColor.lightTeal);
               }
+            }
+            else{
+              Utils().toastMessage('Server error!', Colors.red);
             }
           }catch(e){
             print(e.toString());
           }
-        }else if(responseBody['response'].toString() == 'Something went wrong !') {
-          Utils().toastMessage(
-              'Fill the data properly', CustomColor.lightTeal);
-        }else if(responseBody['response'].toString() == 'Roll/Registration/Session is not correct'){
+        }else if(responseBody['response'].toString() == 'User not Registered'){
           return Utils().
-          toastMessage('Roll/Registration/Session is not correct', Colors.red);
+          toastMessage('User not Registered', Colors.red);
         }else{
         return Utils().toastMessage('Server error!!', Colors.red);
       }
@@ -112,17 +105,6 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
     }
   }
 
-
-  // Future<void> getData() async {
-  //   try {
-  //     DropDownModel dropDownModel = await _d
-  //
-  //   } catch (e) {
-  //     //Utils().toastMessage('Error', Colors.red);
-  //     print('Error fetching data: $e');
-  //   }
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -133,7 +115,6 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
 
   @override
   void dispose() {
-    usernameController.dispose();
     rollController.dispose();
     registrationController.dispose();
     passwordController.dispose();
@@ -148,15 +129,6 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          InputField(
-              //fieldTitle: 'Username',
-              hintText: 'Enter your name',
-              errorText: 'Enter name',
-              obsecureText: false,
-              textInputType: TextInputType.name,
-              controller: usernameController
-          ),
-          Gap(10.h),
           InputField(
               //fieldTitle: 'Email',
               hintText: 'Enter your Roll',
@@ -226,25 +198,35 @@ class _RegisterFormsAndButtonState extends State<RegisterFormsAndButton> {
           ),
 
           CustomButton(
-              buttonName: 'Register',
+              buttonName: 'Reset',
               loading: loading,
-              onTap: (){
-                if(_formKey.currentState!.validate()){
-                  if(passwordController.text.toString().length >= 6){
-                    if(passwordController.text.toString() == confirmPasswordController.text.toString()){
-                      setState(() {
-                        loading = true;
-                      });
-                      register();
-                    } else {
-                      return Utils().toastMessage("Password didn't match", Colors.red);
+              onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      if (technologySelectedValue == technologyOptions[0] ||
+                          sessionSelectedValue == sessionOptions[0]) {
+                        Utils().toastMessage(
+                            'Select technology and session', Colors.red);
+                      }
+                      else {
+                        if (passwordController.text
+                            .toString()
+                            .length >= 6) {
+                          if (passwordController.text.toString() ==
+                              confirmPasswordController.text.toString()) {
+                            setState(() {
+                              loading = true;
+                            });
+                            register();
+                          } else {
+                            return Utils().toastMessage(
+                                "Password didn't match", Colors.red);
+                          }
+                        } else {
+                          return Utils().toastMessage(
+                              "Less than 6 character", Colors.red);
+                        }
+                      }
                     }
-                  }else{
-                    return Utils().toastMessage("Less than 6 character", Colors.red);
-                  }
-                }
-                print('hi ${sessionSelectedValue}');
-                print(technologySelectedValue);
               }
           )
         ],

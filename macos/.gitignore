@@ -1,7 +1,7 @@
 # Flutter-related
 **/Flutter/ephemeral/
 **/Pods/
-
+#../lib/src/controller/api_end_points.dart
 # Xcode-related
 **/dgph
 **/xcuserdata/

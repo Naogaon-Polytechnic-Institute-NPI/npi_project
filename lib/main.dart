@@ -5,9 +5,7 @@ import 'package:npi_project/src/splash_screen.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.white,
-    statusBarIconBrightness: Brightness.dark
-  ));
+      statusBarColor: Colors.white, statusBarIconBrightness: Brightness.dark));
   runApp(const MyApp());
 }
 

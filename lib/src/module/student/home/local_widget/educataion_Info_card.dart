@@ -46,7 +46,7 @@ class _EducationInfoCardState extends State<EducationInfoCard> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const Icon(Icons.keyboard_arrow_down, size: 30,),
+              const Icon(Icons.keyboard_arrow_down, size: 30,color: CustomColor.blueGrey,),
               Gap(10.w),
               InkWell(
                 onTap: () => showModalBottomSheet<void>(

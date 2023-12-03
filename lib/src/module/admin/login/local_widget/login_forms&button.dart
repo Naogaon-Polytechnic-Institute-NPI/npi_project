@@ -1,28 +1,25 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:http/http.dart';
 import 'package:npi_project/src/controller/api_end_points.dart';
-import 'package:npi_project/src/data/global_widget/custom_button.dart';
-import 'package:npi_project/src/data/global_widget/txt_button.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/data/utils/toast.dart';
+import 'package:npi_project/src/module/admin/login/local_widget/custom_button.dart';
+import 'package:npi_project/src/module/admin/login/local_widget/input_form.dart';
 import 'package:npi_project/src/module/student/home/view/home.dart';
-import 'package:npi_project/src/module/student/login&sign_up/local_widget/input_form.dart';
-import 'package:npi_project/src/module/student/login&sign_up/view/forgot_password.dart';
 import 'package:npi_project/src/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginFormsAndButton extends StatefulWidget {
-  const LoginFormsAndButton({super.key});
+class AdminLoginFormsAndButton extends StatefulWidget {
+  const AdminLoginFormsAndButton({super.key});
 
   @override
-  State<LoginFormsAndButton> createState() => _LoginFormsAndButtonState();
+  State<AdminLoginFormsAndButton> createState() => _AdminLoginFormsAndButtonState();
 }
 
-class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
+class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
   final _formKey = GlobalKey<FormState>();
   final rollController = TextEditingController();
   final passwordController = TextEditingController();
@@ -72,7 +69,7 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
             'Password is incorrect') {
           Utils().toastMessage("Password didn't match", Colors.red);
         }else{
-          return Utils().toastMessage('Server error!!', Colors.red);
+          Utils().toastMessage('Server error!!', Colors.red);
         }
       }
     } catch (e) {
@@ -91,14 +88,14 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          InputField(
+          AdminInputField(
               hintText: 'Enter your Roll',
               errorText: 'Enter Roll',
               obsecureText: false,
               textInputType: TextInputType.number,
               controller: rollController),
           Gap(10.h),
-          InputField(
+          AdminInputField(
             //fieldTitle: 'Password',
             hintText: 'Enter your password',
             errorText: 'Enter password',
@@ -108,7 +105,7 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
             suffixIcon: IconButton(
               icon: Icon(
                 _psecure ? Icons.remove_red_eye : Icons.remove_red_eye_outlined,
-                color: CustomColor.lightTeal,
+                color: CustomColor.deepOrange,
               ),
               onPressed: () {
                 setState(() {
@@ -117,16 +114,8 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
               },
             ),
           ),
-          TxtButton(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> const ForgotPassword()));
-              print('Working');
-            },
-            buttonName: 'Forgot password?',
-            fontSize: 13.sp,
-            color: CustomColor.blueGrey,
-          ),
-          CustomButton(
+          Gap(20.h),
+          AdminCustomButton(
               loading: _loading,
               buttonName: 'Login',
               onTap: () {
