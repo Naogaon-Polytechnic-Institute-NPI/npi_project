@@ -6,6 +6,7 @@ import 'package:http/http.dart';
 import 'package:npi_project/src/controller/api_end_points.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/data/utils/toast.dart';
+import 'package:npi_project/src/module/admin/home/view/admin_home.dart';
 import 'package:npi_project/src/module/admin/login/local_widget/custom_button.dart';
 import 'package:npi_project/src/module/admin/login/local_widget/input_form.dart';
 import 'package:npi_project/src/module/student/home/view/home.dart';
@@ -21,7 +22,8 @@ class AdminLoginFormsAndButton extends StatefulWidget {
 
 class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
   final _formKey = GlobalKey<FormState>();
-  final rollController = TextEditingController();
+  final userNameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool _psecure = true;
   bool _loading = false;
@@ -32,8 +34,9 @@ class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
 
   void login() async {
     try {
-      Response response = await post(Uri.parse(ApiEndPoints.login), body: {
-        'roll': rollController.text.toString(),
+      Response response = await post(Uri.parse(ApiEndPoints.adminLogin), body: {
+        'username' : userNameController.text.toString(),
+        'email': emailController.text.toString(),
         'password': passwordController.text.toString()
       });
       if (response.statusCode == 200) {
@@ -41,33 +44,36 @@ class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
           _loading = false;
         });
         var responseBody = jsonDecode(response.body.toString());
-        if (responseBody['response'].toString() == 'success') {
+        if (responseBody['response'].toString() == 'Login Success') {
 
           // If Successfully Logged In (creds are correct)
-          SharedPreferences sharedPref = await SharedPreferences.getInstance();
-          sharedPref.setBool(SplashScreenState.KEYLOGIN, true);
-          sharedPref.setString(SplashScreenState.userName, responseBody['studentData']['name']);
-          sharedPref.setString(SplashScreenState.roll, responseBody['studentData']['roll']);
-          sharedPref.setString(SplashScreenState.privetKey, responseBody['studentData']['private_id']);
+          // SharedPreferences sharedPref = await SharedPreferences.getInstance();
+          // sharedPref.setBool(SplashScreenState.KEYLOGIN, true);
+          // sharedPref.setString(SplashScreenState.userName, responseBody['studentData']['name']);
+          // sharedPref.setString(SplashScreenState.roll, responseBody['studentData']['roll']);
+          // sharedPref.setString(SplashScreenState.privetKey, responseBody['studentData']['private_id']);
 
-          // Navigator.pushAndRemoveUntil(
-          //     context,
-          //     MaterialPageRoute(builder: (context) => HomeScreen()),
-          //     (route) => false);
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => AdminHome()),
+              (route) => false);
 
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-              builder: (context) => HomeScreen(
-                useName: responseBody['studentData']['name'],
-                roll: responseBody['studentData']['roll'],
-                privetKey: responseBody['studentData']["private_id"],
-              )), (route) => false);
+          // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+          //     builder: (context) => HomeScreen(
+          //       useName: responseBody['studentData']['name'],
+          //       roll: responseBody['studentData']['roll'],
+          //       privetKey: responseBody['studentData']["private_id"],
+          //     )), (route) => false);
 
-          Utils().toastMessage('Loged in', CustomColor.lightTeal);
-        } else if (responseBody['response'].toString() == 'Roll not found !') {
+          Utils().toastMessage('Loged in', CustomColor.deepOrange);
+        } else if (responseBody['response'].toString() == 'User Not Found !') {
           Utils().toastMessage('User not found', Colors.red);
         } else if (responseBody['response'].toString() ==
-            'Password is incorrect') {
+            'Password is wrong !') {
           Utils().toastMessage("Password didn't match", Colors.red);
+        }else if (responseBody['response'].toString() ==
+            'Server is busy. Please try again.') {
+          Utils().toastMessage("Server is busy", Colors.red);
         }else{
           Utils().toastMessage('Server error!!', Colors.red);
         }
@@ -89,18 +95,18 @@ class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           AdminInputField(
-              hintText: 'Enter your number',
+              hintText: 'Enter your username',
               errorText: 'Enter number',
               obsecureText: false,
               textInputType: TextInputType.number,
-              controller: rollController),
+              controller: userNameController),
           Gap(10.h),
           AdminInputField(
               hintText: 'Enter your email',
               errorText: 'Enter email',
               obsecureText: false,
               textInputType: TextInputType.number,
-              controller: rollController),
+              controller: emailController),
           Gap(10.h),
           AdminInputField(
             //fieldTitle: 'Password',
@@ -132,9 +138,6 @@ class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
                   });
                   login();
                   print('working');
-                  print(rollController.text.toString());
-                  print(passwordController.text.toString());
-                  //Navigator.push(context, MaterialPageRoute(builder: (context)=> MyHomePage()));
                 }
               })
         ],
