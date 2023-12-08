@@ -85,142 +85,28 @@ class _FilterBarState extends State<FilterBar> {
           ],
         ),
         Gap(18.h),
-        // CustomButton(
-        //   onTap: (){
-        //     getData();
-        //   },
-        // ),
-        //       Gap(20.h),
-        //
-        //       Text('${sharedPreferences!.getString('filterResponse')}' ?? '')
-              // ListView.builder(
-              //   shrinkWrap: true,
-              //   String test = sharedPreferences.getString('filterResponse' ?? '')
-              //   itemCount: ,
-              //   itemBuilder: (context, index) {
-              //     print(getStudentsData.apiResponse["students"]);
-              //     //print('hi ${snapshot.data!.students!.length}');
-              //     return Card(
-              //       color: CustomColor.deepOrange.withOpacity(0.2),
-              //       shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(10.r),
-              //       ),
-              //       elevation: 0,
-              //       child: InkWell(
-              //         onTap: () => Navigator.push(
-              //           context,
-              //           MaterialPageRoute(
-              //             builder: (context) => DetaildScreen(
-              //               privetKey: '${getStudentsData.apiResponse["students"][index]["private_id"]}' ?? '',
-              //             ),
-              //           ),
-              //         ),
-              //         child: ListTile(
-              //           leading: const Icon(Icons.account_circle, color: Colors.grey, size: 40,),
-              //           title: Text(
-              //             '${getStudentsData.apiResponse["students"][index]["name"]}' ?? '',
-              //             style: TextStyle(
-              //               fontFamily: 'Roboto',
-              //               fontWeight: FontWeight.w500,
-              //               fontSize: 16.sp,
-              //               color: CustomColor.lightTeal,
-              //             ),
-              //           ),
-              //           subtitle: Text(
-              //             '${getStudentsData.apiResponse["students"][index]["roll"]}' ?? '',
-              //             style: const TextStyle(
-              //               fontFamily: 'Roboto',
-              //               color: CustomColor.blueGrey,
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     );
-              //   },
-              // )
 
-        FutureBuilder<AdminView>(
-          key: listKey,
-          future: getStudentsData.getFilteredData('$selectedTechnology', '$selectedSession'),
-          builder: (context, snapshot) {
-
-            print('API Response: ${snapshot.data}');
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: LoadingAnimationWidget.staggeredDotsWave(
-                  color: CustomColor.deepOrange,
-                  size: 50,
-                ),
-              );
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text('Error fetching data: ${snapshot.error}'),
-              );
-            } else if (snapshot.hasData) {
-              var adminView = snapshot.data as AdminView;
-              print('Students list length: ${adminView.students?.length}');
-              print('Type of first element: ${adminView.students!.isNotEmpty ? adminView.students![0].runtimeType : 'No elements'}');
-              print('API Response: $adminView');
-              print('response: ${adminView.response}');
-              print('hi ${adminView.studentsFound}');
-              print('Students list: ${adminView.students}');
-
-              if (adminView.students != null && adminView.students!.isNotEmpty) {
+        FutureBuilder(
+            future: getStudentsData.getFilteredData(selectedTechnology.toString(), selectedSession.toString()),
+            builder: (context, snapshot){
+              if(snapshot.connectionState == ConnectionState.waiting){
+                return LoadingAnimationWidget.staggeredDotsWave(
+                    color: CustomColor.deepOrange,
+                    size: 50
+                );
+              }else if(snapshot.hasData == null){
+                return const Text('no data');
+              }else if(snapshot.data!.response == 'No Students Found !'){
+                return Text('No student found');
+              }else{
                 return ListView.builder(
                   shrinkWrap: true,
-                  itemCount: adminView.students!.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      color: CustomColor.deepOrange.withOpacity(0.2),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      elevation: 0,
-                      child: InkWell(
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DetaildScreen(
-                              privetKey: '${adminView.students![index].privateId}',
-                            ),
-                          ),
-                        ),
-                        child: ListTile(
-                          leading: const Icon(Icons.account_circle, color: Colors.grey, size: 40,),
-                          title: Text(
-                            '${adminView.students![index].name}',
-                            style: TextStyle(
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16.sp,
-                              color: CustomColor.lightTeal,
-                            ),
-                          ),
-                          subtitle: Text(
-                            '${adminView.students![index].roll}',
-                            style: const TextStyle(
-                              fontFamily: 'Roboto',
-                              color: CustomColor.blueGrey,
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                );
-              } else {
-                return const Center(
-                  child: Text('No Student found'),
-                );
+                  itemCount: snapshot.data!.students.length,
+                    itemBuilder: (context, index){
+                    return Text('index');
+                });
               }
-            } else {
-              return const Center(
-                child: Text('No data here'),
-              );
-            }
-          },
-        )
-
+            })
       ],
     );
   }
