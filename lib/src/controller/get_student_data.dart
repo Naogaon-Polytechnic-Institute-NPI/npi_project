@@ -10,7 +10,7 @@ class GetStudentsData{
 
   get apiResponse => _apiResponse;
 
-  Stream<AdminView> getFilteredData(String technology, String session) async* {
+  Future<AdminView> getFilteredData(String technology, String session) async {
     try {
       final response = await http.get(Uri.parse('${ApiEndPoints.filteredData}?technology=$technology&session=$session'));
       print('end point: ${ApiEndPoints.filteredData}?technology=$technology&session=$session');
@@ -18,7 +18,7 @@ class GetStudentsData{
       if (response.statusCode == 200) {
         var responseBody = jsonDecode(response.body.toString());
         print(responseBody.toString());
-        yield AdminView.fromJson(responseBody);
+        return AdminView.fromJson(responseBody);
       } else {
         // Handle error case, throw an exception or return an error result
         throw Exception('Failed to fetch data. Status Code: ${response.statusCode}');

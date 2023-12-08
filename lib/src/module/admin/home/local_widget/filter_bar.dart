@@ -139,9 +139,9 @@ class _FilterBarState extends State<FilterBar> {
               //   },
               // )
 
-        StreamBuilder<AdminView>(
+        FutureBuilder<AdminView>(
           key: listKey,
-          stream: getStudentsData.getFilteredData('$selectedTechnology', '$selectedSession'),
+          future: getStudentsData.getFilteredData('$selectedTechnology', '$selectedSession'),
           builder: (context, snapshot) {
 
             print('API Response: ${snapshot.data}');
