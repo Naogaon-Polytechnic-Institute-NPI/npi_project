@@ -34,7 +34,7 @@ class InfoInputForm extends StatelessWidget {
             fontSize: 14.sp,
           ),
         ),
-        Gap(7.h),
+        Gap(3.h),
         SizedBox(
           height: fieldHeight,
           width: fieldWidth,

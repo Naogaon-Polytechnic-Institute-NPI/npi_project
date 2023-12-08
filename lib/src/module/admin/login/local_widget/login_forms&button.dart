@@ -98,14 +98,14 @@ class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
               hintText: 'Enter your username',
               errorText: 'Enter number',
               obsecureText: false,
-              textInputType: TextInputType.number,
+              textInputType: TextInputType.text,
               controller: userNameController),
           Gap(10.h),
           AdminInputField(
               hintText: 'Enter your email',
               errorText: 'Enter email',
               obsecureText: false,
-              textInputType: TextInputType.number,
+              textInputType: TextInputType.emailAddress,
               controller: emailController),
           Gap(10.h),
           AdminInputField(
@@ -114,7 +114,7 @@ class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
             errorText: 'Enter password',
             obsecureText: _psecure,
             controller: passwordController,
-            textInputType: TextInputType.text,
+            textInputType: TextInputType.visiblePassword,
             suffixIcon: IconButton(
               icon: Icon(
                 _psecure ? Icons.remove_red_eye : Icons.remove_red_eye_outlined,

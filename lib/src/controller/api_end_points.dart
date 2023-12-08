@@ -15,5 +15,5 @@ class ApiEndPoints{
   static const occupationInfoPost = 'https://npi-job-placement-backend.onrender.com/private/api/save-student-occupation-info/';
   static const deleteApi = 'https://npi-job-placement-backend.onrender.com/private/api/remove-educational-info?id=';
   static const adminLogin = 'https://npi-job-placement-backend.onrender.com/admin/api/admin-login';
-  static const filteredData = 'https://npi-job-placement-backend.onrender.com/private/api/filter-student-list?';
+  static const filteredData = 'https://npi-job-placement-backend.onrender.com/private/api/filter-student-list';
 }

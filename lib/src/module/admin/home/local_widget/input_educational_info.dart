@@ -17,15 +17,15 @@ import 'package:npi_project/src/module/student/home/view/home.dart';
 import 'package:npi_project/src/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class InputEducationalInfo extends StatefulWidget {
+class EducationalInfo extends StatefulWidget {
   final String privetKey;
-  const InputEducationalInfo({super.key, required this.privetKey});
+  const EducationalInfo({super.key, required this.privetKey});
 
   @override
-  State<InputEducationalInfo> createState() => _InputEducationalInfoState();
+  State<EducationalInfo> createState() => _EducationalInfoState();
 }
 
-class _InputEducationalInfoState extends State<InputEducationalInfo> {
+class _EducationalInfoState extends State<EducationalInfo> {
   final _formKey = GlobalKey<FormState>();
   String? selectedCourse;
   final instituteController = TextEditingController();

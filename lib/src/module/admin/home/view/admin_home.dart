@@ -5,6 +5,7 @@ import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/module/admin/home/local_widget/filter_bar.dart';
 import 'package:npi_project/src/module/admin/home/local_widget/nav_bar.dart';
 import 'package:npi_project/src/module/admin/home/local_widget/search_bar.dart';
+import 'package:npi_project/src/module/admin/home/local_widget/test_filter.dart';
 
 class AdminHome extends StatefulWidget {
   const AdminHome({super.key});
@@ -15,12 +16,6 @@ class AdminHome extends StatefulWidget {
 
 class _AdminHomeState extends State<AdminHome> {
   GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
