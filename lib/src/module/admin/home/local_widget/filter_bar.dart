@@ -26,20 +26,20 @@ class _FilterBarState extends State<FilterBar> {
 
 
 
-  Future<void> getData() async {
-    try {
-      sharedPreferences = await SharedPreferences.getInstance();
-      //AdminViewStudent adminViewStudent = await GetStudentsData().getFilteredData(selectedTechnology!, selectedSession!);
-      sharedPreferences!.setStringList('filterResponse', '${GetStudentsData().getFilteredData(selectedTechnology!, selectedSession!)}' as List<String>);
-      //sharedPreferences.setString('roll', '${adminViewStudent.students![index].roll}');
-      // sharedPreferences.setString('name', '${adminViewStudent.students![index].name}');
-      // sharedPreferences.setString('name', '${adminViewStudent.students![index].name}');
-      // sharedPreferences.setString('name', '${adminViewStudent.students![index].name}');
-    } catch (e) {
-      //Utils().toastMessage('Error', Colors.red);
-      print('Error fetching data: $e');
-    }
-  }
+  // Future<void> getData() async {
+  //   try {
+  //     sharedPreferences = await SharedPreferences.getInstance();
+  //     //AdminViewStudent adminViewStudent = await GetStudentsData().getFilteredData(selectedTechnology!, selectedSession!);
+  //     sharedPreferences!.setStringList('filterResponse', '${GetStudentsData().getFilteredData(selectedTechnology!, selectedSession!)}' as List<String>);
+  //     //sharedPreferences.setString('roll', '${adminViewStudent.students![index].roll}');
+  //     // sharedPreferences.setString('name', '${adminViewStudent.students![index].name}');
+  //     // sharedPreferences.setString('name', '${adminViewStudent.students![index].name}');
+  //     // sharedPreferences.setString('name', '${adminViewStudent.students![index].name}');
+  //   } catch (e) {
+  //     //Utils().toastMessage('Error', Colors.red);
+  //     print('Error fetching data: $e');
+  //   }
+  // }
 
 // @override
 //   void initState() {
