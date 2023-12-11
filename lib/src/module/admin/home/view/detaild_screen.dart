@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
+import 'package:npi_project/src/module/admin/home/local_widget/Occupation_info.dart';
+import 'package:npi_project/src/module/admin/home/local_widget/education_info.dart';
 import 'package:npi_project/src/module/admin/home/local_widget/personal_info.dart';
 
 class DetaildScreen extends StatelessWidget {
@@ -14,13 +17,16 @@ class DetaildScreen extends StatelessWidget {
           body: SingleChildScrollView(
             child: Container(
               margin: EdgeInsets.all(16.w),
-              height: MediaQuery.sizeOf(context).height,
-
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 500,
-                      child: PersonalInfo(privetKey: privetKey))
+                  BackButton(),
+                  Gap(5.h),
+                  PersonalInfo(privetKey: privetKey),
+                  Gap(16.h),
+                  EducationalInfo(privetKey: privetKey),
+                  Gap(16.h),
+                  OccupationInfo(privetKey: privetKey)
                 ],
               ),
             ),
