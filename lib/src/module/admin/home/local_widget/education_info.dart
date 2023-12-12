@@ -61,67 +61,74 @@ class EducationalInfoState extends State<EducationalInfo> {
                       color: CustomColor.deepOrange,
                       size: 50),
                 );
+              } else if(snapshot.connectionState == ConnectionState.done){
+                if(snapshot.data!.response == 'No Data Found !'){
+                  return Text('No Data Found');
+                }else{
+                  return ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: snapshot.data!.educationalInfo!.length,
+                      itemBuilder: (context, index) {
+                        return Column(
+                            children: [
+                              InfoInputForm(
+                                title: '${[index+1]} .Institute Name',
+                                fieldHeight: 50.h,
+                                fieldWidth: width,
+                                hintText: 'No Data Found',
+                                notEditable: true,
+                                errorText: 'No Data Found',
+                                initialValue: snapshot.data!.educationalInfo![index]
+                                    .instituteName,
+
+                              ),
+
+                              Gap(10.h)
+                              ,
+                              InfoInputForm(
+                                title: 'Course Name',
+                                fieldHeight: 50.h,
+                                fieldWidth: width,
+                                notEditable: true,
+                                hintText: 'No Data Found',
+                                errorText: 'No Data Found',
+                                initialValue: snapshot.data!.educationalInfo![index].studying,
+                              ),
+
+                              Gap(10.h),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  InfoInputForm(
+                                    errorText: 'No Data Found',
+                                    title: 'Subject Name',
+                                    fieldHeight: 50.h,
+                                    fieldWidth: 161.w,
+                                    notEditable: true,
+                                    hintText: 'No Data Found',
+                                    initialValue: snapshot.data!.educationalInfo![index].subjectName,
+                                  ),
+                                  InfoInputForm(
+                                    errorText: 'No Data Found',
+                                    title: 'Passing Year',
+                                    fieldHeight: 50.h,
+                                    fieldWidth: 161.w,
+                                    notEditable: true,
+                                    hintText: 'No Data Found',
+                                    initialValue: snapshot.data!.educationalInfo![index].passingYear,
+                                  ),
+                                ],
+                              ),
+                              Gap(20.h)
+                            ]
+                        );
+                      }
+                  );
+                }
+              }else{
+                throw Exception('$Exception');
               }
-              return ListView.builder(
-                shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: snapshot.data!.educationalInfo!.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        InfoInputForm(
-                          title: '${[index+1]} .Institute Name',
-                          fieldHeight: 50.h,
-                          fieldWidth: width,
-                          hintText: 'No Data Found',
-                          notEditable: true,
-                          errorText: 'No Data Found',
-                          initialValue: snapshot.data!.educationalInfo![index]
-                              .instituteName,
-
-                        ),
-
-                        Gap(10.h)
-                        ,
-                        InfoInputForm(
-                          title: 'Course Name',
-                          fieldHeight: 50.h,
-                          fieldWidth: width,
-                          notEditable: true,
-                          hintText: 'No Data Found',
-                          errorText: 'No Data Found',
-                          initialValue: snapshot.data!.educationalInfo![index].studying,
-                        ),
-
-                        Gap(10.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                        InfoInputForm(
-                          errorText: 'No Data Found',
-                          title: 'Subject Name',
-                          fieldHeight: 50.h,
-                          fieldWidth: 161.w,
-                          notEditable: true,
-                          hintText: 'No Data Found',
-                          initialValue: snapshot.data!.educationalInfo![index].subjectName,
-                        ),
-                        InfoInputForm(
-                          errorText: 'No Data Found',
-                          title: 'Passing Year',
-                          fieldHeight: 50.h,
-                          fieldWidth: 161.w,
-                          notEditable: true,
-                          hintText: 'No Data Found',
-                          initialValue: snapshot.data!.educationalInfo![index].passingYear,
-                        ),
-                          ],
-                        ),
-                        Gap(20.h)
-                    ]
-                    );
-                  }
-              );
             }
         ),
       ],

@@ -24,7 +24,7 @@ class DetaildScreen extends StatelessWidget {
                   Gap(5.h),
                   PersonalInfo(privetKey: privetKey),
                   Gap(16.h),
-                  EducationalInfo(privetKey: privetKey),
+                   EducationalInfo(privetKey: privetKey),
                   Gap(16.h),
                   OccupationInfo(privetKey: privetKey)
                 ],

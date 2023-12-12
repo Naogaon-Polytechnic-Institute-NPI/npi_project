@@ -51,101 +51,115 @@ class PersonalInfoState extends State<PersonalInfo> {
                       size: 50
                   ),
                 );
+              } else if(snapshot.connectionState == ConnectionState.done) {
+
+                if(snapshot.data!.response == 'No Data Found !'){
+                  return Text('No Data Found');
+                }else {
+                  return Column(
+                    children: [
+                      InfoInputForm(
+                        title: 'Name',
+                        fieldHeight: 50.h,
+                        fieldWidth: width,
+                        hintText: 'No Data Found',
+                        notEditable: true,
+                        errorText: '',
+                        initialValue: snapshot.data!.personalData!.name,
+                      ),
+                      Gap(10.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InfoInputForm(
+                            title: 'Father Name',
+                            fieldHeight: 50.h,
+                            fieldWidth: 161.w,
+                            notEditable: true,
+                            hintText: 'No Data Found',
+                            errorText: 'enter father name',
+                            //controller: fatherController,
+                            initialValue: snapshot.data!.personalData!
+                                .fatherName ?? 'No data Found',
+                          ),
+                          Gap(5.w),
+                          InfoInputForm(
+                            errorText: 'enter mother name',
+                            title: 'Mother Name',
+                            fieldHeight: 50.h,
+                            fieldWidth: 161.w,
+                            notEditable: true,
+                            hintText: 'No Data Found',
+                            //controller: motherController,
+                            initialValue: snapshot.data!.personalData!
+                                .motherName ?? 'No data Found',
+                          ),
+                        ],
+                      ),
+                      Gap(10.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InfoInputForm(
+                            errorText: 'enter address',
+                            title: 'Present address',
+                            fieldHeight: 50.h,
+                            fieldWidth: 161.w,
+                            notEditable: true,
+                            hintText: 'No Data Found',
+                            //controller: presentController,
+                            initialValue: snapshot.data!.personalData!
+                                .presentAddress ?? 'No data Found',
+                          ),
+                          InfoInputForm(
+                            errorText: 'enter address',
+                            title: 'Permanent address',
+                            fieldHeight: 50.h,
+                            fieldWidth: 161.w,
+                            notEditable: true,
+                            hintText: 'No Data Found',
+                            //controller: permanentController,
+                            initialValue: snapshot.data!.personalData!
+                                .permanentAddress ?? 'No data Found',
+                          ),
+                        ],
+                      ),
+                      Gap(10.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InfoInputForm(
+                            errorText: 'enter number',
+                            title: 'Contact number',
+                            fieldHeight: 50.h,
+                            fieldWidth: 161.w,
+                            notEditable: true,
+                            textInputType: TextInputType.number,
+                            hintText: 'No Data Found',
+                            //controller: contactController,
+                            initialValue: snapshot.data!.personalData!
+                                .contactNumber ?? 'No data Found',
+                          ),
+                          InfoInputForm(
+                            errorText: 'enter email',
+                            title: 'Email',
+                            fieldHeight: 50.h,
+                            fieldWidth: 161.w,
+                            notEditable: true,
+                            textInputType: TextInputType.emailAddress,
+                            hintText: 'No Data Found',
+                            // controller: emailController,
+                            initialValue: snapshot.data!.personalData!
+                                .emailAddress ?? 'No data Found',
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                }
+              }else{
+                throw Exception('$Exception');
               }
-              return Column(
-                children: [
-                  InfoInputForm(
-                    title: 'Name',
-                    fieldHeight: 50.h,
-                    fieldWidth: width,
-                    hintText: 'No Data Found',
-                    notEditable: true,
-                    errorText: '',
-                    initialValue: snapshot.data!.personalData!.name,
-                  ),
-                  Gap(10.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      InfoInputForm(
-                        title: 'Father Name',
-                        fieldHeight: 50.h,
-                        fieldWidth: 161.w,
-                        notEditable: true,
-                        hintText: 'No Data Found',
-                        errorText: 'enter father name',
-                        //controller: fatherController,
-                        initialValue: snapshot.data!.personalData!.fatherName,
-                      ),
-                      Gap(5.w),
-                      InfoInputForm(
-                        errorText: 'enter mother name',
-                        title: 'Mother Name',
-                        fieldHeight: 50.h,
-                        fieldWidth: 161.w,
-                        notEditable: true,
-                        hintText: 'No Data Found',
-                        //controller: motherController,
-                        initialValue: snapshot.data!.personalData!.motherName,
-                      ),
-                    ],
-                  ),
-                  Gap(10.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      InfoInputForm(
-                        errorText: 'enter address',
-                        title: 'Present address',
-                        fieldHeight: 50.h,
-                        fieldWidth: 161.w,
-                        notEditable: true,
-                        hintText: 'No Data Found',
-                        //controller: presentController,
-                        initialValue: snapshot.data!.personalData!.presentAddress,
-                      ),
-                      InfoInputForm(
-                        errorText: 'enter address',
-                        title: 'Permanent address',
-                        fieldHeight: 50.h,
-                        fieldWidth: 161.w,
-                        notEditable: true,
-                        hintText: 'No Data Found',
-                        //controller: permanentController,
-                        initialValue: snapshot.data!.personalData!.permanentAddress,
-                      ),
-                    ],
-                  ),
-                  Gap(10.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      InfoInputForm(
-                        errorText: 'enter number',
-                        title: 'Contact number',
-                        fieldHeight: 50.h,
-                        fieldWidth: 161.w,
-                        notEditable: true,
-                        textInputType: TextInputType.number,
-                        hintText: 'No Data Found',
-                        //controller: contactController,
-                        initialValue: snapshot.data!.personalData!.contactNumber,
-                      ),
-                      InfoInputForm(
-                        errorText: 'enter email',
-                        title: 'Email',
-                        fieldHeight: 50.h,
-                        fieldWidth: 161.w,
-                        notEditable: true,
-                        textInputType: TextInputType.emailAddress,
-                        hintText: 'No Data Found',
-                        // controller: emailController,
-                        initialValue: snapshot.data!.personalData!.emailAddress,
-                      ),
-                    ],
-                  ),
-                ],
-              );
 
             }
         )

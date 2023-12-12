@@ -51,30 +51,39 @@ class OccupationInfoState extends State<OccupationInfo> {
                       size: 50
                   ),
                 );
+              }else if(snapshot.connectionState == ConnectionState.done) {
+                if(snapshot.data!.response == 'No Data Found'){
+                  return Text('No Data Found');
+                }else {
+                  return Column(
+                      children: [
+                        InfoInputForm(
+                          title: 'Current Occupation',
+                          fieldHeight: 50.h,
+                          fieldWidth: width,
+                          hintText: 'No Data Found',
+                          notEditable: true,
+                          errorText: '',
+                          initialValue: snapshot.data!.occupatioInfo!
+                              .currnetOccupation,
+                        ),
+                        Gap(10.h),
+                        InfoInputForm(
+                          title: 'Occupation Details',
+                          fieldHeight: 50.h,
+                          fieldWidth: width,
+                          hintText: 'No Data Found',
+                          notEditable: true,
+                          errorText: '',
+                          initialValue: snapshot.data!.occupatioInfo!
+                              .occupationDetails,
+                        ),
+                      ]
+                  );
+                }
+              }else{
+                throw Exception('$Exception');
               }
-              return Column(
-                children: [
-                  InfoInputForm(
-                    title: 'Current Occupation',
-                    fieldHeight: 50.h,
-                    fieldWidth: width,
-                    hintText: 'No Data Found',
-                    notEditable: true,
-                    errorText: '',
-                    initialValue: snapshot.data!.occupatioInfo!.currnetOccupation,
-                  ),
-                  Gap(10.h),
-                  InfoInputForm(
-                    title: 'Occupation Details',
-                    fieldHeight: 50.h,
-                    fieldWidth: width,
-                    hintText: 'No Data Found',
-                    notEditable: true,
-                    errorText: '',
-                    initialValue: snapshot.data!.occupatioInfo!.occupationDetails,
-                  ),
-               ]
-              );
 
             }
         )
