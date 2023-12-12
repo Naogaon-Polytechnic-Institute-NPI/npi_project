@@ -4,12 +4,9 @@ import 'package:gap/gap.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:npi_project/src/controller/api_end_points.dart';
 import 'package:npi_project/src/controller/get_student_data.dart';
-import 'package:npi_project/src/data/models/AdminViewStudent.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
-import 'package:npi_project/src/module/admin/home/local_widget/custom_button.dart';
 import 'package:npi_project/src/module/admin/home/local_widget/drop_down.dart';
 import 'package:npi_project/src/module/admin/home/view/detaild_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 class FilterBar extends StatefulWidget {
@@ -68,10 +65,6 @@ class _FilterBarState extends State<FilterBar> {
         FutureBuilder(
           future: getStudentsData.getFilteredData('$selectedTechnology', '$selectedSession'),
           builder: (context, snapshot) {
-            print('response: ${snapshot.data!.response}');
-            print('studentsFound: ${snapshot.data!.studentsFound}');
-            print('students: ${snapshot.data!.students!.toList()}');
-            print('students: ${snapshot.data!.students!.length}');
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: LoadingAnimationWidget.staggeredDotsWave(
@@ -83,9 +76,14 @@ class _FilterBarState extends State<FilterBar> {
               return Center(
                 child: Text('Error fetching data: ${snapshot.error}'),
               );
-            } else if (snapshot.data!.response == 'No Students Found !') {
-              return const Center(child:  Text('No Student Found'),);
-              } else {
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              if(snapshot.data!.response == 'No Students Found from $selectedTechnology technology.'){
+                return Text('No Students Found from $selectedTechnology technology.');
+              }else if(snapshot.data!.response == 'No Students Found from $selectedSession Session'){
+                return Text('No Students Found from $selectedSession Session');
+              }else if(snapshot.data!.response == 'No Students Found !'){
+                return Text('No Students Found from $selectedTechnology technology and $selectedSession Session');
+              }else {
                 return ListView.builder(
                   shrinkWrap: true,
                   itemCount: snapshot.data!.students!.length,
@@ -97,16 +95,21 @@ class _FilterBarState extends State<FilterBar> {
                       ),
                       elevation: 0,
                       child: InkWell(
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DetaildScreen(
-                              privetKey: snapshot.data!.students![index].privateId.toString(),
+                        onTap: () =>
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    DetaildScreen(
+                                      privetKey: snapshot.data!.students![index]
+                                          .privateId.toString(),
+                                    ),
+                              ),
                             ),
-                          ),
-                        ),
                         child: ListTile(
-                          leading: const Icon(Icons.account_circle, color: Colors.grey, size: 40,),
+                          leading: const Icon(
+                            Icons.account_circle, color: Colors.grey,
+                            size: 40,),
                           title: Text(
                             snapshot.data!.students![index].name.toString(),
                             style: TextStyle(
@@ -129,6 +132,9 @@ class _FilterBarState extends State<FilterBar> {
                   },
                 );
               }
+              }else{
+              return Text('error');
+            }
             }
         )
       ],
