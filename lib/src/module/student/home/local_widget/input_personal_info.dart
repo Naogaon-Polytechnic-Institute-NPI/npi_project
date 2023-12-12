@@ -12,7 +12,7 @@ import 'package:npi_project/src/data/global_widget/custom_button.dart';
 import 'package:npi_project/src/data/models/PersonalInfoModel.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/data/utils/toast.dart';
-import 'package:npi_project/src/module/student/home/local_widget/info_input_field.dart';
+import 'package:npi_project/src/data/global_widget/info_input_field.dart';
 import 'package:npi_project/src/module/student/home/view/home.dart';
 import 'package:npi_project/src/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
