@@ -84,52 +84,56 @@ class _FilterBarState extends State<FilterBar> {
               }else if(snapshot.data!.response == 'No Students Found !'){
                 return Text('No Students Found from $selectedTechnology technology and $selectedSession Session');
               }else {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: snapshot.data!.students!.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      color: CustomColor.deepOrange.withOpacity(0.2),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      elevation: 0,
-                      child: InkWell(
-                        onTap: () =>
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    DetaildScreen(
-                                      privetKey: snapshot.data!.students![index]
-                                          .privateId.toString(),
-                                    ),
+                return Container(
+                  height: 440.h,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    //physics: ,
+                    itemCount: snapshot.data!.students!.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        color: CustomColor.deepOrange.withOpacity(0.2),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.r),
+                        ),
+                        elevation: 0,
+                        child: InkWell(
+                          onTap: () =>
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetaildScreen(
+                                        privetKey: snapshot.data!.students![index]
+                                            .privateId.toString(),
+                                      ),
+                                ),
+                              ),
+                          child: ListTile(
+                            leading: const Icon(
+                              Icons.account_circle, color: Colors.grey,
+                              size: 40,),
+                            title: Text(
+                              snapshot.data!.students![index].name.toString(),
+                              style: TextStyle(
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16.sp,
+                                color: CustomColor.lightTeal,
                               ),
                             ),
-                        child: ListTile(
-                          leading: const Icon(
-                            Icons.account_circle, color: Colors.grey,
-                            size: 40,),
-                          title: Text(
-                            snapshot.data!.students![index].name.toString(),
-                            style: TextStyle(
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16.sp,
-                              color: CustomColor.lightTeal,
-                            ),
-                          ),
-                          subtitle: Text(
-                            snapshot.data!.students![index].roll.toString(),
-                            style: const TextStyle(
-                              fontFamily: 'Roboto',
-                              color: CustomColor.blueGrey,
+                            subtitle: Text(
+                              snapshot.data!.students![index].roll.toString(),
+                              style: const TextStyle(
+                                fontFamily: 'Roboto',
+                                color: CustomColor.blueGrey,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 );
               }
               }else{

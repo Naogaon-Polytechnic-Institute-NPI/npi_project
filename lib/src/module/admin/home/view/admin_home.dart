@@ -31,30 +31,28 @@ class _AdminHomeState extends State<AdminHome> {
           padding: EdgeInsets.all(24.w),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                  children: [
-                    InkWell(
-                      onTap: (){
-                        _globalKey.currentState!.openDrawer();
-                      },
-                      child: SizedBox(
-                          height: 35.h,
-                          width: 35.w,
-                          child: Image.asset('assets/images/menu.png',
-                              color: CustomColor.deepOrange.withOpacity(.8)
-                          )),
-                    )
-                  ],
-                ),
-                const SearchBarApp(),
-                Gap(8.h),
-                const FilterBar(),
-              ],
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  InkWell(
+                    onTap: (){
+                      _globalKey.currentState!.openDrawer();
+                    },
+                    child: SizedBox(
+                        height: 35.h,
+                        width: 35.w,
+                        child: Image.asset('assets/images/menu.png',
+                            color: CustomColor.deepOrange.withOpacity(.8)
+                        )),
+                  )
+                ],
+              ),
+              const SearchBarApp(),
+              Gap(8.h),
+              const FilterBar(),
+            ],
           ),
         ),
       ),
