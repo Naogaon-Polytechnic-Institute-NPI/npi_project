@@ -17,7 +17,8 @@ class AdminLoginFormsAndButton extends StatefulWidget {
   const AdminLoginFormsAndButton({super.key});
 
   @override
-  State<AdminLoginFormsAndButton> createState() => _AdminLoginFormsAndButtonState();
+  State<AdminLoginFormsAndButton> createState() =>
+      _AdminLoginFormsAndButtonState();
 }
 
 class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
@@ -35,7 +36,7 @@ class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
   void login() async {
     try {
       Response response = await post(Uri.parse(ApiEndPoints.adminLogin), body: {
-        'username' : userNameController.text.toString(),
+        'username': userNameController.text.toString(),
         'email': emailController.text.toString(),
         'password': passwordController.text.toString()
       });
@@ -45,13 +46,16 @@ class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
         });
         var responseBody = jsonDecode(response.body.toString());
         if (responseBody['response'].toString() == 'Login Success') {
-
           // If Successfully Logged In (creds are correct)
           // SharedPreferences sharedPref = await SharedPreferences.getInstance();
           // sharedPref.setBool(SplashScreenState.KEYLOGIN, true);
           // sharedPref.setString(SplashScreenState.userName, responseBody['studentData']['name']);
           // sharedPref.setString(SplashScreenState.roll, responseBody['studentData']['roll']);
           // sharedPref.setString(SplashScreenState.privetKey, responseBody['studentData']['private_id']);
+
+          // If Successfully Logged In (creds are correct)
+          SharedPreferences sharedPref = await SharedPreferences.getInstance();
+          sharedPref.setBool(SplashScreenState.adminLoginKEY, true);
 
           Navigator.pushAndRemoveUntil(
               context,
@@ -71,10 +75,10 @@ class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
         } else if (responseBody['response'].toString() ==
             'Password is wrong !') {
           Utils().toastMessage("Password didn't match", Colors.red);
-        }else if (responseBody['response'].toString() ==
+        } else if (responseBody['response'].toString() ==
             'Server is busy. Please try again.') {
           Utils().toastMessage("Server is busy", Colors.red);
-        }else{
+        } else {
           Utils().toastMessage('Server error!!', Colors.red);
         }
       }
@@ -85,7 +89,6 @@ class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
       print(e.toString());
     }
   }
-
 
   @override
   Widget build(BuildContext context) {

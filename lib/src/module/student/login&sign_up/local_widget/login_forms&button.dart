@@ -45,25 +45,30 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
         });
         var responseBody = jsonDecode(response.body.toString());
         if (responseBody['response'].toString() == 'success') {
-
           // If Successfully Logged In (creds are correct)
           SharedPreferences sharedPref = await SharedPreferences.getInstance();
-          sharedPref.setBool(SplashScreenState.KEYLOGIN, true);
-          sharedPref.setString(SplashScreenState.userName, responseBody['studentData']['name']);
-          sharedPref.setString(SplashScreenState.roll, responseBody['studentData']['roll']);
-          sharedPref.setString(SplashScreenState.privetKey, responseBody['studentData']['private_id']);
+          sharedPref.setBool(SplashScreenState.studentLoginKEY, true);
+          sharedPref.setString(
+              SplashScreenState.userName, responseBody['studentData']['name']);
+          sharedPref.setString(
+              SplashScreenState.roll, responseBody['studentData']['roll']);
+          sharedPref.setString(SplashScreenState.privetKey,
+              responseBody['studentData']['private_id']);
 
           // Navigator.pushAndRemoveUntil(
           //     context,
           //     MaterialPageRoute(builder: (context) => HomeScreen()),
           //     (route) => false);
 
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-              builder: (context) => HomeScreen(
-                useName: responseBody['studentData']['name'],
-                roll: responseBody['studentData']['roll'],
-                privetKey: responseBody['studentData']["private_id"],
-              )), (route) => false);
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => HomeScreen(
+                        useName: responseBody['studentData']['name'],
+                        roll: responseBody['studentData']['roll'],
+                        privetKey: responseBody['studentData']["private_id"],
+                      )),
+              (route) => false);
 
           Utils().toastMessage('Loged in', CustomColor.lightTeal);
         } else if (responseBody['response'].toString() == 'Roll not found !') {
@@ -71,7 +76,7 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
         } else if (responseBody['response'].toString() ==
             'Password is incorrect') {
           Utils().toastMessage("Password didn't match", Colors.red);
-        }else{
+        } else {
           return Utils().toastMessage('Server error!!', Colors.red);
         }
       }
@@ -82,7 +87,6 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
       print(e.toString());
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +123,10 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
           ),
           TxtButton(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> const ForgotPassword()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ForgotPassword()));
               print('Working');
             },
             buttonName: 'Forgot password?',
