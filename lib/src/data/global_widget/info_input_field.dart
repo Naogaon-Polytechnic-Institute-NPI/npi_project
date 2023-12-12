@@ -41,6 +41,7 @@ class InfoInputForm extends StatelessWidget {
           child: TextFormField(
             textInputAction: TextInputAction.next,
             keyboardType: textInputType,
+            initialValue: initialValue,
             controller: controller,
               readOnly: notEditable,
               decoration: InputDecoration(

@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:ffi';
 import 'package:npi_project/src/controller/api_end_points.dart';
+import 'package:npi_project/src/data/models/AdminView.dart';
 import 'package:npi_project/src/data/models/AdminViewStudent.dart';
 import 'package:http/http.dart' as http;
-import 'package:npi_project/src/data/models/TestView.dart';
 
 class GetStudentsData{
   dynamic _apiResponse;

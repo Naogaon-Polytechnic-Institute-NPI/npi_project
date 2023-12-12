@@ -5,12 +5,13 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:npi_project/src/controller/api_end_points.dart';
 import 'package:npi_project/src/controller/get_student_data.dart';
 import 'package:npi_project/src/data/models/AdminViewStudent.dart';
-import 'package:npi_project/src/data/models/TestView.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/module/admin/home/local_widget/custom_button.dart';
 import 'package:npi_project/src/module/admin/home/local_widget/drop_down.dart';
 import 'package:npi_project/src/module/admin/home/view/detaild_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+
 class FilterBar extends StatefulWidget {
   const FilterBar({super.key});
 
@@ -19,34 +20,11 @@ class FilterBar extends StatefulWidget {
 }
 
 class _FilterBarState extends State<FilterBar> {
-  final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
   String? selectedTechnology = '', selectedSession = '';
   GetStudentsData getStudentsData = GetStudentsData();
-  SharedPreferences? sharedPreferences;
 
 
 
-  Future<void> getData() async {
-    try {
-      sharedPreferences = await SharedPreferences.getInstance();
-      //AdminViewStudent adminViewStudent = await GetStudentsData().getFilteredData(selectedTechnology!, selectedSession!);
-      sharedPreferences!.setStringList('filterResponse', '${GetStudentsData().getFilteredData(selectedTechnology!, selectedSession!)}' as List<String>);
-      //sharedPreferences.setString('roll', '${adminViewStudent.students![index].roll}');
-      // sharedPreferences.setString('name', '${adminViewStudent.students![index].name}');
-      // sharedPreferences.setString('name', '${adminViewStudent.students![index].name}');
-      // sharedPreferences.setString('name', '${adminViewStudent.students![index].name}');
-    } catch (e) {
-      //Utils().toastMessage('Error', Colors.red);
-      print('Error fetching data: $e');
-    }
-  }
-
-// @override
-//   void initState() {
-//     // TODO: implement initState
-//     super.initState();
-//     getData();
-//   }
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -68,7 +46,7 @@ class _FilterBarState extends State<FilterBar> {
                 },
                 hintText: 'select technology'
             ),
-            //Gap(5.w),
+
             DropDown(
                 apiEndpoint: ApiEndPoints.sessionList,
                 onValueChanged: (selectedId){
@@ -87,26 +65,71 @@ class _FilterBarState extends State<FilterBar> {
         Gap(18.h),
 
         FutureBuilder(
-            future: getStudentsData.getFilteredData(selectedTechnology.toString(), selectedSession.toString()),
-            builder: (context, snapshot){
-              if(snapshot.connectionState == ConnectionState.waiting){
-                return LoadingAnimationWidget.staggeredDotsWave(
-                    color: CustomColor.deepOrange,
-                    size: 50
-                );
-              }else if(snapshot.hasData == null){
-                return const Text('no data');
-              }else if(snapshot.data!.response == 'No Students Found !'){
-                return Text('No student found');
-              }else{
+          future: getStudentsData.getFilteredData('$selectedTechnology', '$selectedSession'),
+          builder: (context, snapshot) {
+            print('response: ${snapshot.data!.response}');
+            print('studentsFound: ${snapshot.data!.studentsFound}');
+            print('students: ${snapshot.data!.students!.toList()}');
+            print('students: ${snapshot.data!.students!.length}');
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: LoadingAnimationWidget.staggeredDotsWave(
+                  color: CustomColor.deepOrange,
+                  size: 50,
+                ),
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Error fetching data: ${snapshot.error}'),
+              );
+            } else if (snapshot.data!.response == 'No Students Found !') {
+              return const Center(child:  Text('No Student Found'),);
+              } else {
                 return ListView.builder(
                   shrinkWrap: true,
-                  itemCount: snapshot.data!.students.length,
-                    itemBuilder: (context, index){
-                    return Text('index');
-                });
+                  itemCount: snapshot.data!.students!.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      color: CustomColor.deepOrange.withOpacity(0.2),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      elevation: 0,
+                      child: InkWell(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetaildScreen(
+                              privetKey: snapshot.data!.students![index].privateId.toString(),
+                            ),
+                          ),
+                        ),
+                        child: ListTile(
+                          leading: const Icon(Icons.account_circle, color: Colors.grey, size: 40,),
+                          title: Text(
+                            snapshot.data!.students![index].name.toString(),
+                            style: TextStyle(
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16.sp,
+                              color: CustomColor.lightTeal,
+                            ),
+                          ),
+                          subtitle: Text(
+                            snapshot.data!.students![index].roll.toString(),
+                            style: const TextStyle(
+                              fontFamily: 'Roboto',
+                              color: CustomColor.blueGrey,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
               }
-            })
+            }
+        )
       ],
     );
   }
