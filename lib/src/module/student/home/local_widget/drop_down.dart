@@ -6,9 +6,9 @@ import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:http/http.dart' as http;
 
 class DropDown extends StatefulWidget {
-  final String apiEndpoint, hintText;
+  final String apiEndpoint;
   final void Function(String) onValueChanged;
-
+  final String hintText;
   DropDown({required this.apiEndpoint, required this.onValueChanged, required this.hintText});
 
   @override
@@ -53,16 +53,15 @@ class _DropDownState extends State<DropDown> {
         width: MediaQuery.sizeOf(context).width,
     padding: EdgeInsets.symmetric(horizontal: 10.w),
     decoration: BoxDecoration(
-    color: CustomColor.lightTeal.withOpacity(0.1),
-    border: Border.all(color: CustomColor.blueGrey.withOpacity(.2), width: 1),
-    borderRadius: BorderRadius.circular(25.r)
+    border: Border.all(color: const Color(0xffE8E8E8)),
+    borderRadius: BorderRadius.circular(5.r)
     ),
     child:DropdownButton(
       isExpanded: true,
       hint: Text(
         widget.hintText,
         style: TextStyle(
-          color: CustomColor.blueGrey,
+          color: const Color(0xff9A9A9A),
           fontFamily: 'Roboto',
           fontSize: 15.sp,
         ),

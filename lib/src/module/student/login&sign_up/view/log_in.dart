@@ -73,7 +73,7 @@ class _LogInScreenState extends State<LogInScreen> {
                           'Admin login',
                           style: TextStyle(
                             fontFamily: 'Roboto',
-                            color: CustomColor.jadeGreen
+                            color: CustomColor.deepOrange
                           ),
                         )
                     ),
