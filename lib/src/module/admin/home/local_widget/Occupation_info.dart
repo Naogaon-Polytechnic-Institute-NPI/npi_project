@@ -11,7 +11,6 @@ class OccupationInfo extends StatefulWidget {
   final String privetKey;
 
   const OccupationInfo({
-    //required this.userName,
     required this.privetKey,
     super.key});
 

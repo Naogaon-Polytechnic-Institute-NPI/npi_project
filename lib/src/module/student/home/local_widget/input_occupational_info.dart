@@ -175,7 +175,7 @@ class _InputOccupationalInfoState extends State<InputOccupationalInfo> {
                       fieldHeight: 50.h,
                       fieldWidth: width,
                       hintText: 'Enter Occupation Details',
-                      errorText: 'enter father name',
+                      errorText: 'enter occupation details',
                       controller: occupationDetailsController,
                     ),
                     CustomButton(

@@ -1,17 +1,18 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:npi_project/src/controller/user_data.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/data/global_widget/info_input_field.dart';
+import 'package:npi_project/src/module/admin/home/local_widget/custom_button.dart';
 
 class PersonalInfo extends StatefulWidget {
   final String privetKey;
 
   const PersonalInfo({
-    //required this.userName,
     required this.privetKey,
     super.key});
 
@@ -54,18 +55,30 @@ class PersonalInfoState extends State<PersonalInfo> {
               } else if(snapshot.connectionState == ConnectionState.done) {
 
                 if(snapshot.data!.response == 'No Data Found !'){
-                  return Text('No Data Found');
+                  return const Text('No Data Found');
                 }else {
                   return Column(
                     children: [
-                      InfoInputForm(
-                        title: 'Name',
-                        fieldHeight: 50.h,
-                        fieldWidth: width,
-                        hintText: 'No Data Found',
-                        notEditable: true,
-                        errorText: '',
-                        initialValue: snapshot.data!.personalData!.name,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InfoInputForm(
+                            title: 'Name',
+                            fieldHeight: 50.h,
+                            fieldWidth: 250.w,
+                            hintText: 'No Data Found',
+                            notEditable: true,
+                            errorText: '',
+                            initialValue: snapshot.data!.personalData!.name,
+                          ),
+                          CircleAvatar(
+                            backgroundColor: CustomColor.deepOrange,
+                              child: IconButton(onPressed: () async{
+                                final number = snapshot.data!.personalData!.contactNumber; //set the number here
+                                bool? res = await FlutterPhoneDirectCaller.callNumber(number!);
+                              } ,
+                                icon: const Icon(Icons.call, color: Colors.white,),))
+                        ],
                       ),
                       Gap(10.h),
                       Row(
@@ -109,7 +122,7 @@ class PersonalInfoState extends State<PersonalInfo> {
                             hintText: 'No Data Found',
                             //controller: presentController,
                             initialValue: snapshot.data!.personalData!
-                                .presentAddress ?? 'No data Found',
+                                .presentAddress,
                           ),
                           InfoInputForm(
                             errorText: 'enter address',
@@ -120,7 +133,7 @@ class PersonalInfoState extends State<PersonalInfo> {
                             hintText: 'No Data Found',
                             //controller: permanentController,
                             initialValue: snapshot.data!.personalData!
-                                .permanentAddress ?? 'No data Found',
+                                .permanentAddress,
                           ),
                         ],
                       ),
@@ -136,9 +149,8 @@ class PersonalInfoState extends State<PersonalInfo> {
                             notEditable: true,
                             textInputType: TextInputType.number,
                             hintText: 'No Data Found',
-                            //controller: contactController,
                             initialValue: snapshot.data!.personalData!
-                                .contactNumber ?? 'No data Found',
+                                .contactNumber,
                           ),
                           InfoInputForm(
                             errorText: 'enter email',

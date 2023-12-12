@@ -29,7 +29,6 @@ class _InputEducationalInfoState extends State<InputEducationalInfo> {
   final _formKey = GlobalKey<FormState>();
   String? selectedCourse;
   final instituteController = TextEditingController();
-  final courseController = TextEditingController();
   final subjectController = TextEditingController();
   final passingYearController = TextEditingController();
 
@@ -37,7 +36,7 @@ class _InputEducationalInfoState extends State<InputEducationalInfo> {
   void saveEducationalInfo()async{
     Map<String, dynamic> educationalData = {
       'instituteName' : instituteController.text.toString(),
-      'studying' : courseController.text.toString(),
+      'studying' : selectedCourse.toString(),
       'subjectName' : subjectController.text.toString(),
       'passingYear' : passingYearController.text.toString(),
     };
@@ -128,6 +127,7 @@ class _InputEducationalInfoState extends State<InputEducationalInfo> {
                           hintText: 'Enter passing year',
                           errorText: 'Enter passing year',
                           controller: passingYearController,
+                          textInputType: TextInputType.number,
                         ),
                         Gap(10.h),
                         CustomButton(onTap: ()async {

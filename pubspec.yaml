@@ -44,6 +44,7 @@ dependencies:
   loading_animation_widget: ^1.2.0+4
   connectivity_plus: ^5.0.2
   internet_connection_checker: ^1.0.0+1
+  flutter_phone_direct_caller: ^2.1.1
 
 
 dev_dependencies:
