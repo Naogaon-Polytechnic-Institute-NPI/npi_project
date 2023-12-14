@@ -7,7 +7,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:npi_project/src/controller/user_data.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/data/global_widget/info_input_field.dart';
-import 'package:npi_project/src/module/admin/home/local_widget/custom_button.dart';
+
 
 class PersonalInfo extends StatefulWidget {
   final String privetKey;

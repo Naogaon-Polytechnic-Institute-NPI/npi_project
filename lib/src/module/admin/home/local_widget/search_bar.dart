@@ -24,6 +24,7 @@ class _SearchBarAppState extends State<SearchBarApp> {
         padding: const MaterialStatePropertyAll<EdgeInsets>(
             EdgeInsets.symmetric(horizontal: 16.0)),
         onTap: () {
+
         },
         onChanged: (_) {
         },

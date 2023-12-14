@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -46,28 +48,12 @@ class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
         });
         var responseBody = jsonDecode(response.body.toString());
         if (responseBody['response'].toString() == 'Login Success') {
-          // If Successfully Logged In (creds are correct)
-          // SharedPreferences sharedPref = await SharedPreferences.getInstance();
-          // sharedPref.setBool(SplashScreenState.KEYLOGIN, true);
-          // sharedPref.setString(SplashScreenState.userName, responseBody['studentData']['name']);
-          // sharedPref.setString(SplashScreenState.roll, responseBody['studentData']['roll']);
-          // sharedPref.setString(SplashScreenState.privetKey, responseBody['studentData']['private_id']);
 
-          // If Successfully Logged In (creds are correct)
           SharedPreferences sharedPref = await SharedPreferences.getInstance();
           sharedPref.setBool(SplashScreenState.adminLoginKEY, true);
 
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => AdminHome()),
-              (route) => false);
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const AdminHome()));
 
-          // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-          //     builder: (context) => HomeScreen(
-          //       useName: responseBody['studentData']['name'],
-          //       roll: responseBody['studentData']['roll'],
-          //       privetKey: responseBody['studentData']["private_id"],
-          //     )), (route) => false);
 
           Utils().toastMessage('Loged in', CustomColor.deepOrange);
         } else if (responseBody['response'].toString() == 'User Not Found !') {

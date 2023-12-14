@@ -1,16 +1,9 @@
-import 'dart:async';
-import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/module/admin/login/local_widget/login_forms&button.dart';
 import 'package:npi_project/src/module/admin/login/local_widget/welcome_text.dart';
-import 'package:npi_project/src/module/student/login&sign_up/local_widget/login_forms&button.dart';
-import 'package:npi_project/src/module/student/login&sign_up/local_widget/register_txt_button.dart';
-import 'package:npi_project/src/module/student/login&sign_up/local_widget/welcome_text.dart';
 import 'package:npi_project/src/module/student/login&sign_up/view/log_in.dart';
 
 class AdminLogInScreen extends StatelessWidget {

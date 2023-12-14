@@ -18,7 +18,10 @@ class FilterBar extends StatefulWidget {
 
 class _FilterBarState extends State<FilterBar> {
   String? selectedTechnology = '', selectedSession = '';
+  TextEditingController searchController = TextEditingController();
   GetStudentsData getStudentsData = GetStudentsData();
+  String hintTextTechnology = 'Select Technology', hintTextSession = 'Select Session';
+
 
 
 
@@ -27,13 +30,42 @@ class _FilterBarState extends State<FilterBar> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        SearchBar(
+          hintText: 'Search here..',
+          hintStyle: MaterialStateProperty.all(const TextStyle(color: Colors.grey)),
+          controller: searchController,
+          padding: const MaterialStatePropertyAll<EdgeInsets>(
+              EdgeInsets.symmetric(horizontal: 16.0)),
+          onTap: (){
+            setState(() {
+              selectedTechnology = '';
+              selectedSession = '';
+            });
+          },
+          onChanged: (_) {
+            setState(() {
+              selectedTechnology = '';
+              selectedSession = '';
+              searchController.text.toString();
+            });
+          },
+
+          leading: const Icon(Icons.search, color: CustomColor.blueGrey,),
+        ),
+        Gap(16.h),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             DropDown(
                 apiEndpoint: ApiEndPoints.technologyList,
                 onValueChanged: (selectedId){
+                  if(searchController.text.length >=2){
+                    setState(() {
+                      selectedTechnology = '';
+                    });
+                  }
                   setState(() {
+                    searchController.text = '';
                     if(selectedId == 'Select Technology'){
                       selectedTechnology = '';
                     }else {
@@ -41,13 +73,14 @@ class _FilterBarState extends State<FilterBar> {
                     }
                   });
                 },
-                hintText: 'select technology'
+                hintText: hintTextTechnology
             ),
 
             DropDown(
                 apiEndpoint: ApiEndPoints.sessionList,
                 onValueChanged: (selectedId){
                   setState(() {
+                    searchController.text = '';
                     if(selectedId == 'Select Session'){
                       selectedSession = '';
                     }else {
@@ -55,7 +88,7 @@ class _FilterBarState extends State<FilterBar> {
                     }
                   });
                 },
-                hintText: 'select session'
+                hintText: hintTextSession
             )
           ],
         ),
@@ -63,7 +96,7 @@ class _FilterBarState extends State<FilterBar> {
 
 
         FutureBuilder(
-          future: getStudentsData.getFilteredData('$selectedTechnology', '$selectedSession'),
+          future: getStudentsData.getFilteredData('$selectedTechnology', '$selectedSession', searchController.text),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
@@ -83,20 +116,22 @@ class _FilterBarState extends State<FilterBar> {
                 return Text('No Students Found from $selectedSession Session');
               }else if(snapshot.data!.response == 'No Students Found !'){
                 return Text('No Students Found from $selectedTechnology technology and $selectedSession Session');
+              }else if(snapshot.data!.response == 'No Students Found'){
+                return Text('No Students Found for ${searchController.text}');
               }else {
                 return Container(
-                  height: 440.h,
+                  height: 450.h,
                   child: ListView.builder(
-                    shrinkWrap: true,
-                    //physics: ,
+                    //shrinkWrap: true,
+                    //physics: ScrollPhysics(),
                     itemCount: snapshot.data!.students!.length,
                     itemBuilder: (context, index) {
                       return Card(
-                        color: CustomColor.deepOrange.withOpacity(0.2),
+                        //color: CustomColor.deepOrange.withOpacity(0.2),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.r),
                         ),
-                        elevation: 0,
+                        elevation: 5,
                         child: InkWell(
                           onTap: () =>
                               Navigator.push(
@@ -111,7 +146,7 @@ class _FilterBarState extends State<FilterBar> {
                               ),
                           child: ListTile(
                             leading: const Icon(
-                              Icons.account_circle, color: Colors.grey,
+                              Icons.account_circle, color: CustomColor.blueGrey,
                               size: 40,),
                             title: Text(
                               snapshot.data!.students![index].name.toString(),

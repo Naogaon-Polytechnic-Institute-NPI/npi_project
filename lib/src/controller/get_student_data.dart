@@ -10,10 +10,10 @@ class GetStudentsData{
 
   get apiResponse => _apiResponse;
 
-  Future<AdminView> getFilteredData(String technology, String session) async {
+  Future<AdminView> getFilteredData(String technology, session, roll) async {
     try {
-      final response = await http.get(Uri.parse('${ApiEndPoints.filteredData}?technology=$technology&session=$session'));
-      print('end point: ${ApiEndPoints.filteredData}?technology=$technology&session=$session');
+      final response = await http.get(Uri.parse('${ApiEndPoints.filteredData}?technology=$technology&session=$session&roll=$roll'));
+      print('end point: ${ApiEndPoints.filteredData}?technology=$technology&session=$session&roll=$roll');
 
       if (response.statusCode == 200) {
         var responseBody = jsonDecode(response.body.toString());
