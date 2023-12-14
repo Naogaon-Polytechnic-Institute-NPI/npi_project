@@ -42,6 +42,7 @@ class PersonalInfoCard extends StatelessWidget {
               const Icon(
                 Icons.keyboard_arrow_down,
                 size: 30,
+                  color: CustomColor.blueGrey
               ),
               Gap(10.w),
               InkWell(

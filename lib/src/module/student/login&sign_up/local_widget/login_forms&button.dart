@@ -45,7 +45,8 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
         });
         var responseBody = jsonDecode(response.body.toString());
         if (responseBody['response'].toString() == 'success') {
-          // If Successfully Logged In (creds are correct)
+
+
           SharedPreferences sharedPref = await SharedPreferences.getInstance();
           sharedPref.setBool(SplashScreenState.studentLoginKEY, true);
           sharedPref.setString(

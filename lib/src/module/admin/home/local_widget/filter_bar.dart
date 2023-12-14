@@ -31,9 +31,11 @@ class _FilterBarState extends State<FilterBar> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SearchBar(
-          hintText: 'Search here..',
+          hintText: 'Search with roll..',
           hintStyle: MaterialStateProperty.all(const TextStyle(color: Colors.grey)),
           controller: searchController,
+          elevation: const MaterialStatePropertyAll(0),
+          side: MaterialStatePropertyAll<BorderSide>(BorderSide(color: Colors.black)),
           padding: const MaterialStatePropertyAll<EdgeInsets>(
               EdgeInsets.symmetric(horizontal: 16.0)),
           onTap: (){
@@ -50,7 +52,7 @@ class _FilterBarState extends State<FilterBar> {
             });
           },
 
-          leading: const Icon(Icons.search, color: CustomColor.blueGrey,),
+          leading: const Icon(Icons.search, color: Colors.black,),
         ),
         Gap(16.h),
         Row(
@@ -127,11 +129,11 @@ class _FilterBarState extends State<FilterBar> {
                     itemCount: snapshot.data!.students!.length,
                     itemBuilder: (context, index) {
                       return Card(
-                        //color: CustomColor.deepOrange.withOpacity(0.2),
+                        color: CustomColor.deepOrange.withOpacity(0.2),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.r),
                         ),
-                        elevation: 5,
+                        elevation: 0,
                         child: InkWell(
                           onTap: () =>
                               Navigator.push(
@@ -146,7 +148,7 @@ class _FilterBarState extends State<FilterBar> {
                               ),
                           child: ListTile(
                             leading: const Icon(
-                              Icons.account_circle, color: CustomColor.blueGrey,
+                              Icons.account_circle, color: Colors.black,
                               size: 40,),
                             title: Text(
                               snapshot.data!.students![index].name.toString(),
@@ -154,14 +156,14 @@ class _FilterBarState extends State<FilterBar> {
                                 fontFamily: 'Roboto',
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16.sp,
-                                color: CustomColor.lightTeal,
+                                color: Colors.black,
                               ),
                             ),
                             subtitle: Text(
                               snapshot.data!.students![index].roll.toString(),
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontFamily: 'Roboto',
-                                color: CustomColor.blueGrey,
+                                color: Colors.black.withOpacity(.7),
                               ),
                             ),
                           ),

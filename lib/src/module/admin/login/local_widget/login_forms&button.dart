@@ -52,7 +52,8 @@ class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
           SharedPreferences sharedPref = await SharedPreferences.getInstance();
           sharedPref.setBool(SplashScreenState.adminLoginKEY, true);
 
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const AdminHome()));
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+              builder: (context)=> const AdminHome()), (route) => false);
 
 
           Utils().toastMessage('Loged in', CustomColor.deepOrange);

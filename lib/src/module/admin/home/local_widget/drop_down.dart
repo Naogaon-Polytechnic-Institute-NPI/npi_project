@@ -53,7 +53,7 @@ class _DropDownState extends State<DropDown> {
         width: MediaQuery.sizeOf(context).width / 2.50,
         padding: EdgeInsets.symmetric(horizontal: 10.w),
         decoration: BoxDecoration(
-            border: Border.all(color: const Color(0xffE8E8E8)),
+            border: Border.all(color: Colors.black),
             borderRadius: BorderRadius.circular(5.r)
         ),
         child:DropdownButton(
@@ -61,7 +61,7 @@ class _DropDownState extends State<DropDown> {
           hint: Text(
             widget.hintText,
             style: TextStyle(
-              color: const Color(0xff9A9A9A),
+              color: Colors.black,
               fontFamily: 'Roboto',
               fontSize: 15.sp,
             ),

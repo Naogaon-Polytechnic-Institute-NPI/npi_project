@@ -43,7 +43,8 @@ class _AdminHomeState extends State<AdminHome> {
                           height: 35.h,
                           width: 35.w,
                           child: Image.asset('assets/images/menu.png',
-                              color: CustomColor.blueGrey
+                              //color: CustomColor.deepOrange.withOpacity(.8)
+                            color: Colors.black,
                           )),
                     )
                   ],

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -18,7 +20,7 @@ class NavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
         child: Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.fromLTRB(10, 10, 10, 5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,10 +59,8 @@ class NavBar extends StatelessWidget {
                       onTap: () async {
                         var sharedPref = await SharedPreferences.getInstance();
                         sharedPref.clear();
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const AdminLogInScreen()));
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                            builder: (context)=> const AdminLogInScreen()), (route) => false);
                       },
                       child: Container(
                         width: double.infinity,
@@ -93,7 +93,7 @@ class NavBar extends StatelessWidget {
              ),
            ),
           Container(
-
+            //padding: EdgeInsets.only(bottom: 10.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -106,52 +106,85 @@ class NavBar extends StatelessWidget {
                             size: 30
                         );
                       }else{
-                        return Text(
-                            'Verified User: ${snapshot.data!.studentsFound}',
-                          style: TextStyle(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 15.sp
-                          ),
+                        return Row(
+                          children: [
+                            Container(
+                              height: 10.h,
+                              width: 10.h,
+                              decoration: BoxDecoration(
+                                color: Colors.green,
+                                borderRadius: BorderRadius.circular(100)
+                              ),
+                            ),
+                            Gap(5.w),
+                            Text(
+                                'Verified User: ${snapshot.data!.studentsFound}',
+                              style: TextStyle(
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 15.sp
+                              ),
+                            ),
+                          ],
                         );
                       }
                     }
                 ),
+                const Divider(color: Colors.grey, height: 10, thickness: 2,),
                 Gap(5.h),
-                Text('Credit:', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15.sp),),
+                Text('Developer Credit', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15.sp),),
+                Gap(5.h),
                 RichText(
                   text: TextSpan(
                       text: 'Back-end: ',
                       style: TextStyle(
-                          color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14.sp
+                          color: const Color(0xff686868),
+                        //fontWeight: FontWeight.w500,
+                        fontSize: 13.sp
                       ),
                       children: [
                         TextSpan(
                             text: 'Shahir Islam',
-                          style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.normal),
+                          style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.normal),
                         )]), ),
                 Gap(5.h),
                 RichText(
-                  text: TextSpan(
+                  text:  TextSpan(
                       text: 'Front-end: ',
                       style: TextStyle(
-                          color: Colors.black),
+                          color: const Color(0xff686868),
+                          //fontWeight: FontWeight.w500,
+                          fontSize: 13.sp
+                      ),
                       children: [
                         TextSpan(
-                            text: 'Md. Shadikul Islam Shafi, Mosherof Khan, Musfika Haque'
+                            text: 'Md. Shadikul Islam Shafi, Mosherof Khan, Musfika Haque',
+                          style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.normal),
                         )]), ),
                 Gap(5.h),
                 RichText(
                   text: TextSpan(
                       text: 'UI/UX: ',
                       style: TextStyle(
-                          color: Colors.black),
+                          color: const Color(0xff686868),
+                          //fontWeight: FontWeight.w500,
+                          fontSize: 13.sp
+                      ),
                       children: [
                         TextSpan(
-                            text: 'Musfika Haque, Md. Shadikul Islam Shafi, Mosherof Khan, Shahir Islam, Azharul Islam'
-                        )]), )
+                            text: 'Musfika Haque, Md. Shadikul Islam Shafi, Mosherof Khan, Shahir Islam, Azharul Islam',
+                          style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.normal),
+                        )]), ),
+                Gap(10.h),
+                Center(
+                  child: Text('Contact Developer',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 14.sp,
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w700
+                    ),),
+                )
               ],
             ),
 

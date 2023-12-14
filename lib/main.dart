@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         builder: (_, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'First Method',
+            title: 'NPI',
             home: child,
           );
         },

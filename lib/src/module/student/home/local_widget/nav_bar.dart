@@ -45,14 +45,6 @@ class NavBar extends StatelessWidget {
           )),
           Padding(
             padding: const EdgeInsets.all(15),
-            child: InkWell(
-              onTap: () {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const LogInScreen()),
-                    (route) => false);
-              },
               child: InkWell(
                 onTap: () async {
                   var sharedPref = await SharedPreferences.getInstance();
@@ -89,7 +81,7 @@ class NavBar extends StatelessWidget {
                 ),
               ),
             ),
-          )
+
         ],
       ),
     ));

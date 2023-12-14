@@ -93,13 +93,6 @@ class _EducationInfoCardState extends State<EducationInfoCard> {
                   );
                 } else if (snapshot.hasError) {
                   return Center(
-                    // child: Text(
-                    //   'No data found',
-                    //   style: TextStyle(
-                    //     fontSize: 16.sp,
-                    //     fontFamily: 'Roboto',
-                    //     color: CustomColor.blueGrey
-                    //   ),),
                     child: LoadingAnimationWidget.staggeredDotsWave(
                         color: CustomColor.lightTeal, size: 50),
                   );
