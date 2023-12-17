@@ -22,12 +22,9 @@ class _AdminHomeState extends State<AdminHome> {
       child: Scaffold(
         backgroundColor: Colors.white,
         key: _globalKey,
-        drawer: const NavBar(
-            userName: 'admin',
-            email: 'admin@npi.com'
-        ),
+        drawer: const NavBar(userName: 'admin', email: 'admin@npi.com'),
         body: SingleChildScrollView(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           child: Padding(
             padding: EdgeInsets.all(16.w),
             child: Column(
@@ -36,14 +33,15 @@ class _AdminHomeState extends State<AdminHome> {
                 Stack(
                   children: [
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         _globalKey.currentState!.openDrawer();
                       },
                       child: SizedBox(
                           height: 35.h,
                           width: 35.w,
-                          child: Image.asset('assets/images/menu.png',
-                              //color: CustomColor.deepOrange.withOpacity(.8)
+                          child: Image.asset(
+                            'assets/images/menu.png',
+                            //color: CustomColor.deepOrange.withOpacity(.8)
                             color: Colors.black,
                           )),
                     )

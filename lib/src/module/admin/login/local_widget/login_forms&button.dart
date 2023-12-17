@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -48,13 +49,41 @@ class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
         });
         var responseBody = jsonDecode(response.body.toString());
         if (responseBody['response'].toString() == 'Login Success') {
-
-          SharedPreferences sharedPref = await SharedPreferences.getInstance();
-          sharedPref.setBool(SplashScreenState.adminLoginKEY, true);
-
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-              builder: (context)=> const AdminHome()), (route) => false);
-
+          showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text('Please select an option '),
+                  content: const Text('Do you want to save Your Password?'),
+                  actions: [
+                    ElevatedButton(
+                        onPressed: () async {
+                          SharedPreferences sharedPref =
+                              await SharedPreferences.getInstance();
+                          sharedPref.setBool(
+                              SplashScreenState.adminLoginKEY, true);
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const AdminHome()),
+                              (route) => false);
+                        },
+                        child: const Text(
+                          'Yes',
+                        )),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const AdminHome()),
+                              (route) => false);
+                        },
+                        child: const Text('No')),
+                  ],
+                );
+              });
 
           Utils().toastMessage('Loged in', CustomColor.deepOrange);
         } else if (responseBody['response'].toString() == 'User Not Found !') {
