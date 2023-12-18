@@ -27,6 +27,7 @@ class _NavBarState extends State<NavBar> {
             icon: const Icon(Icons.info),
             title: const Text('Log Out'),
             content: const Text('Are you sure you want to Log out?'),
+
             actions: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

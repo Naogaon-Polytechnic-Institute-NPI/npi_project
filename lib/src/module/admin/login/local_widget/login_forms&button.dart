@@ -49,48 +49,21 @@ class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
         });
         var responseBody = jsonDecode(response.body.toString());
         if (responseBody['response'].toString() == 'Login Success') {
-          showDialog(
-              barrierDismissible: false,
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: const Text('Please select an option '),
-                  content: const Text('Do you want to save Your Password?'),
-                  actions: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CupertinoButton(
-                            onPressed: () async {
-                              SharedPreferences sharedPref =
-                                  await SharedPreferences.getInstance();
-                              sharedPref.setBool(
-                                  SplashScreenState.adminLoginKEY, true);
-                              Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const AdminHome()),
-                                  (route) => false);
-                              Utils().toastMessage('Loged in', CustomColor.deepOrange);
-                            },
-                            child: const Text(
-                              'Yes',
-                            )),
-                        CupertinoButton(
-                            onPressed: () {
-                              Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const AdminHome()),
-                                  (route) => false);
-                              Utils().toastMessage('Loged in', CustomColor.deepOrange);
-                            },
-                            child: const Text('No')),
-                      ],
-                    ),
-                  ],
-                );
-              });
+
+          final snackBar = SnackBar(
+            content: const Text('Save your credential'),
+            //backgroundColor: CustomColor.deepOrange,
+            action: SnackBarAction(
+              label: 'Save',
+              onPressed: () async {
+                SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                sharedPreferences.setBool(SplashScreenState.adminLoginKEY, true);
+              },
+            ),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=> AdminHome()), (route) => false);
+
         } else if (responseBody['response'].toString() == 'User Not Found !') {
           Utils().toastMessage('User not found', Colors.red);
         } else if (responseBody['response'].toString() ==
