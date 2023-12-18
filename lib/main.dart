@@ -1,6 +1,8 @@
+import 'package:connection_notifier/connection_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:npi_project/src/internet_connection.dart';
 import 'package:npi_project/src/splash_screen.dart';
 
 void main() {
@@ -20,10 +22,12 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         // Use builder only if you need to use library outside ScreenUtilInit context
         builder: (_, child) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'NPI',
-            home: child,
+          return ConnectionNotifier(
+            child: MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'NPI',
+              home: child,
+            ),
           );
         },
         child: const SplashScreen());

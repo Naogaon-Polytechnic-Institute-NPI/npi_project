@@ -27,8 +27,9 @@ class _NavBarState extends State<NavBar> {
             icon: const Icon(Icons.info),
             title: const Text('Log Out'),
             content: const Text('Are you sure you want to Log out?'),
+
             actions: [
-              CupertinoButton(
+              ElevatedButton(
                   onPressed: () async {
                     var sharedPref = await SharedPreferences.getInstance();
                     sharedPref.clear();
@@ -42,7 +43,7 @@ class _NavBarState extends State<NavBar> {
                     'Yes',
                     style: TextStyle(color: Colors.red),
                   )),
-              CupertinoButton(
+              ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
