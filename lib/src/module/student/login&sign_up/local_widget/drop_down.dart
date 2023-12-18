@@ -51,32 +51,32 @@ class _DropDownState extends State<DropDown> {
         alignment: Alignment.center,
         height: 52.h,
         width: MediaQuery.sizeOf(context).width,
-    padding: EdgeInsets.symmetric(horizontal: 10.w),
-    decoration: BoxDecoration(
-    color: CustomColor.lightTeal.withOpacity(0.1),
-    border: Border.all(color: CustomColor.blueGrey.withOpacity(.2), width: 1),
-    borderRadius: BorderRadius.circular(25.r)
-    ),
-    child:DropdownButton(
-      isExpanded: true,
-      hint: Text(
-        widget.hintText,
-        style: TextStyle(
-          color: CustomColor.blueGrey,
-          fontFamily: 'Roboto',
-          fontSize: 15.sp,
+        padding: EdgeInsets.symmetric(horizontal: 10.w),
+        decoration: BoxDecoration(
+            color: CustomColor.lightTeal.withOpacity(0.1),
+            border: Border.all(color: CustomColor.blueGrey.withOpacity(.2), width: 1),
+            borderRadius: BorderRadius.circular(25.r)
         ),
-      ),
-      underline: const SizedBox(),
-      style: TextStyle(
-        fontFamily: 'Roboto',
-        fontSize: 16.sp,
-        color: Colors.black,
-      ),
-      iconSize: 30,
-      dropdownColor: CustomColor.blueGrey,
-      elevation: 0,
-      borderRadius: BorderRadius.circular(10.r),
+        child:DropdownButton(
+          isExpanded: true,
+          hint: Text(
+            widget.hintText,
+            style: TextStyle(
+              color: CustomColor.blueGrey,
+              fontFamily: 'Roboto',
+              fontSize: 15.sp,
+            ),
+          ),
+          underline: const SizedBox(),
+          style: TextStyle(
+            fontFamily: 'Roboto',
+            fontSize: 16.sp,
+            color: Colors.black,
+          ),
+          iconSize: 30,
+          dropdownColor: CustomColor.blueGrey,
+          elevation: 0,
+          borderRadius: BorderRadius.circular(10.r),
           value: selectedSession,
           items: dropdownList.map((item) {
             return DropdownMenuItem(
@@ -90,7 +90,7 @@ class _DropDownState extends State<DropDown> {
             });
             widget.onValueChanged(selectedSession!);
           },
-    )
-        );
+        )
+    );
   }
 }

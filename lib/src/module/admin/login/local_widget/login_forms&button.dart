@@ -57,35 +57,40 @@ class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
                   title: const Text('Please select an option '),
                   content: const Text('Do you want to save Your Password?'),
                   actions: [
-                    ElevatedButton(
-                        onPressed: () async {
-                          SharedPreferences sharedPref =
-                              await SharedPreferences.getInstance();
-                          sharedPref.setBool(
-                              SplashScreenState.adminLoginKEY, true);
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const AdminHome()),
-                              (route) => false);
-                        },
-                        child: const Text(
-                          'Yes',
-                        )),
-                    ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const AdminHome()),
-                              (route) => false);
-                        },
-                        child: const Text('No')),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CupertinoButton(
+                            onPressed: () async {
+                              SharedPreferences sharedPref =
+                                  await SharedPreferences.getInstance();
+                              sharedPref.setBool(
+                                  SplashScreenState.adminLoginKEY, true);
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const AdminHome()),
+                                  (route) => false);
+                              Utils().toastMessage('Loged in', CustomColor.deepOrange);
+                            },
+                            child: const Text(
+                              'Yes',
+                            )),
+                        CupertinoButton(
+                            onPressed: () {
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const AdminHome()),
+                                  (route) => false);
+                              Utils().toastMessage('Loged in', CustomColor.deepOrange);
+                            },
+                            child: const Text('No')),
+                      ],
+                    ),
                   ],
                 );
               });
-
-          Utils().toastMessage('Loged in', CustomColor.deepOrange);
         } else if (responseBody['response'].toString() == 'User Not Found !') {
           Utils().toastMessage('User not found', Colors.red);
         } else if (responseBody['response'].toString() ==

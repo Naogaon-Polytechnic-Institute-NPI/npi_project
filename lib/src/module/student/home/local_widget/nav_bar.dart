@@ -28,25 +28,31 @@ class _NavBarState extends State<NavBar> {
             title: const Text('Log Out'),
             content: const Text('Are you sure you want to Log out?'),
             actions: [
-              CupertinoButton(
-                  onPressed: () async {
-                    var sharedPref = await SharedPreferences.getInstance();
-                    sharedPref.clear();
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LogInScreen()),
-                        (route) => false);
-                  },
-                  child: const Text(
-                    'Yes',
-                    style: TextStyle(color: Colors.red),
-                  )),
-              CupertinoButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('No')),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CupertinoButton(
+                      onPressed: () async {
+                        var sharedPref = await SharedPreferences.getInstance();
+                        sharedPref.clear();
+                        LoadingAnimationWidget.bouncingBall(color: Colors.red, size: 100);
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LogInScreen()),
+                            (route) => false);
+                      },
+                      child: const Text(
+                        'Yes',
+                        style: TextStyle(color: Colors.red),
+                      )),
+                  CupertinoButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('No')),
+                ],
+              ),
             ],
           );
         });
@@ -73,17 +79,13 @@ class _NavBarState extends State<NavBar> {
                           radius: 42,
                           backgroundImage:
                               AssetImage('assets/images/npi_logo.png')),
-                      const SizedBox(
-                        height: 5,
-                      ),
+                      Gap(5.h),
                       Text(widget.userName,
                           style: TextStyle(
-                              fontSize: 18.sp,
+                              fontSize: 14.sp,
                               fontFamily: 'Roboto',
                               fontWeight: FontWeight.w500)),
-                      const SizedBox(
-                        height: 5,
-                      ),
+                      Gap(5.h),
                       Text(widget.roll)
                     ],
                   ),
@@ -129,7 +131,7 @@ class _NavBarState extends State<NavBar> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 FutureBuilder(
-                    future: GetStudentsData().getFilteredData('', '', ''),
+                    future: GetStudentsData().getFilteredData('', '', '', ''),
                     builder: (_, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return LoadingAnimationWidget.waveDots(
@@ -146,7 +148,7 @@ class _NavBarState extends State<NavBar> {
                             ),
                             Gap(5.w),
                             Text(
-                              'Verified User: ${snapshot.data!.studentsFound}',
+                              'Total User: ${snapshot.data!.studentsFound}',
                               style: TextStyle(
                                   fontFamily: 'Roboto',
                                   fontWeight: FontWeight.w700,

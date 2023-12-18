@@ -98,14 +98,14 @@ class NavBar extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 FutureBuilder(
-                    future: GetStudentsData().getFilteredData('', '', ''),
+                    future: GetStudentsData().getFilteredData('', '', '', ''),
                     builder: (_, snapshot){
                       if(snapshot.connectionState == ConnectionState.waiting){
                         return LoadingAnimationWidget.waveDots(
                             color: CustomColor.deepOrange,
                             size: 30
                         );
-                      }else{
+                      }else if(snapshot.connectionState == ConnectionState.done){
                         return Row(
                           children: [
                             Container(
@@ -118,7 +118,7 @@ class NavBar extends StatelessWidget {
                             ),
                             Gap(5.w),
                             Text(
-                                'Verified User: ${snapshot.data!.studentsFound}',
+                                'Total User: ${snapshot.data!.studentsFound}',
                               style: TextStyle(
                                 fontFamily: 'Roboto',
                                 fontWeight: FontWeight.w700,
@@ -127,6 +127,8 @@ class NavBar extends StatelessWidget {
                             ),
                           ],
                         );
+                      }else{
+                        throw Exception(Text('$Exception'));
                       }
                     }
                 ),

@@ -50,8 +50,8 @@ class _DropDownState extends State<DropDown> {
     return Container(
         alignment: Alignment.center,
         height: 52.h,
-        width: MediaQuery.sizeOf(context).width / 2.50,
-        padding: EdgeInsets.symmetric(horizontal: 10.w),
+        width: MediaQuery.sizeOf(context).width / 3.40,
+        padding: EdgeInsets.symmetric(horizontal: 5.w),
         decoration: BoxDecoration(
             border: Border.all(color: Colors.black),
             borderRadius: BorderRadius.circular(5.r)
@@ -63,16 +63,16 @@ class _DropDownState extends State<DropDown> {
             style: TextStyle(
               color: Colors.black,
               fontFamily: 'Roboto',
-              fontSize: 15.sp,
+              fontSize: 13.sp,
             ),
           ),
           underline: const SizedBox(),
           style: TextStyle(
             fontFamily: 'Roboto',
-            fontSize: 16.sp,
+            fontSize: 13.sp,
             color: Colors.black,
           ),
-          iconSize: 30,
+          iconSize: 25,
           dropdownColor: CustomColor.blueGrey,
           elevation: 0,
           borderRadius: BorderRadius.circular(10.r),
@@ -85,7 +85,7 @@ class _DropDownState extends State<DropDown> {
           }).toList(),
           onChanged: (value) {
             setState(() {
-              selectedSession = value as String?;
+              selectedSession = value;
             });
             widget.onValueChanged(selectedSession!);
           },

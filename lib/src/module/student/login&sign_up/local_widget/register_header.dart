@@ -11,7 +11,7 @@ class RegisterHeader extends StatelessWidget {
     return Column(
       children: [
         Text(
-          'Register',
+          'Verify yourself',
           style: TextStyle(
             color: CustomColor.lightTeal,
             fontSize: 25.sp,

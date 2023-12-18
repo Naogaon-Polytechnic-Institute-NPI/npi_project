@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:npi_project/src/data/global_widget/title_text.dart';
 import 'package:npi_project/src/data/global_widget/txt_button.dart';
 import 'package:npi_project/src/data/utils/custom_color.dart';
-import 'package:npi_project/src/module/student/login&sign_up/local_widget/signup_forms&button.dart';
+import 'package:npi_project/src/module/student/login&sign_up/local_widget/password_forms&button.dart';
 import 'package:npi_project/src/module/student/login&sign_up/view/log_in.dart';
 import 'package:npi_project/src/module/student/login&sign_up/view/signup.dart';
 
