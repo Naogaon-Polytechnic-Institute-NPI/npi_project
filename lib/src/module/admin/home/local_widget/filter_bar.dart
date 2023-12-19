@@ -162,12 +162,16 @@ class _FilterBarState extends State<FilterBar> {
               } else if (snapshot.connectionState == ConnectionState.done) {
                 if(snapshot.data!.response == 'No Students Found from $selectedTechnology technology.'){
                   return Text('No Students Found from $selectedTechnology technology.');
-                }else if(snapshot.data!.response == 'No Students Found from $selectedSession Session'){
-                  return Text('No Students Found from $selectedSession Session');
+                }else if(snapshot.data!.response == 'No Students Found from $selectedSession Session.'){
+                  return Text('No Students Found from $selectedSession Session.');
+                }else if(snapshot.data!.response == 'No Students Found from $selectedTechnology Technology $selectedSession Session.'){
+                  return Text('No Students Found from $selectedTechnology technology and $selectedSession Session.');
+                }else if(snapshot.data!.response == 'No students found with ${searchController.text} Roll.'){
+                  return Text('No students found with ${searchController.text} Roll.');
+                }else if(snapshot.data!.response == 'No Students Found from $shift Shift of $selectedTechnology Technology.'){
+                  return Text('No Students Found from $shift Shift of $selectedTechnology Technology.');
                 }else if(snapshot.data!.response == 'No Students Found !'){
-                  return Text('No Students Found from $selectedTechnology technology and $selectedSession Session');
-                }else if(snapshot.data!.response == 'No Students Found'){
-                  return Text('No Students Found for ${searchController.text}');
+                  return Text('No Students Found from $shift Shift of $selectedTechnology Technology and $selectedSession session.');
                 }else {
                   return Container(
                     height: 450.h,

@@ -24,11 +24,12 @@ class InputOccupationalInfo extends StatefulWidget {
 }
 
 class _InputOccupationalInfoState extends State<InputOccupationalInfo> {
-  final _formKey = GlobalKey<FormState>();
+
   final occupationDetailsController = TextEditingController();
   bool _loading = false;
   final UserData _userData = UserData();
   static const List<String> workOption = [
+    'Select a option',
     'Student',
     'Businessman',
     'Employed',
@@ -36,12 +37,12 @@ class _InputOccupationalInfoState extends State<InputOccupationalInfo> {
     'Freelancer',
     'Others'
   ];
-  String? selectedValue;
+  String? selectedValue, selectedOccupation = '';
 
 
   void saveOccupationInfo() async {
     Map<String, dynamic> occupationData = {
-      'currnetOccupation': selectedValue.toString(),
+      'currnetOccupation': selectedOccupation.toString(),
       'occupationDetails': occupationDetailsController.text.toString(),
     };
     try {
@@ -60,7 +61,22 @@ class _InputOccupationalInfoState extends State<InputOccupationalInfo> {
             responseBody['response'].toString() == 'success') {
           Utils().toastMessage('Data Updated', CustomColor.lightTeal);
         } else if (responseBody['response'].toString() == 'success') {
+          SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => HomeScreen(
+                    privetKey: sharedPreferences
+                        .getString(SplashScreenState.privetKey),
+                    useName:
+                    sharedPreferences.getString(SplashScreenState.userName),
+                    roll: sharedPreferences.getString(SplashScreenState.roll),
+                  )),
+                  (route) => false);
           Utils().toastMessage('Data Saved', CustomColor.lightTeal);
+        } else if (responseBody['response'].toString() == 'Please set your current occupation.') {
+          Utils().toastMessage('Select a job', CustomColor.lightTeal);
         } else {
           Utils().toastMessage('server error!', Colors.red);
           SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -74,19 +90,6 @@ class _InputOccupationalInfoState extends State<InputOccupationalInfo> {
       } else {
         Utils().toastMessage('server error!', Colors.red);
       }
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-              builder: (context) => HomeScreen(
-                    privetKey: sharedPreferences
-                        .getString(SplashScreenState.privetKey),
-                    useName:
-                        sharedPreferences.getString(SplashScreenState.userName),
-                    roll: sharedPreferences.getString(SplashScreenState.roll),
-                  )),
-          (route) => false);
     } catch (e) {
       print(e.toString());
     }
@@ -104,9 +107,12 @@ class _InputOccupationalInfoState extends State<InputOccupationalInfo> {
       setState(() {
         selectedValue = occupationInfoModel.occupatioInfo!.currnetOccupation!.toString();
       });
-      occupationDetailsController.text = occupationInfoModel.occupatioInfo!.occupationDetails ?? '';
+      occupationDetailsController.text = occupationInfoModel.occupatioInfo!.occupationDetails ?? workOption.first;
     } catch (e) {
-      Utils().toastMessage('Error', Colors.red);
+      setState(() {
+        selectedValue = workOption.first;
+      });
+      //Utils().toastMessage('Error', Colors.red);
       print('Error fetching data: $e');
     }
   }
@@ -119,90 +125,77 @@ class _InputOccupationalInfoState extends State<InputOccupationalInfo> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        body: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: SizedBox(
-              height: 500.h,
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0.h),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      height: 52.h,
-                      width: MediaQuery.sizeOf(context).width,
-                      padding: EdgeInsets.symmetric(horizontal: 10.w),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                              color: CustomColor.blueGrey.withOpacity(.2),
-                              width: 1),
-                          borderRadius: BorderRadius.circular(5.r)),
-                      child: DropdownButton<String>(
-                        isExpanded: true,
-                        underline: const SizedBox(),
-                        style: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontSize: 16.sp,
-                          color: Colors.black,
-                        ),
-                        iconSize: 30,
-                        dropdownColor: CustomColor.blueGrey,
-                        elevation: 0,
-                        borderRadius: BorderRadius.circular(10.r),
-                        value: selectedValue,
-                        onChanged: (String? newValue) {
-                          if(mounted){
+        body: SingleChildScrollView(
+          child: SizedBox(
+            height: 500.h,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0.h),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    height: 52.h,
+                    width: MediaQuery.sizeOf(context).width,
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                            color: CustomColor.blueGrey.withOpacity(.2),
+                            width: 1),
+                        borderRadius: BorderRadius.circular(5.r)),
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      underline: const SizedBox(),
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 16.sp,
+                        color: Colors.black,
+                      ),
+                      iconSize: 30,
+                      dropdownColor: CustomColor.blueGrey,
+                      elevation: 0,
+                      borderRadius: BorderRadius.circular(10.r),
+                      value: selectedValue,
+                      onChanged: (String? newValue) {
+                        if(mounted){
+                          if(newValue.toString() != workOption.first){
                             setState(() {
                               selectedValue = newValue.toString();
+                              selectedOccupation = newValue.toString();
+                            });
+                          }else{
+                            setState(() {
+                              selectedOccupation = '';
                             });
                           }
-                        },
-                        items: workOption
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
+                        }
+                      },
+                      items: workOption
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     ),
-                    Gap(10.h),
-                    InfoInputForm(
-                      title: 'Occupation Details',
-                      fieldHeight: 50.h,
-                      fieldWidth: width,
-                      hintText: 'Enter Occupation Details',
-                      errorText: 'enter occupation details',
-                      controller: occupationDetailsController,
-                    ),
-                    CustomButton(
-                        onTap: () async {
-                          if (_formKey.currentState!.validate()) {
-                            saveOccupationInfo();
-                            print(selectedValue);
-                            // SharedPreferences sharedPreferences =
-                            //     await SharedPreferences.getInstance();
-                            // Navigator.pushAndRemoveUntil(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => HomeScreen(
-                            //               privetKey:
-                            //                   sharedPreferences.getString(
-                            //                       SplashScreenState.privetKey),
-                            //               useName: sharedPreferences.getString(
-                            //                   SplashScreenState.userName),
-                            //               roll: sharedPreferences.getString(
-                            //                   SplashScreenState.roll),
-                            //             )),
-                            //     (route) => false);
-                          }
+                  ),
+                  Gap(10.h),
+                  InfoInputForm(
+                    title: 'Occupation Details',
+                    fieldHeight: 50.h,
+                    fieldWidth: width,
+                    hintText: 'Enter Occupation Details',
+                    errorText: 'enter occupation details',
+                    controller: occupationDetailsController,
+                  ),
+                  CustomButton(
+                      onTap: (){
+                          saveOccupationInfo();
+
                         },
-                        buttonName: 'SAVE')
-                  ],
-                ),
+                      buttonName: 'SAVE')
+                ],
               ),
             ),
           ),

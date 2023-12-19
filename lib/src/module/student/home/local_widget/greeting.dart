@@ -29,7 +29,7 @@ class GreetingPart extends StatelessWidget {
           Text(
             userName,
           style: TextStyle(
-            fontSize: 16.sp,
+            fontSize: 15.sp,
             fontFamily: 'Roboto',
             color: CustomColor.blueGrey
           ),)
