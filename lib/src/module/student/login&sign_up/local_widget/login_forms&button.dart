@@ -46,8 +46,13 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
         var responseBody = jsonDecode(response.body.toString());
         if (responseBody['response'].toString() == 'success') {
 
-
-          SharedPreferences sharedPref = await SharedPreferences.getInstance();
+          final snackBar = SnackBar(
+            content: const Text('Save your credential'),
+            //backgroundColor: CustomColor.deepOrange,
+            action: SnackBarAction(
+              label: 'Save',
+              onPressed: () async {
+                SharedPreferences sharedPref = await SharedPreferences.getInstance();
           sharedPref.setBool(SplashScreenState.studentLoginKEY, true);
           sharedPref.setString(
               SplashScreenState.userName, responseBody['studentData']['name']);
@@ -55,12 +60,11 @@ class _LoginFormsAndButtonState extends State<LoginFormsAndButton> {
               SplashScreenState.roll, responseBody['studentData']['roll']);
           sharedPref.setString(SplashScreenState.privetKey,
               responseBody['studentData']['private_id']);
-
-          // Navigator.pushAndRemoveUntil(
-          //     context,
-          //     MaterialPageRoute(builder: (context) => HomeScreen()),
-          //     (route) => false);
-
+              },
+            ),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
