@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:npi_project/src/module/student/login&sign_up/local_widget/login_txt_button.dart';
 import 'package:npi_project/src/module/student/login&sign_up/local_widget/register_header.dart';
-import 'package:npi_project/src/module/student/login&sign_up/local_widget/password_forms&button.dart';
-import 'package:npi_project/src/module/student/login&sign_up/local_widget/verify_form&button.dart';
+import 'package:npi_project/src/module/student/login&sign_up/local_widget/verify_forms&button.dart';
+
 
 
 class SignUp extends StatelessWidget {
