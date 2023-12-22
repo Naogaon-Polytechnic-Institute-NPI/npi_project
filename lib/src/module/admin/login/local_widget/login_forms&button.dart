@@ -62,7 +62,7 @@ class _AdminLoginFormsAndButtonState extends State<AdminLoginFormsAndButton> {
             ),
           );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=> AdminHome()), (route) => false);
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=> const AdminHome()), (route) => false);
 
         } else if (responseBody['response'].toString() == 'User Not Found !') {
           Utils().toastMessage('User not found', Colors.red);
