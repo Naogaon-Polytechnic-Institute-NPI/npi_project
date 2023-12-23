@@ -39,12 +39,6 @@ class _FilterBarState extends State<FilterBar> {
           side: const MaterialStatePropertyAll<BorderSide>(BorderSide(color: Colors.black)),
           padding: const MaterialStatePropertyAll<EdgeInsets>(
               EdgeInsets.symmetric(horizontal: 16.0)),
-          // onTap: (){
-          //   setState(() {
-          //     selectedTechnology = '';
-          //     selectedSession = '';
-          //   });
-          // },
           onChanged: (_) {
             setState(() {
               selectedTechnology = '';
@@ -160,7 +154,7 @@ class _FilterBarState extends State<FilterBar> {
                   child: Text('Error fetching data: ${snapshot.error}'),
                 );
               } else if (snapshot.connectionState == ConnectionState.done) {
-                if(snapshot.data!.response == 'No Students Found from $selectedTechnology technology.'){
+                if(snapshot.data!.response == 'No Students Found from $selectedTechnology Technology.'){
                   return Text('No Students Found from $selectedTechnology technology.');
                 }else if(snapshot.data!.response == 'No Students Found from $selectedSession Session.'){
                   return Text('No Students Found from $selectedSession Session.');
