@@ -8,6 +8,8 @@ import 'package:npi_project/src/data/utils/custom_color.dart';
 import 'package:npi_project/src/module/student/login&sign_up/view/log_in.dart';
 import 'package:npi_project/src/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NavBar extends StatefulWidget {
   final String userName, roll;
@@ -222,13 +224,16 @@ class _NavBarState extends State<NavBar> {
                 ),
                 Gap(10.h),
                 Center(
-                  child: Text(
-                    'Contact Developer',
-                    style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 14.sp,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.w700),
+                  child: InkWell(
+                    onTap: _launchUrl,
+                    child: Text(
+                      'Contact Developer',
+                      style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 14.sp,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.w700),
+                    ),
                   ),
                 )
               ],
@@ -239,5 +244,9 @@ class _NavBarState extends State<NavBar> {
     ));
   }
 
+  Future<void> _launchUrl() async {
+    if (!await launchUrl(Uri.parse('https://forms.gle/FXV3HbQ1apuaZZ5b8'))) {
+      throw Exception('Could not launch https://forms.gle/FXV3HbQ1apuaZZ5b8');
+    }}
   void _sharedPref() async {}
 }

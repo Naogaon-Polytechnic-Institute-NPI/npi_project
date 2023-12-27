@@ -46,6 +46,7 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   flutter_phone_direct_caller: ^2.1.1
   connection_notifier: ^2.0.1
+  url_launcher: ^6.2.2
 
 
 dev_dependencies:
