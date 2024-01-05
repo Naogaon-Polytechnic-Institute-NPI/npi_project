@@ -13,6 +13,7 @@ import 'package:npi_project/src/module/admin/home/view/admin_home.dart';
 import 'package:npi_project/src/module/admin/login/view/log_in.dart';
 import 'package:npi_project/src/module/student/home/view/home.dart';
 import 'package:npi_project/src/module/student/login&sign_up/view/log_in.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -69,7 +70,11 @@ class SplashScreenState extends State<SplashScreen> {
   Future<void> appStatus()async{
     AppStatusModel appStatusModel = await _appStatus.getAppStatus();
 
-    if(appStatusModel.newVersionAvailable == 'True'){
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String version = packageInfo.version;
+
+
+    if(version != appStatusModel.appVersion){
       showDialog(
         barrierDismissible: false,
           context: context,
