@@ -68,7 +68,7 @@ class SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> appStatus()async{
-    AppStatusModel appStatusModel = await _appStatus.getAppStatus();
+    AppStatusModel appStatusModel = await _appStatus.getAppStatus(context);
 
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String version = packageInfo.version;
@@ -128,7 +128,7 @@ class SplashScreenState extends State<SplashScreen> {
               ],
             );
           });
-    }else{
+    }else {
       changeScreen();
     }
   }

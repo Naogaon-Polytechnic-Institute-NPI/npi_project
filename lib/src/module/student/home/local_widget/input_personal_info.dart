@@ -18,8 +18,7 @@ import 'package:npi_project/src/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class InputPersonalInfo extends StatefulWidget {
-  final String privetKey,
-      userName;
+  final String privetKey, userName;
   const InputPersonalInfo({
     required this.userName,
     required this.privetKey,
