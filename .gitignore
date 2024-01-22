@@ -43,5 +43,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# Api end point
-lib/src/controller/api_end_points.dart
+# Api end point base url
+*.env
+

@@ -35,8 +35,8 @@ class SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    appStatus();
-    //changeScreen();
+    //appStatus();
+    changeScreen();
     super.initState();
   }
 
