@@ -4,6 +4,7 @@
 *.pyc
 *.swp
 .DS_Store
+.env
 .atom/
 .buildlog/
 .history
@@ -44,5 +45,4 @@ app.*.map.json
 /android/app/release
 
 # Api end point base url
-*.env
 
